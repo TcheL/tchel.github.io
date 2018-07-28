@@ -114,20 +114,25 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Here4U">
-<meta property="og:url" content="http://tchel.github.io/tags/WillDelete/index.html">
+  <meta name="description" content="Definations of Hilbert transformation and Analytic signal">
+<meta name="keywords" content="DSP">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hilbert 变换">
+<meta property="og:url" content="http://tchel.github.io/temp/Hilbert_transform.html">
 <meta property="og:site_name" content="Here4U">
+<meta property="og:description" content="Definations of Hilbert transformation and Analytic signal">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-21T05:49:41.655Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Here4U">
+<meta name="twitter:title" content="Hilbert 变换">
+<meta name="twitter:description" content="Definations of Hilbert transformation and Analytic signal">
 
 
 
 
 
 
-  <link rel="canonical" href="http://tchel.github.io/tags/WillDelete/"/>
+  <link rel="canonical" href="http://tchel.github.io/temp/Hilbert_transform.html"/>
 
 
 
@@ -137,7 +142,7 @@
   };
 </script>
 
-  <title>Tag: WillDelete | Here4U</title>
+  <title>Hilbert 变换 | Here4U</title>
   
 
 
@@ -187,7 +192,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <!-- 小条 Fork me on Github
@@ -249,7 +254,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
   </li>
@@ -355,58 +360,74 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>WillDelete<small>Tag</small>
-        </h1>
-      </div>
+<h1 class="post-title" itemprop="name headline">Hilbert 变换</h1>
+
+<div class="post-meta">
+  
+    <div class="post-description">Definations of Hilbert transformation and Analytic signal</div>
+  
+  
+
+
+
+</div>
+
+</header>
 
       
+      
+      
+      <div class="post-body">
         
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
         
-            <a class="post-title-link" href="/2018/07/18/My-first-blog-attemp/" itemprop="url">
-              
-                <span itemprop="name">My First Blog Attemp</span>
-              
-            </a>
-        
-      </h2>
+          <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>参考 <a href="https://en.wikipedia.org/wiki/Hilbert_transform" target="_blank" rel="noopener">Wikipedia</a> 。</p>
+<p>The <code>Hilbert transform</code> of the function $u(t)$ can be thought of as the <strong>convolution</strong> of $u(t)$ with the function $h(t)=\frac{1}{\pi t}$.</p>
+<p>Because $h(t)$ is not integrable, the integrals defining the convolution do not converge. Instead, the Hilbert transform is defined using the <strong>Cauchy principal value</strong> (denoted here by $p$ ):</p>
+<p>$$\mathcal{H}{u(t)}=p\int_{-\infty}^{\infty}u(\tau)h(t-\tau)d\tau=\frac{1}{\pi}p\int_{-\infty}^{\infty}\frac{u(\tau)}{t-\tau}d\tau$$.</p>
+<h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><p>A property of Hilbert transform is: $\mathcal{H}{\mathcal{H}{u(t)}}=-u(t)$.</p>
+<h3 id="解析信号"><a href="#解析信号" class="headerlink" title="解析信号"></a>解析信号</h3><p>参考 <a href="/home/tche/Learning/Learning/Paper/FWI/Bozdag_2011_GJI_Misfit functions for FWI.pdf">(Bozdag, 2011)</a>。</p>
+<p>The <code>analytic signal</code> is constructed from a real signal $f(t)$ and its Hilbert transform $\mathcal{H}{f(t)}$ :</p>
+<p>$$\tilde f(t)=f(t)-i\mathcal H{f(t)}$$.</p>
+<p>The analytic signal can be written in terms of the instantaneous amplitude $E(t)$ and the instantaneous phase $\phi(t)$ as</p>
+<p>$$\tilde f(t)=E(t)e^{i\phi(t)}$$,</p>
+<p>where</p>
+<p>$$\phi(t)=\arctan\frac{\mathfrak I{\tilde f(t)}}{\mathfrak R{\tilde f(t)}}=\arctan\frac{\mathcal H{f(t)}}{f(t)}$$,</p>
+<p>$$E(t)=\sqrt{\mathfrak R{\tilde f(t)}^2+\mathfrak I{\tilde f(t)}^2}=\sqrt{f(t)^2+\mathcal H{f(t)}^2}$$.</p>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-18T20:49:04+08:00"
-              content="2018-07-18" >
-          07-18
-        </time>
+        
       </div>
-
-    </header>
-  </article>
-
-
+      
+      
       
     </div>
+    
 
+
+
+    
+    
+    
   </div>
-  
-  
-  
-
-  
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE5NS8xNDcyMw=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -427,8 +448,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -553,6 +583,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性质"><span class="nav-number">2.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解析信号"><span class="nav-number">3.</span> <span class="nav-text">解析信号</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -708,6 +754,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
 
   
 
@@ -726,6 +776,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
@@ -1075,6 +1136,30 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 

@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/earth-32x32.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/earth-16x16.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="服务器管理过程中的一些命令技巧">
+<meta name="keywords" content="Server">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器管理">
+<meta property="og:url" content="http://tchel.github.io/2018/07/21/Tips-of-Server/index.html">
+<meta property="og:site_name" content="Here4U">
+<meta property="og:description" content="服务器管理过程中的一些命令技巧">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-21T05:23:02.801Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="服务器管理">
+<meta name="twitter:description" content="服务器管理过程中的一些命令技巧">
+
+
+
+
+
+
+  <link rel="canonical" href="http://tchel.github.io/2018/07/21/Tips-of-Server/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>服务器管理 | Here4U</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <!-- 小条 Fork me on Github
+     <a href="https://github.com/TcheL"><img style="position:absolute; top:0; right:0; border:0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on Github"></a>
+    -->
+    <a href="https://github.com/TcheL" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Here4U</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Share me with you</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tchel.github.io/2018/07/21/Tips-of-Server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tche LIU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/f58b38472ae7594c1da00001675eb66a?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Here4U">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">服务器管理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-21 13:17:58 / Modified: 13:23:02" itemprop="dateCreated datePublished" datetime="2018-07-21T13:17:58+08:00">2018-07-21</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">服务器管理过程中的一些命令技巧</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="SSH-免密登录"><a href="#SSH-免密登录" class="headerlink" title="SSH 免密登录"></a>SSH 免密登录</h2><p>以下实现主机 A 到主机 B 的免密登录：</p>
+<ul>
+<li>在主机 A 下生成公钥/私钥对：执行 <code>[user@A ~]$ ssh-keygen -t rsa</code> 后，连按三次回车键即可。</li>
+<li>把主机 A 下生成的公钥复制远程传输到主机 B 上：执行 <code>[user@A ~]$ scp .ssh/id_rsa.pub user@B:~/</code> 即可。</li>
+<li>登录主机 B 后复制主机 A 的公钥内容到 authorized_keys：执行 <code>[user@B ~]$ cat id_rsa.pub &gt;&gt; .ssh/authorized_keys</code> 即可。</li>
+</ul>
+<p>注：设置 authorized_keys 文件权限为 600 。</p>
+<hr>
+<h2 id="设置系统免密登录"><a href="#设置系统免密登录" class="headerlink" title="设置系统免密登录"></a>设置系统免密登录</h2><p>以命令 <code>[root@A ~]$ systemctl stop firewalld.service</code> 关闭防火墙；以命令 <code>[root@A ~]$ systemctl disable firewalld.service</code> 禁用防火墙。</p>
+<p>以命令 <code>[root@A ~]$ setenforce 0</code> 关闭 SELinux；修改 /etc/selinux/config 文件：<code>SELINUX=disabled</code>， 以禁用 SELinux 。 </p>
+<hr>
+<h2 id="安装-EPEL-源"><a href="#安装-EPEL-源" class="headerlink" title="安装 EPEL 源"></a>安装 EPEL 源</h2><p>EPEL，即 Extra Packages for Enterprise Linux，是为企业级 Linux 提供的一组高质量的额外软件包。</p>
+<p>命令 <code>[root@A ~]$ yum install epel-release</code> 安装 rpm 包，命令 <code>[root@A ~]$ yum clean all &amp;&amp; yum makecache</code> 更新软件源。</p>
+<hr>
+<h2 id="系统软件安装"><a href="#系统软件安装" class="headerlink" title="系统软件安装"></a>系统软件安装</h2><h3 id="必要安装"><a href="#必要安装" class="headerlink" title="必要安装"></a>必要安装</h3><ul>
+<li>gcc-gfortran: <code>[root@A ~]$ yum install gcc-gfortran</code></li>
+<li>gcc-c++: <code>[root@A ~]$ yum install gcc-c++.x86_64</code></li>
+<li>autojump: 命令 <code>[root@A ~]$ yum install autojump</code> 安装，命令 <code>[root@A ~]$ yum install autojump-zsh.noarch</code> 添加对 zsh 的支持。</li>
+<li>HDF5 库：<code>[root@A ~]$ yum install hdf5-devel</code></li>
+<li>htop: <code>[root@A ~]$ yum install htop</code></li>
+<li>vim: <code>[root@A ~]$ yum install vim</code></li>
+<li>tmux: <code>[root@A ~]$ yum install tmux</code></li>
+<li>sysstat: <code>[root@A ~]$ yum install sysstat.x86_64</code></li>
+<li>locate: <code>[root@A ~]$ yum install mlocate</code></li>
+</ul>
+<h3 id="可选安装"><a href="#可选安装" class="headerlink" title="可选安装"></a>可选安装</h3><ul>
+<li>Xpm 库：<code>[root@A ~]$ yum install libXpm-devel.x86_64</code></li>
+<li>ifconfig: <code>[root@A ~]$ yum install net-tools.x86_64</code></li>
+<li>GNU Parallel: <code>[root@A ~]$ yum install parallel.noarch</code></li>
+<li>eog: <code>[root@A ~]$ yum install eog.x86_64</code></li>
+<li>Xt 库：<code>[root@A ~]$ yum install libXt-devel.x86_64</code></li>
+<li>xauth: <code>[root@A ~]$ yum install xauth</code> （当 <code>ssh -X</code> 远程登录报错 <code>X11 forwarding request failed on channel 0</code> 时）</li>
+<li>xwindow 图形界面：<code>[root@A ~]$ yum -y groupinstall &quot;X Window System&quot;</code></li>
+<li>GNU m4 宏处理器：<code>[root@A ~]$ yum install m4.x86_64</code></li>
+<li>ghostscript: <code>[root@A ~]$ yum install ghostscript.x86_64</code></li>
+<li>mail: <code>[root@A ~]$ yum install mailx</code></li>
+</ul>
+<h3 id="GPU-节点安装"><a href="#GPU-节点安装" class="headerlink" title="GPU 节点安装"></a>GPU 节点安装</h3><ul>
+<li>nl 库：<code>[root@A ~]$ yum install libnl-devel.x86_64</code></li>
+</ul>
+<hr>
+<h2 id="bashrc、-etc-bashrc-和-etc-profile"><a href="#bashrc、-etc-bashrc-和-etc-profile" class="headerlink" title="~/.bashrc、/etc/bashrc 和 /etc/profile"></a>~/.bashrc、/etc/bashrc 和 /etc/profile</h2><ul>
+<li>~/.bashrc 为用户终端环境设置，仅影响当前用户；/etc/bashrc 和 /etc/profile 为系统终端环境设置，影响所有用户。</li>
+<li>系统登录时，/etc/profile 最先被加载，而后它调用了 /etc/bashrc 以及 ~/.bashrc。</li>
+<li>/etc/profile 对所有 shell 生效，/etc/bashrc 和 ~/.bashrc 仅对 bash 生效。</li>
+</ul>
+<hr>
+<h2 id="修改系统登录提示（欢迎）信息"><a href="#修改系统登录提示（欢迎）信息" class="headerlink" title="修改系统登录提示（欢迎）信息"></a>修改系统登录提示（欢迎）信息</h2><p>Linux 系统 SSH 的欢迎信息可以通过修改 /etc/motd 的内容来进行自定义。</p>
+<p>但是 /etc/motd 只支持纯文本的欢迎信息。想要实现彩色效果，可以通过修改 /etc/profiles.d/motd.sh 来实现，如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">echo "==================================================="</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> ATTENTION:</span><br><span class="line">echo -en "\033[01;31m"</span><br><span class="line">echo -e  "ATTENTION:"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>    1. submitting your job at: seislab1, seislab2</span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    1. submitting your job at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab1, seislab2"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>    2. GPU test at: seislab0</span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    2. GPU test at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab0"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span></span><br><span class="line">echo -e  "\033[00m"</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="修改主机名"><a href="#修改主机名" class="headerlink" title="修改主机名"></a>修改主机名</h2><p><code>hostnamectl set-hostname seislab</code> 命令修改主机名为 seislab 。</p>
+<hr>
+<h2 id="修改用户名及删除用户"><a href="#修改用户名及删除用户" class="headerlink" title="修改用户名及删除用户"></a>修改用户名及删除用户</h2><p>以下命令修改旧用户名 test 为新用户名 love：</p>
+<ul>
+<li>修改用户信息及 HOME 目录：<code>[root@A ~]$ usermod -l love -d /home/love -m test</code></li>
+<li>修改用户组信息：<code>[root@A ~]$ groumod -n love test</code></li>
+</ul>
+<p>以命令 <code>[root@A ~]$ userdel -rf test</code> 删除用户 test 。</p>
+<hr>
+<h2 id="发送广播消息"><a href="#发送广播消息" class="headerlink" title="发送广播消息"></a>发送广播消息</h2><h3 id="mesg-命令"><a href="#mesg-命令" class="headerlink" title="mesg 命令"></a>mesg 命令</h3><ul>
+<li>语法：<code>[root@A ~]$ mesg [ny]</code></li>
+<li>功能：设置终端机的写入权限</li>
+<li>参数：<code>n/y</code> 允许/不允许系统用户将信息直接显示在屏幕上</li>
+</ul>
+<h3 id="write-命令"><a href="#write-命令" class="headerlink" title="write 命令"></a>write 命令</h3><ul>
+<li>语法：<code>[user@A ~]$ write 用户名 [终端串口]</code></li>
+<li>功能：向系统某一用户发送消息</li>
+</ul>
+<h3 id="wall-命令"><a href="#wall-命令" class="headerlink" title="wall 命令"></a>wall 命令</h3><ul>
+<li>语法：<code>[root@A ~]$ wall &lt; 文件名</code></li>
+<li>功能：向系统所有已登录用户发送文件内容</li>
+</ul>
+<hr>
+<h2 id="关机-重启"><a href="#关机-重启" class="headerlink" title="关机/重启"></a>关机/重启</h2><h3 id="shutdown-命令"><a href="#shutdown-命令" class="headerlink" title="shutdown 命令"></a>shutdown 命令</h3><ul>
+<li>语法：<code>[root@A ~]$ shutdown [-t sec] [-hkr] time &quot;WARNING INFO.&quot;</code></li>
+<li>参数：<ul>
+<li>h: 停止所有系统服务后立即关机；</li>
+<li>k: 只发送警告信息，实际不执行关机操作；</li>
+<li>r: 停止所有系统服务后重新启动。</li>
+</ul>
+</li>
+<li>实例：<ul>
+<li><code>shutdown -h now</code>: 立即关机；</li>
+<li><code>shutdown -h 20:30</code>: 在下一个 20:30 时刻关机；</li>
+<li><code>shutdown +5 &quot;System will shutdown after 5 minutes</code>: 向所有登入用户发送警告，在 5 分钟后关机。</li>
+</ul>
+</li>
+</ul>
+<h3 id="reboot-命令"><a href="#reboot-命令" class="headerlink" title="reboot 命令"></a>reboot 命令</h3><ul>
+<li>语法：<code>[root@A ~]$ reboot [-w]</code></li>
+<li>参数：<code>w</code> 仅做测试，执行一个重开机模拟，并不真正将系统重启。</li>
+</ul>
+<hr>
+<h2 id="添加用户到-sudoer-列表"><a href="#添加用户到-sudoer-列表" class="headerlink" title="添加用户到 sudoer 列表"></a>添加用户到 sudoer 列表</h2><p>以下实现将 user 用户添加到 sudoer 列表：</p>
+<ul>
+<li>进入 root 账户，在命令行键入：<code>[root@A ~]$ visudo</code>，打开 sudoer 的配置文件。</li>
+<li>向下查找到 <code>root   ALL=(ALL)   ALL</code> 内容行，在下一行参照新建行内容<code>user   ALL=(ALL)   ALL</code>，保存后退出。</li>
+</ul>
+<hr>
+<h2 id="pip-指定安装目录"><a href="#pip-指定安装目录" class="headerlink" title="pip 指定安装目录"></a>pip 指定安装目录</h2><h3 id="临时方法"><a href="#临时方法" class="headerlink" title="临时方法"></a>临时方法</h3><p>安装模块 modulename 到目录 /path/to/directory 可以使用命令：<code>[user@A ~]$ pip install --target=/path/to/directory modulename</code></p>
+<p>此方法会直接在目标目录创建 module 文件夹，因此调用前只需将该目录加入 <code>PYTHONPATH</code> 系统环境变量即可。</p>
+<h3 id="永久方法"><a href="#永久方法" class="headerlink" title="永久方法"></a>永久方法</h3><p>若经常需要安装一些额外的 python 函数包到目录 /path/to/directory，则可以修改用户 HOME 目录下 .pip/pip.conf（若不存在则创建），加入以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[install]</span><br><span class="line">install-option=--prefix=/path/to/directory</span><br></pre></td></tr></table></figure>
+<p>此方法会根据安装 module 版本的不同，在目标目录下进一步创建其他子文件夹，最终在子文件夹下创建 module 文件夹，因此调用前需将子文件夹目录加入到 <code>PYTHONPATH</code> 系统环境变量中。</p>
+<hr>
+<h2 id="强制踢出已登录用户"><a href="#强制踢出已登录用户" class="headerlink" title="强制踢出已登录用户"></a>强制踢出已登录用户</h2><p>以下实现踢出已登录用户 user：</p>
+<ul>
+<li>先使用 <code>w</code> 命令查看用户 user 登录的 TTY 端口号，此处假设端口号为 pts/4；</li>
+<li>再使用命令 <code>[root@A ~]$ pkill -kill -t pts/4</code> 踢出。</li>
+</ul>
+<hr>
+<h2 id="查看系统信息"><a href="#查看系统信息" class="headerlink" title="查看系统信息"></a>查看系统信息</h2><ul>
+<li>查看系统版本号：<code>[user@A ~]$ cat /etc/centos-release</code></li>
+<li>查看系统内核版本号：<code>[user@A ~]$ uname -r</code></li>
+<li>查看操作系统位数：<code>[user@A ~]$ getconf LONG_BIT</code></li>
+<li>查看系统日志：<code>[root@A ~]$ vim /var/log/messages</code></li>
+<li>查看系统字体：<code>[user@A ~]$ fc-list</code>；查看系统中文字体：<code>[user@A ~]$ fc-list :lang=zh</code></li>
+</ul>
+<hr>
+<h2 id="xz-压缩或解压"><a href="#xz-压缩或解压" class="headerlink" title="xz 压缩或解压"></a>xz 压缩或解压</h2><p>使用 <code>xz -z dir</code> 命令压缩目录 dir，使用 <code>xz -d file</code> 命令解压文件 file。在解压以 <code>.tar.xz</code> 结尾的文件时，可以调用 <code>tar -l xz -cxvf</code> 命令。</p>
+<hr>
+<h2 id="rpm-查看系统安装包安装目录"><a href="#rpm-查看系统安装包安装目录" class="headerlink" title="rpm 查看系统安装包安装目录"></a>rpm 查看系统安装包安装目录</h2><p>先用 <code>rpm -qa | grep libname</code> 命令查询 libname 安装包得到该包完整名字 libname-version.arch ，再用 <code>rpm -ql libname-version.arch</code> 命令查看该包安装位置。</p>
+<hr>
+<h2 id="修改系统时区"><a href="#修改系统时区" class="headerlink" title="修改系统时区"></a>修改系统时区</h2><p>先用 <code>timedatectl set-timezone Asia/Shanghai</code> 命令更新时区为亚洲上海时区，再用 <code>timedatectl set-local-rtc 1</code> 命令将硬件时钟与系统时钟调整一致。</p>
+<hr>
+<h2 id="挂载远程目录"><a href="#挂载远程目录" class="headerlink" title="挂载远程目录"></a>挂载远程目录</h2><p>以主机 B（ip 为 192.18.1.2）挂载远程主机 A（ip 为 192.18.1.1）的共享目录 /data/share 为例：</p>
+<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><ul>
+<li><code>[root@A ~]$ yum install nfs-utils rpcbind</code> 安装 nfs-utils 和 rpcbind 服务；</li>
+<li><code>[root@A ~]$ chkconfig nfs on</code> 设置 nfs 服务开机自启，<code>[root@A ~]$ chkconfig rpcbind on</code> 设置 rpcbind 服务开机自启；</li>
+<li><code>[root@A ~]$ service rpcbind start</code> 启动 rpcbind 服务，<code>[root@A ~]$ service nfs start</code> 启动 nfs 服务，注意这两条命令的执行顺序；</li>
+<li>在文件 /etc/exports 中添加内容 <code>/data/share 192.18.1.2(rw, no_root_squash, no_subtree_check)</code> ；</li>
+<li><code>[root@A ~]$ exportfs -a</code> 使配置文件生效；</li>
+<li><code>[root@A ~]$ showmount -e</code> 查看是否共享成功。</li>
+</ul>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><ul>
+<li><code>[root@B ~]$ yum install nfs-utils rpcbind</code> 安装 nfs-utils 和 rpcbind 服务；</li>
+<li><code>[root@A ~]$ chkconfig nfs on</code> 设置 nfs 服务开机自启，<code>[root@A ~]$ chkconfig rpcbind on</code> 设置 rpcbind 服务开机自启；</li>
+<li><code>[root@A ~]$ service rpcbind start</code> 启动 rpcbind 服务，<code>[root@A ~]$ service nfs start</code> 启动 nfs 服务，注意这两条命令的执行顺序；</li>
+<li><code>[root@B ~]$ showmount -e 192.18.1.1</code> 查看是否检测到服务端的共享</li>
+<li><code>[root@B ~]$ mkdir /data/share</code> 创建映射目录；</li>
+<li>在文件 /etc/fstab 中添加内容 <code>192.18.1.1:/data/share /data/share nfs rw,defaults 0 0</code> ；</li>
+<li>当前启动下，执行手动挂载 <code>[root@B ~]$ mount -t nfs 192.18.1.1:/data/share /data/share</code> 。</li>
+</ul>
+<hr>
+<h2 id="安装-PbsPro-作业调度系统"><a href="#安装-PbsPro-作业调度系统" class="headerlink" title="安装 PbsPro 作业调度系统"></a>安装 PbsPro 作业调度系统</h2><h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><h4 id="机器"><a href="#机器" class="headerlink" title="机器"></a>机器</h4><p>假设如下两台机器（CentOS 7 系统）：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">主机名</th>
+<th style="text-align:center">主机 IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">pbsmaster</td>
+<td style="text-align:center">192.18.1.1</td>
+</tr>
+<tr>
+<td style="text-align:center">pbsslave</td>
+<td style="text-align:center">192.18.1.2</td>
+</tr>
+</tbody>
+</table>
+<p>修改两台机器的 /etc/hosts 文件，确保两台机器可以 ssh 互相访问。</p>
+<h4 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h4><p><a href="https://github.com/PBSPro/pbspro/releases" target="_blank" rel="noopener">此处</a>下载安装包 pbspro-14.1.0.tar.gz 。</p>
+<h4 id="制作-RPM-包"><a href="#制作-RPM-包" class="headerlink" title="制作 RPM 包"></a>制作 RPM 包</h4><p>先提前安装依赖包：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum -y install rpm-build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> yum -y install gcc autoconf automake libtool hwloc-devel</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> yum -y install libX11-devel libXt-devel libedit-devel libical-devel ncurses-devel postgresql-devel python-devel python-devel tcl-devel tk-devel swig expat-devel openssl-devel libXext libXft</span></span><br></pre></td></tr></table></figure>
+<p>执行以下命令，在 /root/rpmbuild/RPMS/x86_64 目录下生成 pbspro-[ client | debuginfo | execution | server ]-14.1.0-0.x86_64.rpm 包：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p /root/rpmbuild/SOURCES/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mv pbspro-14.1.0.tar.gz /root/rpmbuild/SOURCES/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /root/rpmbuild/SOURCES &amp;&amp; tar zxvf pbspro-14.1.0.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /root/rpmbuild/SOURCES/pbspro-14.1.0 &amp;&amp; rpmbuild -ba pbspro.spec</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="安装-Master"><a href="#安装-Master" class="headerlink" title="安装 Master"></a>安装 Master</h4><p>登录至 Master 节点，命令 <code>[root@pbsmaster /root/rpmbuild/RPMS/x86_64]$ yum install -y pbspro-server-14.1.0-0.x86_64.rpm</code> （或者 <code>[root@pbsmaster /root/rpmbuild/RPMS/x86_64]$ rpm -ivh pbspro-server-14.1.0-0.x86_64.rpm</code> ）安装作业调度系统，修改 /etc/pbs.conf 文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PBS_SERVER=pbsmaster</span><br><span class="line">PBS_START_MOM=1</span><br></pre></td></tr></table></figure>
+<h4 id="安装-Slave"><a href="#安装-Slave" class="headerlink" title="安装 Slave"></a>安装 Slave</h4><p>登录至 Slave 节点，命令 <code>[root@pbsslave /root/rpmbuild/RPMS/x86_64]$ yum install -y pbspro-execution-14.1.0-0.x86_64.rpm</code> （或者 <code>[root@pbsslave /root/rpmbuild/RPMS/x86_64]$ rpm -ivh pbspro-execution-14.1.0-0.x86_64.rpm</code> ）安装作业调度系统，修改 /etc/pbs.conf 文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PBS_SERVER=pbsmaster</span><br><span class="line">PBS_START_MOM=1</span><br></pre></td></tr></table></figure>
+<p>修改 /var/spool/pbs/mom_priv/config 文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">clienthost pbsmaster</span></span><br><span class="line"><span class="meta">$</span><span class="bash">restrict_user_maxsysid 999</span></span><br></pre></td></tr></table></figure>
+<h4 id="启动-pbs"><a href="#启动-pbs" class="headerlink" title="启动 pbs"></a>启动 pbs</h4><p>以命令 <code>$ /etc/init.d/pbs start</code> 分别在 pbsmaster 和 pbsslave 节点上启动 pbs，以命令 <code>[root@pbsmaster ~]$ qmgr -c &#39;create node pbsslave&#39;</code> 在 pbsmaster 主节点上将 pbsslave 节点加入集群。</p>
+<hr>
+<h2 id="查看-CPU-温度"><a href="#查看-CPU-温度" class="headerlink" title="查看 CPU 温度"></a>查看 CPU 温度</h2><p>以命令 <code>[root@A ~]$ yum install lm_sensors.x86_64</code> 安装 lm_sensors，以 <code>[root@A ~]$ sh -c &quot;yes|sensors-detect&quot;</code> 检测传感器后，即可以命令 <code>[user@A ~]$ sensors</code> 查看 CPU 温度了。</p>
+<hr>
+<h2 id="挂载本地磁盘"><a href="#挂载本地磁盘" class="headerlink" title="挂载本地磁盘"></a>挂载本地磁盘</h2><h3 id="查看本地已挂载磁盘文件系统格式"><a href="#查看本地已挂载磁盘文件系统格式" class="headerlink" title="查看本地已挂载磁盘文件系统格式"></a>查看本地已挂载磁盘文件系统格式</h3><p>以命令 <code>[root@A ~]$ cat /etc/fstab</code> 查看本地已挂载磁盘文件系统格式，如 ntfs 或 ext4 等。</p>
+<h3 id="格式化本地磁盘"><a href="#格式化本地磁盘" class="headerlink" title="格式化本地磁盘"></a>格式化本地磁盘</h3><p>命令 <code>[root@A ~]$ mkfs -t ext4 /dev/sdb</code> 以 ext4 文件格式格式化本地磁盘 /dev/sdb。</p>
+<h3 id="挂载本地磁盘-1"><a href="#挂载本地磁盘-1" class="headerlink" title="挂载本地磁盘"></a>挂载本地磁盘</h3><p>命令 <code>[root@A ~]$ mount /dev/sdb /shdisk/lab</code> 将本地磁盘 /dev/sdb 挂载至 /shdisk/sdb 目录下。</p>
+<hr>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>若蒙小宠，如沐春风</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Tche LIU WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Tche LIU Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+      ---------- 文结至此
+      <i class="fa fa-paw"></i>
+      静待下章 ----------
+    </div>
+  
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Server/" rel="tag"><i class="fa fa-tag"></i> Server</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/21/Boundary-problem-of-Moving-Median-Filter/" rel="next" title="滑动中值滤波边界问题">
+                <i class="fa fa-chevron-left"></i> 滑动中值滤波边界问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/21/MPI-Cartesian-Function/" rel="prev" title="MPI 二维切割子程序 MPI_CART_CREATE、MPI_CART_COORDS 和 MPI_CART_SHIFT">
+                MPI 二维切割子程序 MPI_CART_CREATE、MPI_CART_COORDS 和 MPI_CART_SHIFT <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE5NS8xNDcyMw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://s.gravatar.com/avatar/f58b38472ae7594c1da00001675eb66a?s=80"
+                alt="Tche LIU" />
+            
+              <p class="site-author-name" itemprop="name">Tche LIU</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/TcheL" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:seistche@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH-免密登录"><span class="nav-number">1.</span> <span class="nav-text">SSH 免密登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置系统免密登录"><span class="nav-number">2.</span> <span class="nav-text">设置系统免密登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-EPEL-源"><span class="nav-number">3.</span> <span class="nav-text">安装 EPEL 源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统软件安装"><span class="nav-number">4.</span> <span class="nav-text">系统软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#必要安装"><span class="nav-number">4.1.</span> <span class="nav-text">必要安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可选安装"><span class="nav-number">4.2.</span> <span class="nav-text">可选安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPU-节点安装"><span class="nav-number">4.3.</span> <span class="nav-text">GPU 节点安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bashrc、-etc-bashrc-和-etc-profile"><span class="nav-number">5.</span> <span class="nav-text">~/.bashrc、/etc/bashrc 和 /etc/profile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改系统登录提示（欢迎）信息"><span class="nav-number">6.</span> <span class="nav-text">修改系统登录提示（欢迎）信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改主机名"><span class="nav-number">7.</span> <span class="nav-text">修改主机名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改用户名及删除用户"><span class="nav-number">8.</span> <span class="nav-text">修改用户名及删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发送广播消息"><span class="nav-number">9.</span> <span class="nav-text">发送广播消息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mesg-命令"><span class="nav-number">9.1.</span> <span class="nav-text">mesg 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#write-命令"><span class="nav-number">9.2.</span> <span class="nav-text">write 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wall-命令"><span class="nav-number">9.3.</span> <span class="nav-text">wall 命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关机-重启"><span class="nav-number">10.</span> <span class="nav-text">关机/重启</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shutdown-命令"><span class="nav-number">10.1.</span> <span class="nav-text">shutdown 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reboot-命令"><span class="nav-number">10.2.</span> <span class="nav-text">reboot 命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户到-sudoer-列表"><span class="nav-number">11.</span> <span class="nav-text">添加用户到 sudoer 列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pip-指定安装目录"><span class="nav-number">12.</span> <span class="nav-text">pip 指定安装目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#临时方法"><span class="nav-number">12.1.</span> <span class="nav-text">临时方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#永久方法"><span class="nav-number">12.2.</span> <span class="nav-text">永久方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强制踢出已登录用户"><span class="nav-number">13.</span> <span class="nav-text">强制踢出已登录用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看系统信息"><span class="nav-number">14.</span> <span class="nav-text">查看系统信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xz-压缩或解压"><span class="nav-number">15.</span> <span class="nav-text">xz 压缩或解压</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpm-查看系统安装包安装目录"><span class="nav-number">16.</span> <span class="nav-text">rpm 查看系统安装包安装目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改系统时区"><span class="nav-number">17.</span> <span class="nav-text">修改系统时区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载远程目录"><span class="nav-number">18.</span> <span class="nav-text">挂载远程目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端"><span class="nav-number">18.1.</span> <span class="nav-text">服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端"><span class="nav-number">18.2.</span> <span class="nav-text">客户端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-PbsPro-作业调度系统"><span class="nav-number">19.</span> <span class="nav-text">安装 PbsPro 作业调度系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备"><span class="nav-number">19.1.</span> <span class="nav-text">准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#机器"><span class="nav-number">19.1.1.</span> <span class="nav-text">机器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装包"><span class="nav-number">19.1.2.</span> <span class="nav-text">安装包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#制作-RPM-包"><span class="nav-number">19.1.3.</span> <span class="nav-text">制作 RPM 包</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">19.2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-Master"><span class="nav-number">19.2.1.</span> <span class="nav-text">安装 Master</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-Slave"><span class="nav-number">19.2.2.</span> <span class="nav-text">安装 Slave</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动-pbs"><span class="nav-number">19.2.3.</span> <span class="nav-text">启动 pbs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看-CPU-温度"><span class="nav-number">20.</span> <span class="nav-text">查看 CPU 温度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载本地磁盘"><span class="nav-number">21.</span> <span class="nav-text">挂载本地磁盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看本地已挂载磁盘文件系统格式"><span class="nav-number">21.1.</span> <span class="nav-text">查看本地已挂载磁盘文件系统格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#格式化本地磁盘"><span class="nav-number">21.2.</span> <span class="nav-text">格式化本地磁盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载本地磁盘-1"><span class="nav-number">21.3.</span> <span class="nav-text">挂载本地磁盘</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tche LIU</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme - <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a> v6.3.0</div>
+
+
+
+
+<div class="busuanzi-count">
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span class="site-uv">
+    <i class="fa fa-user"></i>
+    Vistor: <span id="busuanzi_value_site_uv"></span>
+  </span>
+  <span class="post-meta-divider">|</span>
+  <span class="site-pv">
+    <i class="fa fa-eye"></i>
+    View: <span id="busuanzi_value_site_pv"></span>
+  </span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+</body>
+</html>

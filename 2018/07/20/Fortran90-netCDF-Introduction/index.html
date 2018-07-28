@@ -114,20 +114,25 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Here4U">
-<meta property="og:url" content="http://tchel.github.io/tags/WillDelete/index.html">
+  <meta name="description" content="本文翻译自 Michael Thorne 所执笔的 Introduction to using the netCDF data format with Fortran 90，简单介绍了 netCDF 格式的文件结构，仅供学习之用。">
+<meta name="keywords" content="netCDF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Fortran 90 中使用 netCDF 数据格式简介">
+<meta property="og:url" content="http://tchel.github.io/2018/07/20/Fortran90-netCDF-Introduction/index.html">
 <meta property="og:site_name" content="Here4U">
+<meta property="og:description" content="本文翻译自 Michael Thorne 所执笔的 Introduction to using the netCDF data format with Fortran 90，简单介绍了 netCDF 格式的文件结构，仅供学习之用。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-20T09:12:34.295Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Here4U">
+<meta name="twitter:title" content="在 Fortran 90 中使用 netCDF 数据格式简介">
+<meta name="twitter:description" content="本文翻译自 Michael Thorne 所执笔的 Introduction to using the netCDF data format with Fortran 90，简单介绍了 netCDF 格式的文件结构，仅供学习之用。">
 
 
 
 
 
 
-  <link rel="canonical" href="http://tchel.github.io/tags/WillDelete/"/>
+  <link rel="canonical" href="http://tchel.github.io/2018/07/20/Fortran90-netCDF-Introduction/"/>
 
 
 
@@ -137,7 +142,7 @@
   };
 </script>
 
-  <title>Tag: WillDelete | Here4U</title>
+  <title>在 Fortran 90 中使用 netCDF 数据格式简介 | Here4U</title>
   
 
 
@@ -187,7 +192,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <!-- 小条 Fork me on Github
@@ -249,7 +254,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
   </li>
@@ -329,84 +334,317 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>WillDelete<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tchel.github.io/2018/07/20/Fortran90-netCDF-Introduction/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tche LIU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/f58b38472ae7594c1da00001675eb66a?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Here4U">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/07/18/My-first-blog-attemp/" itemprop="url">
-              
-                <span itemprop="name">My First Blog Attemp</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">在 Fortran 90 中使用 netCDF 数据格式简介
+              
+            
+          </h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-18T20:49:04+08:00"
-              content="2018-07-18" >
-          07-18
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
 
-    </header>
-  </article>
+            
+            
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-20 15:02:45 / Modified: 17:12:34" itemprop="dateCreated datePublished" datetime="2018-07-20T15:02:45+08:00">2018-07-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">本文翻译自 Michael Thorne 所执笔的 Introduction to using the netCDF data format with Fortran 90，简单介绍了 netCDF 格式的文件结构，仅供学习之用。</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文翻译自 Michael Thorne (<a href="mailto:michael.thorne@utah.edu" target="_blank" rel="noopener">michael.thorne@utah.edu</a>) 所执笔的 <a href="http://web.utah.edu/thorne/computing/Examples_netCDF.pdf" target="_blank" rel="noopener">Introduction to using the netCDF data format with Fortran 90</a>（故而文中所有自称均指代原文作者），谨供学习在 Fortran 中使用 netCDF 数据格式之用。</p>
+</blockquote>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><strong>netCDF</strong>（即 network Common Data Form）为存储多维数据而产生的一种基于数组的数据结构。一个 netCDF 文件采用 ASCII 头书写，以二进制格式存储数据。因为我们不必担心字节序的问题，以二进制文件来保存数据具有明显的优势。字节交换可以通过调用 netCDF 库来实现，netCDF 文件可以在任何平台上读取。与使用 netCDF 数据格式相关的特性如下：</p>
+<ul>
+<li><strong>坐标系</strong>：支持 N 维坐标系。<ul>
+<li>X 坐标（如，纬度）</li>
+<li>Y 坐标（如，经度）</li>
+<li>Z 坐标（如，高程）</li>
+<li>时间维度</li>
+<li>其他维度</li>
+</ul>
+</li>
+<li><strong>变量</strong>：支持多重变量。<ul>
+<li>如，S 波速度，P 波速度，密度，应力分量……</li>
+</ul>
+</li>
+<li><strong>空间几何</strong>：支持多种网格类型（隐式或显式）。<ul>
+<li>规则网格（隐式）</li>
+<li>不规则网格</li>
+<li>数据点</li>
+</ul>
+</li>
+<li><strong>自我描述</strong>：数据集可以包括数据定义信息。<ul>
+<li>单位（如，km，m/sec……）</li>
+<li>注释（如，标题，调用约定，变量名（如，P 波速度），坐标单位（如，km/sec），……）</li>
+</ul>
+</li>
+</ul>
+<p>关于数据格式的更全的文档在：</p>
+<ul>
+<li><a href="http://www.unidata.ucar.edu/software/netcdf/" target="_blank" rel="noopener">netCDF 主页</a></li>
+<li><a href="http://www.unidata.ucar.edu/software/netcdf/docs/" target="_blank" rel="noopener">netCDF 文档</a></li>
+<li><a href="http://www.unidata.ucar.edu/software/netcdf/netcdf-4/newdocs/netcdf-f90.html#NF90_005fPUT_005fVAR" target="_blank" rel="noopener">F90 接口指导</a></li>
+</ul>
+<p><strong>文件名约定</strong>：netCDF 文件通常以 <em>.nc</em> 为扩展名。<br><strong>文件约定</strong>：有很多 netCDF 数据风格和约定。在地震学中，人们对 <em>.grd</em> 文件（<a href="http://gmt.soest.hawaii.edu/" target="_blank" rel="noopener">GMT</a> 软件生成）最熟悉。为了符合 GMT 的要求，采用 <a href="http://ferret.wrc.noaa.gov/noaa_coop/coop_cdf_profile.html" target="_blank" rel="noopener">COARDS</a> (Cooperative Ocean/Atmosphere Research Data Service) 数据约定书写 netCDF 文件。<br>我开始使用 netCDF 文件的原因之一是，网格信息也可以随数据一同保存下来。因此，在使用类似 GMT 的软件时我不必显式地书写 <em>xyz2grd</em> 命令对数据成图和记忆正在成图的数据文件的范围（GMT 中的 <strong>-R</strong> 选项）以及网格增量（<strong>-I</strong> 选项）是多少。然而，只能在直角坐标系统下使用 COARDS 约定。坐标可以不等间距，但必须单调递增或单调递减。很不幸，在不使用类似 <em>blockmean</em> 的命令对数据进行预处理时，GMT 是不能对不等间距网格进行操作的。<br><strong>可视化</strong>：使用 netCDF 格式还有一个明显的优势，即有多种数据查看器。另外，几乎所有的我熟悉的可视化包都可以读取 netCDF 格式。这里有一些常用的免费查看器或可视化包：</p>
+<ul>
+<li><a href="http://meteora.ucsd.edu/~pierce/ncview_home_page.html" target="_blank" rel="noopener">Ncview</a></li>
+<li><a href="http://www.opendx.org/" target="_blank" rel="noopener">Data Explorer (OpenDX)</a></li>
+</ul>
+<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><p>netCDF 文件包含如下结构：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">netCDF 文件结构</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">全局属性</td>
+<td style="text-align:left">描述文件内容</td>
+</tr>
+<tr>
+<td style="text-align:left">维度</td>
+<td style="text-align:left">描述数据结构（如，时间，深度，纬度，经度）</td>
+</tr>
+<tr>
+<td style="text-align:left">变量</td>
+<td style="text-align:left">按照维度存储数据的数组</td>
+</tr>
+<tr>
+<td style="text-align:left">变量属性</td>
+<td style="text-align:left">描述每个变量的内容</td>
+</tr>
+</tbody>
+</table>
+<p>另参见 <a href="http://www.cnblogs.com/alex-bn-lee/p/5815388.html" target="_blank" rel="noopener">博文</a></p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>若蒙小宠，如沐春风</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Tche LIU WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Tche LIU Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+      ---------- 文结至此
+      <i class="fa fa-paw"></i>
+      静待下章 ----------
+    </div>
+  
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/netCDF/" rel="tag"><i class="fa fa-tag"></i> netCDF</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/20/Tips-of-Vim/" rel="next" title="Vim 配置、技巧及其周边">
+                <i class="fa fa-chevron-left"></i> Vim 配置、技巧及其周边
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/21/Boundary-problem-of-Moving-Median-Filter/" rel="prev" title="滑动中值滤波边界问题">
+                滑动中值滤波边界问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE5NS8xNDcyMw=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -427,8 +665,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -553,6 +800,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件结构"><span class="nav-number">2.</span> <span class="nav-text">文件结构</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -708,6 +971,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
 
   
 
@@ -726,6 +993,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 

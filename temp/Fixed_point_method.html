@@ -114,20 +114,25 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Here4U">
-<meta property="og:url" content="http://tchel.github.io/tags/WillDelete/index.html">
+  <meta name="description" content="The principle of Fixed point algorithm">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fixed point 迭代法">
+<meta property="og:url" content="http://tchel.github.io/temp/Fixed_point_method.html">
 <meta property="og:site_name" content="Here4U">
+<meta property="og:description" content="The principle of Fixed point algorithm">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-21T05:48:01.610Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Here4U">
+<meta name="twitter:title" content="Fixed point 迭代法">
+<meta name="twitter:description" content="The principle of Fixed point algorithm">
 
 
 
 
 
 
-  <link rel="canonical" href="http://tchel.github.io/tags/WillDelete/"/>
+  <link rel="canonical" href="http://tchel.github.io/temp/Fixed_point_method.html"/>
 
 
 
@@ -137,7 +142,7 @@
   };
 </script>
 
-  <title>Tag: WillDelete | Here4U</title>
+  <title>Fixed point 迭代法 | Here4U</title>
   
 
 
@@ -187,7 +192,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <!-- 小条 Fork me on Github
@@ -249,7 +254,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
   </li>
@@ -355,58 +360,74 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>WillDelete<small>Tag</small>
-        </h1>
-      </div>
+<h1 class="post-title" itemprop="name headline">Fixed point 迭代法</h1>
+
+<div class="post-meta">
+  
+    <div class="post-description">The principle of Fixed point algorithm</div>
+  
+  
+
+
+
+</div>
+
+</header>
 
       
+      
+      
+      <div class="post-body">
         
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
         
-            <a class="post-title-link" href="/2018/07/18/My-first-blog-attemp/" itemprop="url">
-              
-                <span itemprop="name">My First Blog Attemp</span>
-              
-            </a>
-        
-      </h2>
+          <h3 id="Fixed-point"><a href="#Fixed-point" class="headerlink" title="Fixed point"></a>Fixed point</h3><p>参考 <a href="https://en.wikipedia.org/wiki/Fixed_point_(mathematics" target="_blank" rel="noopener">Wikipedia</a>) 。</p>
+<p>Not to be confused with a <strong>stationary point</strong> where $f’(x)=0$ . In mathematics, $c$ is a <strong>fixed point</strong> of the function $f(x)$ if $f(c) = c$.</p>
+<p>Points that come back to the same value after a finite number of iterations of the function are called <strong>periodic points</strong>. A fixed point is a periodic point with period equal to one.</p>
+<h3 id="Fixed-point-迭代"><a href="#Fixed-point-迭代" class="headerlink" title="Fixed point 迭代"></a>Fixed point 迭代</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>参考 <a href="https://en.wikipedia.org/wiki/Fixed-point_iteration" target="_blank" rel="noopener">Wikipedia</a> 。</p>
+<p>In numerical analysis, given a function $f$ defined on the real number with real values and given a point $x_0$ in the domain of $f$, the <strong>fixed point iteration</strong> is</p>
+<p>$$x_{n+1}=f(x_n), n=0,1,2,…$$</p>
+<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><p><strong>Newton’s method</strong> for finding roots of a given differentiable function $f(x)$ is</p>
+<p>$$x_{n+1}=x_n-\frac{f(x_n)}{f’(x_n)}$$.</p>
+<p>If we write $g(x)=x-\frac{f(x)}{f’(x)}$, we may rewrite the Newton iteration as</p>
+<p>$$x_{n+1}=g(x_n)$$.</p>
+<p>If this iteration converges to a fixed point $x$ of $g$, then</p>
+<p>$$x=g(x)=x-\frac{f(x)}{f’(x)}$$, so $$\frac{f(x)}{f’(x)}=0$$.</p>
+<p>The reciprocal of anything is nonzero, therefore $f(x)=0$: $x$ is a root of $f$.</p>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-18T20:49:04+08:00"
-              content="2018-07-18" >
-          07-18
-        </time>
+        
       </div>
-
-    </header>
-  </article>
-
-
+      
+      
       
     </div>
+    
 
+
+
+    
+    
+    
   </div>
-  
-  
-  
-
-  
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE5NS8xNDcyMw=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -427,8 +448,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -553,6 +583,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fixed-point"><span class="nav-number">1.</span> <span class="nav-text">Fixed point</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fixed-point-迭代"><span class="nav-number">2.</span> <span class="nav-text">Fixed point 迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用"><span class="nav-number">2.2.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -708,6 +754,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
 
   
 
@@ -726,6 +776,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
@@ -1075,6 +1136,30 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 

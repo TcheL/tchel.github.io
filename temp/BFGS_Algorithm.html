@@ -114,20 +114,25 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Here4U">
-<meta property="og:url" content="http://tchel.github.io/tags/WillDelete/index.html">
+  <meta name="description" content="The principle of BFGS algorithm">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BFGS 算法">
+<meta property="og:url" content="http://tchel.github.io/temp/BFGS_Algorithm.html">
 <meta property="og:site_name" content="Here4U">
+<meta property="og:description" content="The principle of BFGS algorithm">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-21T05:47:32.246Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Here4U">
+<meta name="twitter:title" content="BFGS 算法">
+<meta name="twitter:description" content="The principle of BFGS algorithm">
 
 
 
 
 
 
-  <link rel="canonical" href="http://tchel.github.io/tags/WillDelete/"/>
+  <link rel="canonical" href="http://tchel.github.io/temp/BFGS_Algorithm.html"/>
 
 
 
@@ -137,7 +142,7 @@
   };
 </script>
 
-  <title>Tag: WillDelete | Here4U</title>
+  <title>BFGS 算法 | Here4U</title>
   
 
 
@@ -187,7 +192,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <!-- 小条 Fork me on Github
@@ -249,7 +254,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
   </li>
@@ -355,58 +360,81 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>WillDelete<small>Tag</small>
-        </h1>
-      </div>
+<h1 class="post-title" itemprop="name headline">BFGS 算法</h1>
+
+<div class="post-meta">
+  
+    <div class="post-description">The principle of BFGS algorithm</div>
+  
+  
+
+
+
+</div>
+
+</header>
 
       
+      
+      
+      <div class="post-body">
         
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
         
-            <a class="post-title-link" href="/2018/07/18/My-first-blog-attemp/" itemprop="url">
-              
-                <span itemprop="name">My First Blog Attemp</span>
-              
-            </a>
-        
-      </h2>
+          <p>也即 Broyden-Fletcher-Goldfarb-Shanno 算法。参考 <a href="https://en.wikipedia.org/wiki/Broyden-Fletcher-Goldfarb-Shanno_algorithm" target="_blank" rel="noopener">Wikipedia</a> 。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>The search direction at stage $k$ is given by the Newton method:</p>
+<p>$$p_k=-B_k\nabla f(x_k)$$,</p>
+<p>where $B_k$ is an approximation of the Hessian matrix, and $\nabla f(x_k)$ is the gradient of the function at $x_k$.</p>
+<p>The <strong>quasi-Newton condition</strong> imposed on the update of $B_k$ is:</p>
+<p>$$B_{k+1}(x_{k+1}-x_k)=\nabla f(x_{k+1})-\nabla f(x_k)$$.</p>
+<p>Let $y_k=\nabla f(x_{k+1})-\nabla f(x_k)$ and $s_k=x_{k+1}-x_k$, then $B_{k+1}s_k=y_k$ which is the <strong>secant equation</strong>. The <strong>curvature condition</strong> $s_k^Ty_k&gt;0$ should be satisfied.</p>
+<p>In the BFGS method, instead of requiring the full Hessian matrix at $x_{k+1}$ to be computed, the approximate Hessian is given by:</p>
+<p>$$B_{k+1}=B_k+\frac{y_ky_k^T}{y_k^Ts_k}-\frac{B_ks_ks_k^TB_k}{s_k^TB_ks_k}$$,</p>
+<p>$$B_{k+1}^{-1}=\left(I-\frac{s_ky_k^T}{y_k^Ts_k}\right)B_k^{-1}\left(I-\frac{y_ks_k^T}{y_k^Ts_k}\right)+\frac{s_ks_k^T}{y_k^Ts_k}$$,</p>
+<p>or</p>
+<p>$$B_{k+1}^{-1}=B_k^{-1}+\frac{(s_k^Ty_k+y_k^TB_k^{-1}y_k)(s_ks_k^T)}{(s_k^Ty_k)^2}-\frac{B_k^{-1}y_ks_k^T+s_ky_k^TB_k^{-1}}{s_k^Ty_k}$$.</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>From an initial guess $x_0$ and an approximate Hessian matrix $B_0$ (generally the identity matrix), the following steps are repeated as $x_k$ converges to the solution:</p>
+<ul>
+<li>Obtain a direction: $p_k=-B_k^{-1}\nabla f(x_k)$;</li>
+<li>Perform a line search to find an acceptable stepsize $\alpha_k$ in the direction found in the first step;</li>
+<li>Set $s_k=\alpha_kp_k$ and update $x_{k+1}=x_k+s_k$;</li>
+<li>$y_k=\nabla f(x_{k+1})-\nabla f(x_k)$;</li>
+<li>$B_{k+1}=B_k+\frac{y_ky_k^T}{y_k^Ts_k}-\frac{B_ks_ks_k^TB_k}{s_k^TB_ks_k}$.</li>
+</ul>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-18T20:49:04+08:00"
-              content="2018-07-18" >
-          07-18
-        </time>
+        
       </div>
-
-    </header>
-  </article>
-
-
+      
+      
       
     </div>
+    
 
+
+
+    
+    
+    
   </div>
-  
-  
-  
-
-  
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE5NS8xNDcyMw=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -427,8 +455,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -553,6 +590,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">2.</span> <span class="nav-text">算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -708,6 +761,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
 
   
 
@@ -726,6 +783,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
@@ -1075,6 +1143,30 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 
