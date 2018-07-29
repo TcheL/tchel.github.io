@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="包括 Vim 常用配置函数，以及常用配置命令收录。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-20T09:06:03.936Z">
+<meta property="og:updated_time" content="2018-07-29T04:53:59.914Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vim 配置、技巧及其周边">
 <meta name="twitter:description" content="包括 Vim 常用配置函数，以及常用配置命令收录。">
@@ -396,12 +396,24 @@
                 
               
 
-              <time title="Created: 2018-07-20 13:55:42 / Modified: 17:06:03" itemprop="dateCreated datePublished" datetime="2018-07-20T13:55:42+08:00">2018-07-20</time>
+              <time title="Created: 2018-07-20 13:55:42" itemprop="dateCreated datePublished" datetime="2018-07-20T13:55:42+08:00">2018-07-20</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-29 12:53:59" itemprop="dateModified" datetime="2018-07-29T12:53:59+08:00">2018-07-29</time>
               
             
           </span>
@@ -455,35 +467,36 @@
 
       
         <h2 id="常用配置函数"><a href="#常用配置函数" class="headerlink" title="常用配置函数"></a>常用配置函数</h2><p>Vim 有一些配置函数，利用这些函数，我们可以通过修改配置文件让我们的 Vim 发挥出更强大的功能。</p>
-<h4 id="line-expr"><a href="#line-expr" class="headerlink" title="line(expr)"></a>line(expr)</h4><blockquote>
+<h3 id="line-expr"><a href="#line-expr" class="headerlink" title="line(expr)"></a>line(expr)</h3><blockquote>
 <p>The result is a Number , which is the line number of the file position given with expr .<br>The accepted positions are: “.” the cursor position; “$” the last line in the current buffer; x position of mark “x” (if the mark is not set, 0 is returned).</p>
 </blockquote>
 <p>返回值是一个整数。这个函数功能时返回一个行号。如果你后面的参数 expr 是 “.” 的话，则返回当前光标所在的位置。如果 expr 是 “$” 则返回当前缓冲区最后一行的行号。如果 expr 的值是一个标签名，则返回你对应的标签所在的行号。<br>例如：call line(“.”) 得到当前光标所在的行号。</p>
-<h4 id="col-expr"><a href="#col-expr" class="headerlink" title="col({expr})"></a>col({expr})</h4><p>返回指定位置的列号，列号从1开始算起。<br>例如：echo col(“.”) 返回光标所在的列号。echo col(“$”) 返回光标所在的行的长度+1。echo col([2,’$’]) 返回第2行的长度+1。（之所以是长度+1是因为，其实每行的最后有一个不可打印的换行符）</p>
-<h4 id="setpos-expr"><a href="#setpos-expr" class="headerlink" title="setpos({expr})"></a>setpos({expr})</h4><p>移动光标到指定的行和列。<br>例如：let pos=[0, 25, 15, 0]; call setpos(“.”, pos) 移动光标到 25 行 15 列的位置。</p>
-<h4 id="setline-lnum-text"><a href="#setline-lnum-text" class="headerlink" title="setline ({lnum}, {text})"></a>setline ({lnum}, {text})</h4><blockquote>
+<h3 id="col-expr"><a href="#col-expr" class="headerlink" title="col({expr})"></a>col({expr})</h3><p>返回指定位置的列号，列号从1开始算起。<br>例如：echo col(“.”) 返回光标所在的列号。echo col(“$”) 返回光标所在的行的长度+1。echo col([2,’$’]) 返回第2行的长度+1。（之所以是长度+1是因为，其实每行的最后有一个不可打印的换行符）</p>
+<h3 id="setpos-expr"><a href="#setpos-expr" class="headerlink" title="setpos({expr})"></a>setpos({expr})</h3><p>移动光标到指定的行和列。<br>例如：let pos=[0, 25, 15, 0]; call setpos(“.”, pos) 移动光标到 25 行 15 列的位置。</p>
+<h3 id="setline-lnum-text"><a href="#setline-lnum-text" class="headerlink" title="setline ({lnum}, {text})"></a>setline ({lnum}, {text})</h3><blockquote>
 <p>Set line {lnum} of the current buffer to {text}.If this succeeds, 0 is returned. If this fails (most likely lnum is invalid) 1 is returned.<br>When {lnum} is just below the last line the {text} will be added as a new line.</p>
 </blockquote>
 <p>这个函数就是将第 lnum 行的内容替换成 text 中的内容。如果这个 lunm 行是最后一行的下面一行，那么将新建一行，然后将 text 的内容存放到这一行。如果不是最后一行的下一行，则要满足的条件是行号为 lnum 的行必须是存在的。<br>例如：call setline(1, “/*********************/“) 在文件的开头添加上面的一行，主要是用于 .c/.cpp 文件注释的。</p>
-<h4 id="getline-lnum-end"><a href="#getline-lnum-end" class="headerlink" title="getline({lnum}, {end})"></a>getline({lnum}, {end})</h4><blockquote>
+<h3 id="getline-lnum-end"><a href="#getline-lnum-end" class="headerlink" title="getline({lnum}, {end})"></a>getline({lnum}, {end})</h3><blockquote>
 <p>Without the {end},the result is a String, which is  line {lnum} from the current buffer.<br>When {end} is given the result is a List where each item is a line from the current buffer in the range {lnum} to {end}, including line {end}.</p>
 </blockquote>
 <p>返回值是一个字符串。当 end 参数存在的时候，函数返回行号为 lnum 的内容，否则函数将返回行 lnum 到行 end 的所有内容（包括第 end 行）。<br>例如：let  lines=getline(2, 5); call append(6, lines) 取得 2-5 行的内容，然后从第六行的下一行开始添加，保持原来的格式不变。</p>
-<h4 id="append-lnum-string"><a href="#append-lnum-string" class="headerlink" title="append(lnum, string)"></a>append(lnum, string)</h4><blockquote>
+<h3 id="append-lnum-string"><a href="#append-lnum-string" class="headerlink" title="append(lnum, string)"></a>append(lnum, string)</h3><blockquote>
 <p>Append the text string after line lnum in the current buffer. lnum can be zero, to insert a line before the first one. Returns 1 for failure (lnum out of range) or 0 for success.</p>
 </blockquote>
 <p>这个函数就是将 string 这个字符串，插入到行号为 lnum 的下一行。成功则返回 0，否则返回 1 。</p>
-<h4 id="expand-expr-flag"><a href="#expand-expr-flag" class="headerlink" title="expand(expr [, flag])"></a>expand(expr [, flag])</h4><blockquote>
+<h3 id="expand-expr-flag"><a href="#expand-expr-flag" class="headerlink" title="expand(expr [, flag])"></a>expand(expr [, flag])</h3><blockquote>
 <p>Expand the file wildcards in expr . The result is a String .<br>When the result of expr starts with% , # or &lt; , the expansion is done like for the cmdline- special variables with their associated modifiers. There cannot be a white space between the variables and the following modifier. When the current or alternate file name is not defined, % or # use an empty string. Using %:p in a buffer with no name results in the current directory, with a “/ ”added.<br>When {expr} starts with ‘%’, ‘#’ or ‘&lt;’, the expansion is done like for the |cmdline-special| variables with their associated modifiers.  Here is a short overview:<br>“%” current file name;<br>“#“ alternate file name;<br>“#n” alternate file name n.<br>Modifiers:<br>:p expand to full path;<br>:h head (last path component removed);<br>:t tail (last path component only);<br>:r root (one extension removed);<br>:e extension only.</p>
 </blockquote>
 <p>函数的返回值是一个字符串。功能就是将参数 expr 这个通配符进行扩展。各个通配符的含义上面列出来了。<br>例如：call append(2, “File Name: “.expand(“%”)) 在文件的第三行写入这句话 “File Name: ${filename}”，这边%表示当前文件的名称，通过函数expand（”%”）将其还原成了文件名字符串。let sourcefilepath=expand(“%:p”) 获取到当前文件的完全路径（绝对路径）。</p>
-<h4 id="配置函数应用举例"><a href="#配置函数应用举例" class="headerlink" title="配置函数应用举例"></a>配置函数应用举例</h4><p>在用 Vim 打开文件后，在命令模式下，输入命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:echo col(&quot;.&quot;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="配置函数应用举例"><a href="#配置函数应用举例" class="headerlink" title="配置函数应用举例"></a>配置函数应用举例</h3><p>在用 Vim 打开文件后，在命令模式下，输入命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="built_in">echo</span> col(<span class="string">"."</span>)</span><br></pre></td></tr></table></figure></p>
 <p>即返回光标所在的列号。<br>在「<strong>$HOME/.vimrc</strong>」文件中添加如下语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if has(&quot;autocmd&quot;)</span><br><span class="line">  au BufReadPost * if line(&quot;&apos;.&quot;) &gt; 0 &amp;&amp; line(&quot;&apos;.&quot;) &lt;= line(&quot;$&quot;) | exe &quot;normal! `.&quot; | endif</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
-<p>此设置即在文件打开时，如果文件上次编辑的位置存在（即不在 1 行和最大行数以外），自动跳转至上次编辑的位置。<br>此外，可以使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">au BufReadPost * if line(&quot;&apos;\&quot;&quot;) &gt; 1 &amp;&amp; line(&quot;&apos;\&quot;&quot;) &lt;= line(&quot;$&quot;) | exe &quot;normal! &apos;\&quot;&quot; | endif</span><br></pre></td></tr></table></figure></p>
-<p>跳转至上次离开的行首。使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">au BufReadPost * if line(&quot;&apos;\&quot;&quot;) &gt; 0 &amp;&amp; line(&quot;&apos;\&quot;&quot;) &lt;= line(&quot;$&quot;) | exe &quot;normal! `\&quot;&quot; | endif</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if has("autocmd")</span><br><span class="line">  au BufReadPost * if line("'.") &gt; 0 &amp;&amp; line("'.") &lt;= line("$") | exe "normal! `." | endif</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
+<p>此设置即在文件打开时，如果文件上次编辑的位置存在（即不在 1 行和最大行数以外），自动跳转至上次编辑的位置。<br>此外，可以使用<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">au BufReadPost * if line("'\"") &gt; 1 &amp;&amp; line("'\"") &lt;= line("$") | exe "normal! '\"" | endif</span><br></pre></td></tr></table></figure></p>
+<p>跳转至上次离开的行首。使用<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">au BufReadPost * if line("'\"") &gt; 0 &amp;&amp; line("'\"") &lt;= line("$") | exe "normal! `\"" | endif</span><br></pre></td></tr></table></figure></p>
 <p>跳转至上次离开的位置。</p>
-<h2 id="Vim-配置收录"><a href="#Vim-配置收录" class="headerlink" title="Vim 配置收录"></a>Vim 配置收录</h2><table>
+<h2 id="Vim-配置收录"><a href="#Vim-配置收录" class="headerlink" title="Vim 配置收录"></a>Vim 配置收录</h2><p>以下：</p>
+<table>
 <thead>
 <tr>
 <th style="text-align:center">配置</th>
@@ -587,12 +600,17 @@
 <td style="text-align:center">set cursorline</td>
 <td style="text-align:center">高亮当前行</td>
 </tr>
+<tr>
+<td style="text-align:center">set relativenumber</td>
+<td style="text-align:center">显示相对行号</td>
+</tr>
 </tbody>
 </table>
 <p><code>注：本表持续更新中</code></p>
 <p>将以上配置写入「<strong> $HOME/.vimrc </strong>」文件，即可对所有文件打开生效。<br>如果想要对某些文件采用不同的打开初始配置，可在相应的文件末尾加入类似如下语句<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim:ft=make:sw=4:wrap</span><br></pre></td></tr></table></figure></p>
 <p>该文件为一个 makefile 文件，第一个字符 “#” 为 makefile 文件的注释符，不同的文件可以采用各自相应的注释符。”ft=make” 即指文件格式为 makefile 文件，Vim 自动按 makefile 语法高亮文本，”sw=4” 即设置自动缩进空格数为 4，”wrap” 即设置自动折行，在这里，省去配置语句中的 set，不同的配置语句间用 “:” 隔开。</p>
-<h2 id="Vim-命令技巧收录"><a href="#Vim-命令技巧收录" class="headerlink" title="Vim 命令技巧收录"></a>Vim 命令技巧收录</h2><table>
+<h2 id="Vim-命令技巧收录"><a href="#Vim-命令技巧收录" class="headerlink" title="Vim 命令技巧收录"></a>Vim 命令技巧收录</h2><p>以下：</p>
+<table>
 <thead>
 <tr>
 <th style="text-align:center">命令</th>
@@ -900,7 +918,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用配置函数"><span class="nav-number">1.</span> <span class="nav-text">常用配置函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#line-expr"><span class="nav-number">1.0.1.</span> <span class="nav-text">line(expr)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#col-expr"><span class="nav-number">1.0.2.</span> <span class="nav-text">col({expr})</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setpos-expr"><span class="nav-number">1.0.3.</span> <span class="nav-text">setpos({expr})</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setline-lnum-text"><span class="nav-number">1.0.4.</span> <span class="nav-text">setline ({lnum}, {text})</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getline-lnum-end"><span class="nav-number">1.0.5.</span> <span class="nav-text">getline({lnum}, {end})</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#append-lnum-string"><span class="nav-number">1.0.6.</span> <span class="nav-text">append(lnum, string)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#expand-expr-flag"><span class="nav-number">1.0.7.</span> <span class="nav-text">expand(expr [, flag])</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置函数应用举例"><span class="nav-number">1.0.8.</span> <span class="nav-text">配置函数应用举例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vim-配置收录"><span class="nav-number">2.</span> <span class="nav-text">Vim 配置收录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vim-命令技巧收录"><span class="nav-number">3.</span> <span class="nav-text">Vim 命令技巧收录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用配置函数"><span class="nav-number">1.</span> <span class="nav-text">常用配置函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#line-expr"><span class="nav-number">1.1.</span> <span class="nav-text">line(expr)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#col-expr"><span class="nav-number">1.2.</span> <span class="nav-text">col({expr})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setpos-expr"><span class="nav-number">1.3.</span> <span class="nav-text">setpos({expr})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setline-lnum-text"><span class="nav-number">1.4.</span> <span class="nav-text">setline ({lnum}, {text})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getline-lnum-end"><span class="nav-number">1.5.</span> <span class="nav-text">getline({lnum}, {end})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#append-lnum-string"><span class="nav-number">1.6.</span> <span class="nav-text">append(lnum, string)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#expand-expr-flag"><span class="nav-number">1.7.</span> <span class="nav-text">expand(expr [, flag])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置函数应用举例"><span class="nav-number">1.8.</span> <span class="nav-text">配置函数应用举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vim-配置收录"><span class="nav-number">2.</span> <span class="nav-text">Vim 配置收录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vim-命令技巧收录"><span class="nav-number">3.</span> <span class="nav-text">Vim 命令技巧收录</span></a></li></ol></div>
             
 
           </div>
