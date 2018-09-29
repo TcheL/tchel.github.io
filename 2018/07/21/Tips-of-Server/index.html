@@ -515,7 +515,7 @@
 <hr>
 <h2 id="修改系统登录提示（欢迎）信息"><a href="#修改系统登录提示（欢迎）信息" class="headerlink" title="修改系统登录提示（欢迎）信息"></a>修改系统登录提示（欢迎）信息</h2><p>Linux 系统 SSH 的欢迎信息可以通过修改 /etc/motd 的内容来进行自定义。</p>
 <p>但是 /etc/motd 只支持纯文本的欢迎信息。想要实现彩色效果，可以通过修改 /etc/profiles.d/motd.sh 来实现，如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">echo "==================================================="</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> ATTENTION:</span><br><span class="line">echo -en "\033[01;31m"</span><br><span class="line">echo -e  "ATTENTION:"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>    1. submitting your job at: seislab1, seislab2</span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    1. submitting your job at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab1, seislab2"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>    2. GPU test at: seislab0</span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    2. GPU test at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab0"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span></span><br><span class="line">echo -e  "\033[00m"</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">echo "==================================================="</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> ATTENTION:</span></span><br><span class="line">echo -en "\033[01;31m"</span><br><span class="line">echo -e  "ATTENTION:"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">    1. submitting your job at: seislab1, seislab2</span></span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    1. submitting your job at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab1, seislab2"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">    2. GPU <span class="built_in">test</span> at: seislab0</span></span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    2. GPU test at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab0"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line">echo -e  "\033[00m"</span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="修改主机名"><a href="#修改主机名" class="headerlink" title="修改主机名"></a>修改主机名</h2><p><code>hostnamectl set-hostname seislab</code> 命令修改主机名为 seislab 。</p>
 <hr>
@@ -836,7 +836,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -902,7 +902,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">14</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
