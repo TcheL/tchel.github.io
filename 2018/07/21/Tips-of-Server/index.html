@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="服务器管理过程中的一些命令技巧">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-28T05:26:55.317Z">
+<meta property="og:updated_time" content="2018-11-03T04:04:05.441Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="服务器管理">
 <meta name="twitter:description" content="服务器管理过程中的一些命令技巧">
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-10-28 13:26:55" itemprop="dateModified" datetime="2018-10-28T13:26:55+08:00">2018-10-28</time>
+                <time title="Modified: 2018-11-03 12:04:05" itemprop="dateModified" datetime="2018-11-03T12:04:05+08:00">2018-11-03</time>
               
             
           </span>
@@ -515,7 +515,7 @@
 <hr>
 <h2 id="修改系统登录提示（欢迎）信息"><a href="#修改系统登录提示（欢迎）信息" class="headerlink" title="修改系统登录提示（欢迎）信息"></a>修改系统登录提示（欢迎）信息</h2><p>Linux 系统 SSH 的欢迎信息可以通过修改 /etc/motd 的内容来进行自定义。</p>
 <p>但是 /etc/motd 只支持纯文本的欢迎信息。想要实现彩色效果，可以通过修改 /etc/profiles.d/motd.sh 来实现，如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">echo "==================================================="</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> ATTENTION:</span><br><span class="line">echo -en "\033[01;31m"</span><br><span class="line">echo -e  "ATTENTION:"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>    1. submitting your job at: seislab1, seislab2</span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    1. submitting your job at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab1, seislab2"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>    2. GPU test at: seislab0</span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    2. GPU test at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab0"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span></span><br><span class="line">echo -e  "\033[00m"</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">echo "==================================================="</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> ATTENTION:</span></span><br><span class="line">echo -en "\033[01;31m"</span><br><span class="line">echo -e  "ATTENTION:"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">    1. submitting your job at: seislab1, seislab2</span></span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    1. submitting your job at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab1, seislab2"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">    2. GPU <span class="built_in">test</span> at: seislab0</span></span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    2. GPU test at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab0"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line">echo -e  "\033[00m"</span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="修改主机名"><a href="#修改主机名" class="headerlink" title="修改主机名"></a>修改主机名</h2><p><code>hostnamectl set-hostname seislab</code> 命令修改主机名为 seislab 。</p>
 <hr>
@@ -777,8 +777,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/07/21/MPI-Cartesian-Function/" rel="prev" title="MPI 二维切割子程序 MPI_CART_CREATE、MPI_CART_COORDS 和 MPI_CART_SHIFT">
-                MPI 二维切割子程序 MPI_CART_CREATE、MPI_CART_COORDS 和 MPI_CART_SHIFT <i class="fa fa-chevron-right"></i>
+              <a href="/2018/07/22/Principle-of-Algorithm/" rel="prev" title="一些算法原理">
+                一些算法原理 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -862,7 +862,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -887,7 +887,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -932,7 +934,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">16</span>
+                      
+                    
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

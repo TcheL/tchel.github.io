@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/earth-32x32.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/earth-16x16.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="目前本人在初学 MPI 并行编程，在阅读 Fortran 语言实例代码过程中，遇到了二维切割问题，查阅相关资料，得郑守成于 2002 年所著《Fortran 語言 MPI 平行计算程式设计》，文中个别字词于我有异，不便阅读，特于此转录记之，以备后用。">
+<meta name="keywords" content="MPI,Parallel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MPI 二维切割子程序 MPI_CART_CREATE、MPI_CART_COORDS 和 MPI_CART_SHIFT">
+<meta property="og:url" content="http://tchel.github.io/2018/11/03/MPI-Cartesian-Function/index.html">
+<meta property="og:site_name" content="Here4U">
+<meta property="og:description" content="目前本人在初学 MPI 并行编程，在阅读 Fortran 语言实例代码过程中，遇到了二维切割问题，查阅相关资料，得郑守成于 2002 年所著《Fortran 語言 MPI 平行计算程式设计》，文中个别字词于我有异，不便阅读，特于此转录记之，以备后用。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3649341-0ab70aa6c34b21f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-11-03T04:06:04.514Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MPI 二维切割子程序 MPI_CART_CREATE、MPI_CART_COORDS 和 MPI_CART_SHIFT">
+<meta name="twitter:description" content="目前本人在初学 MPI 并行编程，在阅读 Fortran 语言实例代码过程中，遇到了二维切割问题，查阅相关资料，得郑守成于 2002 年所著《Fortran 語言 MPI 平行计算程式设计》，文中个别字词于我有异，不便阅读，特于此转录记之，以备后用。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3649341-0ab70aa6c34b21f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="http://tchel.github.io/2018/11/03/MPI-Cartesian-Function/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MPI 二维切割子程序 MPI_CART_CREATE、MPI_CART_COORDS 和 MPI_CART_SHIFT | Here4U</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <!-- 小条 Fork me on Github
+     <a href="https://github.com/TcheL"><img style="position:absolute; top:0; right:0; border:0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on Github"></a>
+    -->
+    <a href="https://github.com/TcheL" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Here4U</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Share me with you</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tchel.github.io/2018/11/03/MPI-Cartesian-Function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tche LIU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/f58b38472ae7594c1da00001675eb66a?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Here4U">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MPI 二维切割子程序 MPI_CART_CREATE、MPI_CART_COORDS 和 MPI_CART_SHIFT
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-03 12:06:04" itemprop="dateCreated datePublished" datetime="2018-11-03T12:06:04+08:00">2018-11-03</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">目前本人在初学 MPI 并行编程，在阅读 Fortran 语言实例代码过程中，遇到了二维切割问题，查阅相关资料，得郑守成于 2002 年所著《Fortran 語言 MPI 平行计算程式设计》，文中个别字词于我有异，不便阅读，特于此转录记之，以备后用。</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><blockquote>
+<p><em>注：这里只介绍了 MPI 二维切割在 Fortran 语言中的应用，于 C 语言，类似但略有差别。</em></p>
+</blockquote>
+<p>专用词语转录说明如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">原词</th>
+<th style="text-align:center">转录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">程式</td>
+<td style="text-align:center">程序</td>
+</tr>
+<tr>
+<td style="text-align:center">副程式</td>
+<td style="text-align:center">子程序</td>
+</tr>
+<tr>
+<td style="text-align:center">阵列</td>
+<td style="text-align:center">数组</td>
+</tr>
+<tr>
+<td style="text-align:center">叫用</td>
+<td style="text-align:center">调用</td>
+</tr>
+<tr>
+<td style="text-align:center">引数</td>
+<td style="text-align:center">参数</td>
+</tr>
+<tr>
+<td style="text-align:center">communicator</td>
+<td style="text-align:center">通信域</td>
+</tr>
+<tr>
+<td style="text-align:center">CPU id</td>
+<td style="text-align:center">进程编号</td>
+</tr>
+<tr>
+<td style="text-align:center">整数阵列</td>
+<td style="text-align:center">整型数组</td>
+</tr>
+<tr>
+<td style="text-align:center">逻辑阵列</td>
+<td style="text-align:center">逻辑型数组</td>
+</tr>
+<tr>
+<td style="text-align:center">变数</td>
+<td style="text-align:center">变量</td>
+</tr>
+<tr>
+<td style="text-align:center">安排</td>
+<td style="text-align:center">排布</td>
+</tr>
+<tr>
+<td style="text-align:center">运作</td>
+<td style="text-align:center">运行</td>
+</tr>
+<tr>
+<td style="text-align:center">邻居</td>
+<td style="text-align:center">邻位</td>
+</tr>
+</tbody>
+</table>
+<h2 id="垂直坐标图示法则（Cartesian-Topology）"><a href="#垂直坐标图示法则（Cartesian-Topology）" class="headerlink" title="垂直坐标图示法则（Cartesian Topology）"></a>垂直坐标图示法则（Cartesian Topology）</h2><p>二维数组 A(NN, MM) 要做二维切割时，需先说明在第一维和第二维各切成几块。例如第一维要切成四块，第二维要切成三块，则切割后第一维的长度 N 为 NN/4，第二维的长度 M 为 MM/3，当然两者都必须能整除才行。如果 NN = 200 和 MM = 150，就可以使用 PARAMETER 来设定 M、N 的值，切割后数组的第一维和第二维都要预留前后各一个数组元素位置时，其参数可设定为：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">PARAMETER</span> (NN=<span class="number">200</span>, MM=<span class="number">150</span>, JP=<span class="number">4</span>, IP=<span class="number">3</span>, N=NN/JP, M=MM/IP,)</span><br><span class="line"><span class="keyword">DIMENSION</span> A(<span class="number">0</span>:N+<span class="number">1</span>, <span class="number">0</span>:M+<span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
+<p>数组 A 切成 4×3 十二块，第一块由一个 CPU 来执行时，则需要十二个 CPU。这十二个 CPU 的编号和坐标如下图所示：<br><img src="http://upload-images.jianshu.io/upload_images/3649341-0ab70aa6c34b21f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="二维切割区块图"><br>十二个 CPU 之中每一个 CPU 的上、下、左、右邻位关系如上图所示。水平方向 X 轴为第一维 (J) ，垂直方向 Y 轴为第二维 (I) 。</p>
+<h2 id="MPI-CART-CREATE"><a href="#MPI-CART-CREATE" class="headerlink" title="MPI_CART_CREATE"></a>MPI_CART_CREATE</h2><p>二维切割方式必须在调用 MPI_CART_SIZE、MPI_COMM_RANK 分别取得通信域的进程数和进程编号等之后，再调用 MPI 子程序 MPI_CART_CREATE 来加以设定。如上图所示的二维切割方式，其相应的参数设定如下：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">PARAMETER</span> (NDIM=<span class="number">2</span>, JP=<span class="number">4</span>, IP=<span class="number">3</span>)</span><br><span class="line"><span class="keyword">INTEGER</span> NPROC, MYID</span><br><span class="line"><span class="keyword">INTEGER</span> IPART(NDIM), COMM2D, MY_CID, MY_COORD(NDIM)</span><br><span class="line"><span class="keyword">INTEGER</span> SIDEWAYS, UPDOWN, RIGHT, UP, L_NBR, R_NBR, T_NBR, B_NBR</span><br><span class="line"><span class="keyword">LOGICAL</span> PERIODS(NDIM), REORDER</span><br><span class="line">...</span><br><span class="line"><span class="keyword">CALL</span> MPI_INIT (IERR)</span><br><span class="line"><span class="keyword">CALL</span> MPI_COMM_SIZE (MPI_COMM_WORLD, NPROC, IERR)</span><br><span class="line"></span><br><span class="line">IPART(<span class="number">1</span>)=JP</span><br><span class="line">IPART(<span class="number">2</span>)=IP</span><br><span class="line">PERIODS(<span class="number">1</span>)=.FALSE.</span><br><span class="line">PERIODS(<span class="number">2</span>)=.FALSE.</span><br><span class="line">REORDER=.TRUE.</span><br><span class="line"><span class="keyword">CALL</span> MPI_CART_CREATE (MPI_COMM_WORLD, NDIM, IPART, PERIODS, REORDER, COMM2D, IERR)</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">MPI_COMM_WORLD</td>
+<td style="text-align:left">原来的通信域</td>
+</tr>
+<tr>
+<td style="text-align:left">NDIM</td>
+<td style="text-align:left">切割的维数，上图中二维切割的例子需设定为 2</td>
+</tr>
+<tr>
+<td style="text-align:left">IPART</td>
+<td style="text-align:left">NDIM 个元素的整型数组</td>
+</tr>
+<tr>
+<td style="text-align:left">IPART(1)</td>
+<td style="text-align:left">第一维切成的块数，上图中的例子需设定为 4</td>
+</tr>
+<tr>
+<td style="text-align:left">IPART(2)</td>
+<td style="text-align:left">第二维切成的块数，上图中的例子需设定为 3</td>
+</tr>
+<tr>
+<td style="text-align:left">PERIODS</td>
+<td style="text-align:left">NDIM 个元素的逻辑型数组</td>
+</tr>
+<tr>
+<td style="text-align:left">PERIODS(1)</td>
+<td style="text-align:left">第一维首尾区块是否相邻，是为 .TRUE. 否为 .FALSE. ，上图中的例子需设定为 .FALSE.</td>
+</tr>
+<tr>
+<td style="text-align:left">PERIODS(2)</td>
+<td style="text-align:left">第二维首尾区块是否相邻，是为 .TRUE. 否为 .FALSE. ，上图中的例子需设定为 .FALSE.</td>
+</tr>
+<tr>
+<td style="text-align:left">REORDER</td>
+<td style="text-align:left">逻辑型变量，已排定的 CPU 是否重排，是为 .TRUE. 否为 .FALSE. ，一般设为 .TRUE.</td>
+</tr>
+<tr>
+<td style="text-align:left">COMM2D</td>
+<td style="text-align:left">切割后得到的新通信域</td>
+</tr>
+</tbody>
+</table>
+<p>在调用 MPI_CART_CREATE 之前已经调用过 MPI_COMM_RANK，已经排布好各个 CPU 了，这是一种线性排布。在调用 MPI_CART_CREATE 时，是一种平面排布，当 REORDER 的值设定为 .TRUE. 时，允许系统重新排布各个 CPU，使得相邻的 CPU 排布在相邻的位置上，从而得到最佳的传输效率。</p>
+<h2 id="MPI-CART-COORDS"><a href="#MPI-CART-COORDS" class="headerlink" title="MPI_CART_COORDS"></a>MPI_CART_COORDS</h2><p>此后，程序在新的的通信域 COMM2D 中运行，之前获取的进程编号已经不再适用。必须重新调用 MPI_COMM_RANK 获取当前 CPU 在新的通信域中的进程号。MPI_COMM_RANK 的调用格式如下：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CALL</span> MPI_COMM_RANK (COMM2D, MYID, IERR)</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">COMM2D</td>
+<td style="text-align:left">新设定的通信域</td>
+</tr>
+<tr>
+<td style="text-align:left">MYID</td>
+<td style="text-align:left">在通信域 COMM2D 中的新的进程号</td>
+</tr>
+</tbody>
+</table>
+<p>MYID 的排布方式如上图中的 CPU0、CPU1、CPU2 等所示。<br>接下来就须调用 MPI_CART_COORDS 获取当前 CPU 在二维 CPU 数组中的坐标 MY_COORD。调用格式如下：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CALL</span> MPI_CART_COORDS (COMM2D, MY_CID, NDIM, MY_COORD, IERR)</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">COMM2D</td>
+<td style="text-align:left">新设定的通信域</td>
+</tr>
+<tr>
+<td style="text-align:left">MY_CID</td>
+<td style="text-align:left">在通信域 COMM2D 中的进程号</td>
+</tr>
+<tr>
+<td style="text-align:left">NDIM</td>
+<td style="text-align:left">切割的维数，如上图中的例子需设定为 2</td>
+</tr>
+<tr>
+<td style="text-align:left">MY_COORD</td>
+<td style="text-align:left">NDIM 个元素的整型数组，进程号为 MY_CID 的 CPU 的 CPU 数组坐标</td>
+</tr>
+<tr>
+<td style="text-align:left">MY_COORD(1)</td>
+<td style="text-align:left">第一维方向上的坐标，从 0 起算</td>
+</tr>
+<tr>
+<td style="text-align:left">MY_COORD(2)</td>
+<td style="text-align:left">第二维方向上的坐标，从 0 起算</td>
+</tr>
+</tbody>
+</table>
+<p>CPU 坐标 MY_COORD 的排布方式如上图中 CPU0、CPU1、CPU2 等进程号下的括号内的数字。<br>由上图易知：当 MY_COORD(1) 为 0 时，该 CPU 位于 CPU 数组的最左边；当 MY_COORD(1) 为 JP - 1 时，该 CPU 位于 CPU 数组的最右边；当 MY_COORD(2) 为 0 时，该 CPU 位于 CPU 数组的最下面（底边）；当 MY_COORD(2) 为 IP - 1 时，该 CPU 位于 CPU 数组的最上面（顶边）。</p>
+<h2 id="MPI-CART-SHIFT"><a href="#MPI-CART-SHIFT" class="headerlink" title="MPI_CART_SHIFT"></a>MPI_CART_SHIFT</h2><p>现在，还须调用 MPI_CART_SHIFT 来获取当前 CPU 的上、下、左、右邻位的进程号。调用格式如下：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INTEGER</span> SIDEWAYS, UPDOWN, RIGHT, UP</span><br><span class="line">SIDEWAYS=<span class="number">0</span></span><br><span class="line">UPDOWN=<span class="number">1</span></span><br><span class="line">RIGHT=<span class="number">1</span></span><br><span class="line">UP=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CALL</span> MPI_CART_SHIFT (COMM2D, SIDEWAYS, RIGHT, L_NBR, R_NBR, IERR)</span><br><span class="line"><span class="keyword">CALL</span> MPI_CART_SHIFT (COMM2D, UPDOWN, UP, B_NBR, T_NBR, IERR)</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">COMM2D</td>
+<td style="text-align:left">新设定的通信域</td>
+</tr>
+<tr>
+<td style="text-align:left">SIDEWAYS</td>
+<td style="text-align:left">整型变量，其值为 0 表示获取第一维 (J) 方向的邻位</td>
+</tr>
+<tr>
+<td style="text-align:left">RIGHT</td>
+<td style="text-align:left">整型变量，其值为 1 表示获取左、右邻位</td>
+</tr>
+<tr>
+<td style="text-align:left">L_NBR</td>
+<td style="text-align:left">整型变量，其值为获取的当前 CPU 的左邻位的进程号</td>
+</tr>
+<tr>
+<td style="text-align:left">R_NBR</td>
+<td style="text-align:left">整型变量，其值为获取的当前 CPU 的右邻位的进程号</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">UPDOWN</td>
+<td style="text-align:left">整型变量，其值为 1 表示获取第二维 (I) 方向的邻位</td>
+</tr>
+<tr>
+<td style="text-align:left">UP</td>
+<td style="text-align:left">整型变量，其值为 1 表示获取下、上邻位</td>
+</tr>
+<tr>
+<td style="text-align:left">B_NBR</td>
+<td style="text-align:left">整型变量，其值为获取的当前 CPU 的下邻位的进程号</td>
+</tr>
+<tr>
+<td style="text-align:left">T_NBR</td>
+<td style="text-align:left">整型变量，其值为获取的当前 CPU 的上邻位的进程号</td>
+</tr>
+</tbody>
+</table>
+<p>这里，L_NBR、R_NBR、B_NBR 和 T_NBR 分别代表 left_neighbor、right_neighbor、bottom_neighbor 和 top_neighbor。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><blockquote>
+<p><strong>郑守成，2002，《Fortran 語言 MPI 平行计算程式设计》第五章 5.4 节</strong></p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>若蒙小宠，如沐春风</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Tche LIU WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Tche LIU Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+      ---------- 文结至此
+      <i class="fa fa-paw"></i>
+      静待下章 ----------
+    </div>
+  
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MPI/" rel="tag"><i class="fa fa-tag"></i> MPI</a>
+          
+            <a href="/tags/Parallel/" rel="tag"><i class="fa fa-tag"></i> Parallel</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/03/Password/" rel="next" title="一些不可吿人的小东西">
+                <i class="fa fa-chevron-left"></i> 一些不可吿人的小东西
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE5NS8xNDcyMw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://s.gravatar.com/avatar/f58b38472ae7594c1da00001675eb66a?s=80"
+                alt="Tche LIU" />
+            
+              <p class="site-author-name" itemprop="name">Tche LIU</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/TcheL" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:seistche@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垂直坐标图示法则（Cartesian-Topology）"><span class="nav-number">2.</span> <span class="nav-text">垂直坐标图示法则（Cartesian Topology）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI-CART-CREATE"><span class="nav-number">3.</span> <span class="nav-text">MPI_CART_CREATE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI-CART-COORDS"><span class="nav-number">4.</span> <span class="nav-text">MPI_CART_COORDS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI-CART-SHIFT"><span class="nav-number">5.</span> <span class="nav-text">MPI_CART_SHIFT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tche LIU</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme - <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a> v6.3.0</div>
+
+
+
+
+<div class="busuanzi-count">
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span class="site-uv">
+    <i class="fa fa-user"></i>
+    Vistor: <span id="busuanzi_value_site_uv"></span>
+  </span>
+  <span class="post-meta-divider">|</span>
+  <span class="site-pv">
+    <i class="fa fa-eye"></i>
+    View: <span id="busuanzi_value_site_pv"></span>
+  </span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+</body>
+</html>
