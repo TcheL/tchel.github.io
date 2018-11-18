@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="许久未曾编写 C 程序，重新学习，现在此记录一些 Cuda C 编程学习过程中遇到的小知识，可能仅适用于本人所使用的编译运行平台。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-03T04:03:55.217Z">
+<meta property="og:updated_time" content="2018-11-16T11:59:02.506Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cuda C 学习之路">
 <meta name="twitter:description" content="许久未曾编写 C 程序，重新学习，现在此记录一些 Cuda C 编程学习过程中遇到的小知识，可能仅适用于本人所使用的编译运行平台。">
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-03 12:03:55" itemprop="dateModified" datetime="2018-11-03T12:03:55+08:00">2018-11-03</time>
+                <time title="Modified: 2018-11-16 19:59:02" itemprop="dateModified" datetime="2018-11-16T19:59:02+08:00">2018-11-16</time>
               
             
           </span>
@@ -475,6 +475,7 @@
 <li>Cuda kernel 函数不允许通过指针形参传递单变量地址，修改指针引用值不会改变外部实参的值。</li>
 <li>在 Cuda kernel 函数内进行屏幕输出时，可在 host 端 kernel 函数之后加上 <code>cudaDeviceReset();</code> 确保屏幕及时输出。</li>
 <li>若运行时报错 “Too many resources requested for lanch”，可能是处理器上的 register 数超出了限制，可减少 the number of threads per block 后再次尝试运行。</li>
+<li>在 C++ 类的构造函数中，不要 launch kernel，否则会发生不可预测的后果，在程序运行至某处时报错 “an illegal memory access was encountered” ？</li>
 </ul>
 <hr>
 
