@@ -114,25 +114,25 @@
 
 
 
-  <meta name="description" content="The defination of Conjugate transpose">
-<meta name="keywords" content="MathOperation">
-<meta property="og:type" content="website">
-<meta property="og:title" content="共轭转置">
-<meta property="og:url" content="http://tchel.github.io/temp/Conjugate_transpose.html">
+  <meta name="description" content="一些值得记录的 awk 编程实例">
+<meta name="keywords" content="awk">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWK 编程拾锦">
+<meta property="og:url" content="http://tchel.github.io/2018/11/26/Examples-of-AWK/index.html">
 <meta property="og:site_name" content="Here4U">
-<meta property="og:description" content="The defination of Conjugate transpose">
+<meta property="og:description" content="一些值得记录的 awk 编程实例">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-21T05:49:17.318Z">
+<meta property="og:updated_time" content="2018-11-26T08:20:14.375Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="共轭转置">
-<meta name="twitter:description" content="The defination of Conjugate transpose">
+<meta name="twitter:title" content="AWK 编程拾锦">
+<meta name="twitter:description" content="一些值得记录的 awk 编程实例">
 
 
 
 
 
 
-  <link rel="canonical" href="http://tchel.github.io/temp/Conjugate_transpose.html"/>
+  <link rel="canonical" href="http://tchel.github.io/2018/11/26/Examples-of-AWK/"/>
 
 
 
@@ -142,7 +142,7 @@
   };
 </script>
 
-  <title>共轭转置 | Here4U</title>
+  <title>AWK 编程拾锦 | Here4U</title>
   
 
 
@@ -334,84 +334,237 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tchel.github.io/2018/11/26/Examples-of-AWK/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tche LIU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/f58b38472ae7594c1da00001675eb66a?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Here4U">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">共轭转置</h1>
-
-<div class="post-meta">
-  
-    <div class="post-description">The defination of Conjugate transpose</div>
-  
-  
-
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>又称 Hermitian 转置。参考 <a href="https://en.wikipedia.org/wiki/Conjugate_transpose" target="_blank" rel="noopener">Wikipedia</a> 。</p>
-<p>In mathematics, the <code>conjugate transpose</code> and <code>Hermitian transpose</code> of an $m\times n$ matrix $A$ with complex entries is the $n\times m$ matrix $A^*$ obtained from $A$ by taking the <strong>transpose</strong> and then taking the <strong>complex conjugate</strong> of each entry.</p>
-<p>The definition can also be written as</p>
-<p>$$A^*=(\bar{A})^T=\overline{A^T}$$.</p>
-<p>The commonly used symbols for the conjugate transpose:</p>
-<ul>
-<li>$A^*$ or $A^H$ in <em>linear algebra</em> ;</li>
-<li>$A^\dagger$ in <em>quantum mechanics</em> ;</li>
-<li>$A^+$.</li>
-</ul>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>If $A=\left[\begin{array}{c} 1 &amp; -2-i \ 1+i &amp; i \end{array}\right] $, then $A^*=\left[\begin{array}{c} 1 &amp; 1-i \ -2+i &amp; -i \end{array}\right]$.</p>
-
+          <h1 class="post-title" itemprop="name headline">AWK 编程拾锦
+              
+            
+          </h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-26 15:37:16 / Modified: 16:20:14" itemprop="dateCreated datePublished" datetime="2018-11-26T15:37:16+08:00">2018-11-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">一些值得记录的 awk 编程实例</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h2 id="以相同的列首字段分割文件"><a href="#以相同的列首字段分割文件" class="headerlink" title="以相同的列首字段分割文件"></a>以相同的列首字段分割文件</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>文件的第一列为分类标志，以相同的每行第一列内容为分隔，将文件分为不同的多个文件。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>假如有文件 <code>run</code> 内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0 one</span><br><span class="line">0 two</span><br><span class="line">1 three</span><br><span class="line">1 four</span><br><span class="line">1 five</span><br><span class="line">2 six</span><br><span class="line">2 seven</span><br><span class="line">2 eigth</span><br></pre></td></tr></table></figure>
+<p>首先，需要一个变量 <code>fs</code> 来记录每相同首列部分的首列内容，在 BEGIN 阶段需要对此变量初始化，在判断出 fs 与当前行的首列内容 $1 不同时重新给 fs 赋值并创建新文件；同时，还需要一个变量 <code>fn</code> 记录不同部分对应的输出文件名。具体实现为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[user@A ~]$ cat run | awk 'BEGIN &#123;fs=""&#125; &#123;if(fs!=$1) &#123;fs=$1; fn="file" $1; print $1, $2 &gt; fn&#125; else &#123;print $1, $2 &gt;&gt; fn&#125;&#125;'</span><br><span class="line">[user@A ~]$ cat file0</span><br><span class="line">0 one</span><br><span class="line">0 two</span><br><span class="line">[user@A ~]$ cat file1</span><br><span class="line">1 three</span><br><span class="line">1 four</span><br><span class="line">1 five</span><br><span class="line">[user@A ~]$ cat file2</span><br><span class="line">2 six</span><br><span class="line">2 seven</span><br><span class="line">2 eigth</span><br></pre></td></tr></table></figure>
+<hr>
+
       
     </div>
+
     
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>若蒙小宠，如沐春风</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Tche LIU WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Tche LIU Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+      ---------- 文结至此
+      <i class="fa fa-paw"></i>
+      静待下章 ----------
+    </div>
+  
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/awk/" rel="tag"><i class="fa fa-tag"></i> awk</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/24/Love-of-Seismology/" rel="next" title="地震学中那些可爱的人和事儿">
+                <i class="fa fa-chevron-left"></i> 地震学中那些可爱的人和事儿
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
 
-    
-    
-    
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -605,7 +758,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">2.</span> <span class="nav-text">例子</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#以相同的列首字段分割文件"><span class="nav-number">1.</span> <span class="nav-text">以相同的列首字段分割文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#需求"><span class="nav-number">1.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">1.2.</span> <span class="nav-text">实现</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1148,30 +1301,6 @@
   
   
 
-  
-    
-      <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      },
-      TeX: {equationNumbers: { autoNumber: "AMS" }}
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-      var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-    
   
 
 
