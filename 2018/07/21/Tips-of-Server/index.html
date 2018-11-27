@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="服务器管理过程中的一些命令技巧">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-18T11:09:25.961Z">
+<meta property="og:updated_time" content="2018-11-27T12:27:26.061Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="服务器管理">
 <meta name="twitter:description" content="服务器管理过程中的一些命令技巧">
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-18 19:09:25" itemprop="dateModified" datetime="2018-11-18T19:09:25+08:00">2018-11-18</time>
+                <time title="Modified: 2018-11-27 20:27:26" itemprop="dateModified" datetime="2018-11-27T20:27:26+08:00">2018-11-27</time>
               
             
           </span>
@@ -466,7 +466,11 @@
       
 
       
-        <h2 id="SSH-免密登录"><a href="#SSH-免密登录" class="headerlink" title="SSH 免密登录"></a>SSH 免密登录</h2><p>以下实现主机 A 到主机 B 的免密登录：</p>
+        <h2 id="dd-命令刻录系统启动盘"><a href="#dd-命令刻录系统启动盘" class="headerlink" title="dd 命令刻录系统启动盘"></a>dd 命令刻录系统启动盘</h2><p>若系统已自动挂载 U 盘，可以命令 <code>[root@A ~]$ fdisk -l</code> 查看 U 盘挂载设备号，如 /dev/sdb，但由于 Linux 中每个设备文件可能对应多个设备号，如主/次设备号，实际自动挂载的可能只是其中的一个设备号，如 /dev/sdb1，再以命令 <code>[root@A ~]$ umount /dev/sdb1</code> 卸载 U 盘；若系统未自动挂载 U 盘，同样可由 fdisk 命令查看 U 盘对应的设备号，如 /dev/sdb；</p>
+<p>以命令 <code>[root@A ~]$ mkfs.vfat /dev/sdb -I</code> 格式化 U 盘；</p>
+<p>最后以命令 <code>[root@A ~]$ dd if=~/CentOS-7-x86_64-Minimal-xxxx.iso of=/dev/sdb</code> 即可将 ~/CentOS-7-x86_64-Minimal-xxxx.iso 系统文件内容刻录入设备 /dev/sdb 对应的 U 盘。</p>
+<hr>
+<h2 id="SSH-免密登录"><a href="#SSH-免密登录" class="headerlink" title="SSH 免密登录"></a>SSH 免密登录</h2><p>以下实现主机 A 到主机 B 的免密登录：</p>
 <ul>
 <li>在主机 A 下生成公钥/私钥对：执行 <code>[user@A ~]$ ssh-keygen -t rsa</code> 后，连按三次回车键即可。</li>
 <li>把主机 A 下生成的公钥复制远程传输到主机 B 上：执行 <code>[user@A ~]$ scp .ssh/id_rsa.pub user@B:~/</code> 即可。</li>
@@ -514,58 +518,9 @@
 <li>nl 库：<code>[root@A ~]$ yum install libnl-devel.x86_64</code></li>
 </ul>
 <hr>
-<h2 id="bashrc、-etc-bashrc-和-etc-profile"><a href="#bashrc、-etc-bashrc-和-etc-profile" class="headerlink" title="~/.bashrc、/etc/bashrc 和 /etc/profile"></a>~/.bashrc、/etc/bashrc 和 /etc/profile</h2><ul>
-<li>~/.bashrc 为用户终端环境设置，仅影响当前用户；/etc/bashrc 和 /etc/profile 为系统终端环境设置，影响所有用户。</li>
-<li>系统登录时，/etc/profile 最先被加载，而后它调用了 /etc/bashrc 以及 ~/.bashrc。</li>
-<li>/etc/profile 对所有 shell 生效，/etc/bashrc 和 ~/.bashrc 仅对 bash 生效。</li>
-</ul>
-<hr>
-<h2 id="修改系统登录提示（欢迎）信息"><a href="#修改系统登录提示（欢迎）信息" class="headerlink" title="修改系统登录提示（欢迎）信息"></a>修改系统登录提示（欢迎）信息</h2><p>Linux 系统 SSH 的欢迎信息可以通过修改 /etc/motd 的内容来进行自定义。</p>
-<p>但是 /etc/motd 只支持纯文本的欢迎信息。想要实现彩色效果，可以通过修改 /etc/profile.d/motd.sh 来实现，如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">echo "==================================================="</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> ATTENTION:</span></span><br><span class="line">echo -en "\033[01;31m"</span><br><span class="line">echo -e  "ATTENTION:"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">    1. submitting your job at: seislab1, seislab2</span></span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    1. submitting your job at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab1, seislab2"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">    2. GPU <span class="built_in">test</span> at: seislab0</span></span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    2. GPU test at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab0"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line">echo -e  "\033[00m"</span><br></pre></td></tr></table></figure>
-<hr>
 <h2 id="修改主机名"><a href="#修改主机名" class="headerlink" title="修改主机名"></a>修改主机名</h2><p><code>hostnamectl set-hostname seislab</code> 命令修改主机名为 seislab 。</p>
 <hr>
-<h2 id="修改用户名及删除用户"><a href="#修改用户名及删除用户" class="headerlink" title="修改用户名及删除用户"></a>修改用户名及删除用户</h2><p>以下命令修改旧用户名 test 为新用户名 love：</p>
-<ul>
-<li>修改用户信息及 HOME 目录：<code>[root@A ~]$ usermod -l love -d /home/love -m test</code></li>
-<li>修改用户组信息：<code>[root@A ~]$ groumod -n love test</code></li>
-</ul>
-<p>以命令 <code>[root@A ~]$ userdel -rf test</code> 删除用户 test 。</p>
-<hr>
-<h2 id="发送广播消息"><a href="#发送广播消息" class="headerlink" title="发送广播消息"></a>发送广播消息</h2><h3 id="mesg-命令"><a href="#mesg-命令" class="headerlink" title="mesg 命令"></a>mesg 命令</h3><ul>
-<li>语法：<code>[root@A ~]$ mesg [ny]</code></li>
-<li>功能：设置终端机的写入权限</li>
-<li>参数：<code>n/y</code> 允许/不允许系统用户将信息直接显示在屏幕上</li>
-</ul>
-<h3 id="write-命令"><a href="#write-命令" class="headerlink" title="write 命令"></a>write 命令</h3><ul>
-<li>语法：<code>[user@A ~]$ write 用户名 [终端串口]</code></li>
-<li>功能：向系统某一用户发送消息</li>
-</ul>
-<h3 id="wall-命令"><a href="#wall-命令" class="headerlink" title="wall 命令"></a>wall 命令</h3><ul>
-<li>语法：<code>[root@A ~]$ wall &lt; 文件名</code></li>
-<li>功能：向系统所有已登录用户发送文件内容</li>
-</ul>
-<hr>
-<h2 id="关机-重启"><a href="#关机-重启" class="headerlink" title="关机/重启"></a>关机/重启</h2><h3 id="shutdown-命令"><a href="#shutdown-命令" class="headerlink" title="shutdown 命令"></a>shutdown 命令</h3><ul>
-<li>语法：<code>[root@A ~]$ shutdown [-t sec] [-hkr] time &quot;WARNING INFO.&quot;</code></li>
-<li>参数：<ul>
-<li>h: 停止所有系统服务后立即关机；</li>
-<li>k: 只发送警告信息，实际不执行关机操作；</li>
-<li>r: 停止所有系统服务后重新启动。</li>
-</ul>
-</li>
-<li>实例：<ul>
-<li><code>shutdown -h now</code>: 立即关机；</li>
-<li><code>shutdown -h 20:30</code>: 在下一个 20:30 时刻关机；</li>
-<li><code>shutdown +5 &quot;System will shutdown after 5 minutes</code>: 向所有登入用户发送警告，在 5 分钟后关机。</li>
-</ul>
-</li>
-</ul>
-<h3 id="reboot-命令"><a href="#reboot-命令" class="headerlink" title="reboot 命令"></a>reboot 命令</h3><ul>
-<li>语法：<code>[root@A ~]$ reboot [-w]</code></li>
-<li>参数：<code>w</code> 仅做测试，执行一个重开机模拟，并不真正将系统重启。</li>
-</ul>
+<h2 id="修改系统时区"><a href="#修改系统时区" class="headerlink" title="修改系统时区"></a>修改系统时区</h2><p>先用 <code>timedatectl set-timezone Asia/Shanghai</code> 命令更新时区为亚洲上海时区，再用 <code>timedatectl set-local-rtc 1</code> 命令将硬件时钟与系统时钟调整一致。</p>
 <hr>
 <h2 id="添加用户到-sudoer-列表"><a href="#添加用户到-sudoer-列表" class="headerlink" title="添加用户到 sudoer 列表"></a>添加用户到 sudoer 列表</h2><p>以下实现将 user 用户添加到 sudoer 列表：</p>
 <ul>
@@ -573,132 +528,9 @@
 <li>向下查找到 <code>root   ALL=(ALL)   ALL</code> 内容行，在下一行参照新建行内容<code>user   ALL=(ALL)   ALL</code>，保存后退出。</li>
 </ul>
 <hr>
-<h2 id="pip-指定安装目录"><a href="#pip-指定安装目录" class="headerlink" title="pip 指定安装目录"></a>pip 指定安装目录</h2><h3 id="临时方法"><a href="#临时方法" class="headerlink" title="临时方法"></a>临时方法</h3><p>安装模块 modulename 到目录 /path/to/directory 可以使用命令：<code>[user@A ~]$ pip install --target=/path/to/directory modulename</code></p>
-<p>此方法会直接在目标目录创建 module 文件夹，因此调用前只需将该目录加入 <code>PYTHONPATH</code> 系统环境变量即可。</p>
-<h3 id="永久方法"><a href="#永久方法" class="headerlink" title="永久方法"></a>永久方法</h3><p>若经常需要安装一些额外的 python 函数包到目录 /path/to/directory，则可以修改用户 HOME 目录下 .pip/pip.conf（若不存在则创建），加入以下内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[install]</span><br><span class="line">install-option=--prefix=/path/to/directory</span><br></pre></td></tr></table></figure>
-<p>此方法会根据安装 module 版本的不同，在目标目录下进一步创建其他子文件夹，最终在子文件夹下创建 module 文件夹，因此调用前需将子文件夹目录加入到 <code>PYTHONPATH</code> 系统环境变量中。</p>
-<hr>
-<h2 id="强制踢出已登录用户"><a href="#强制踢出已登录用户" class="headerlink" title="强制踢出已登录用户"></a>强制踢出已登录用户</h2><p>以下实现踢出已登录用户 user：</p>
-<ul>
-<li>先使用 <code>w</code> 命令查看用户 user 登录的 TTY 端口号，此处假设端口号为 pts/4；</li>
-<li>再使用命令 <code>[root@A ~]$ pkill -kill -t pts/4</code> 踢出。</li>
-<li>最后使用命令 <code>[root@A ~]$ pkill -u user</code> 杀死该用户的所有进程。</li>
-</ul>
-<hr>
-<h2 id="查看系统信息"><a href="#查看系统信息" class="headerlink" title="查看系统信息"></a>查看系统信息</h2><ul>
-<li>查看系统版本号：<code>[user@A ~]$ cat /etc/centos-release</code></li>
-<li>查看系统内核版本号：<code>[user@A ~]$ uname -r</code></li>
-<li>查看操作系统位数：<code>[user@A ~]$ getconf LONG_BIT</code></li>
-<li>查看系统日志：<code>[root@A ~]$ vim /var/log/messages</code></li>
-<li>查看系统字体：<code>[user@A ~]$ fc-list</code>；查看系统中文字体：<code>[user@A ~]$ fc-list :lang=zh</code></li>
-</ul>
-<hr>
-<h2 id="xz-压缩或解压"><a href="#xz-压缩或解压" class="headerlink" title="xz 压缩或解压"></a>xz 压缩或解压</h2><p>使用 <code>xz -z dir</code> 命令压缩目录 dir，使用 <code>xz -d file</code> 命令解压文件 file。在解压以 <code>.tar.xz</code> 结尾的文件时，可以调用 <code>tar -l xz -cxvf</code> 命令。</p>
-<hr>
-<h2 id="rpm-查看系统安装包安装目录"><a href="#rpm-查看系统安装包安装目录" class="headerlink" title="rpm 查看系统安装包安装目录"></a>rpm 查看系统安装包安装目录</h2><p>先用 <code>rpm -qa | grep libname</code> 命令查询 libname 安装包得到该包完整名字 libname-version.arch ，再用 <code>rpm -ql libname-version.arch</code> 命令查看该包安装位置。</p>
-<hr>
-<h2 id="修改系统时区"><a href="#修改系统时区" class="headerlink" title="修改系统时区"></a>修改系统时区</h2><p>先用 <code>timedatectl set-timezone Asia/Shanghai</code> 命令更新时区为亚洲上海时区，再用 <code>timedatectl set-local-rtc 1</code> 命令将硬件时钟与系统时钟调整一致。</p>
-<hr>
-<h2 id="挂载远程目录"><a href="#挂载远程目录" class="headerlink" title="挂载远程目录"></a>挂载远程目录</h2><p>以主机 B（ip 为 192.18.1.2）挂载远程主机 A（ip 为 192.18.1.1）的共享目录 /data/share 为例：</p>
-<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><ul>
-<li><code>[root@A ~]$ yum install nfs-utils rpcbind</code> 安装 nfs-utils 和 rpcbind 服务；</li>
-<li><code>[root@A ~]$ chkconfig nfs on</code> 设置 nfs 服务开机自启，<code>[root@A ~]$ chkconfig rpcbind on</code> 设置 rpcbind 服务开机自启；</li>
-<li><code>[root@A ~]$ service rpcbind start</code> 启动 rpcbind 服务，<code>[root@A ~]$ service nfs start</code> 启动 nfs 服务，注意这两条命令的执行顺序；</li>
-<li>在文件 /etc/exports 中添加内容 <code>/data/share 192.18.1.2(rw, no_root_squash, no_subtree_check)</code> ；</li>
-<li><code>[root@A ~]$ exportfs -a</code> 使配置文件生效；</li>
-<li><code>[root@A ~]$ showmount -e</code> 查看是否共享成功。</li>
-</ul>
-<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><ul>
-<li><code>[root@B ~]$ yum install nfs-utils rpcbind</code> 安装 nfs-utils 和 rpcbind 服务；</li>
-<li><code>[root@A ~]$ chkconfig nfs on</code> 设置 nfs 服务开机自启，<code>[root@A ~]$ chkconfig rpcbind on</code> 设置 rpcbind 服务开机自启；</li>
-<li><code>[root@A ~]$ service rpcbind start</code> 启动 rpcbind 服务，<code>[root@A ~]$ service nfs start</code> 启动 nfs 服务，注意这两条命令的执行顺序；</li>
-<li><code>[root@B ~]$ showmount -e 192.18.1.1</code> 查看是否检测到服务端的共享</li>
-<li><code>[root@B ~]$ mkdir /data/share</code> 创建映射目录；</li>
-<li>在文件 /etc/fstab 中添加内容 <code>192.18.1.1:/data/share /data/share nfs rw,defaults 0 0</code> ；</li>
-<li>当前启动下，执行手动挂载 <code>[root@B ~]$ mount -t nfs 192.18.1.1:/data/share /data/share</code> 。</li>
-</ul>
-<p>若出现由于客户端偶然宕机而导致服务端执行 df 或 ls 等与远程挂载目录相关的操作时终端卡死的情况，可以依次执行如下命令手动重启客户端 rpcbind 和 nfs 服务解决：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@A ~]$ service rpcbind stop</span><br><span class="line">[root@A ~]$ service nfs stop</span><br><span class="line">[root@A ~]$ service rpcbind start</span><br><span class="line">[root@A ~]$ service nfs start</span><br></pre></td></tr></table></figure>
-<p>注意，这里如果使用命令 <code>[root@A ~]$ service XXX restart</code> 重启服务可能无法解决该问题。</p>
-<hr>
-<h2 id="安装-PbsPro-作业调度系统"><a href="#安装-PbsPro-作业调度系统" class="headerlink" title="安装 PbsPro 作业调度系统"></a>安装 PbsPro 作业调度系统</h2><h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><h4 id="机器"><a href="#机器" class="headerlink" title="机器"></a>机器</h4><p>假设如下两台机器（CentOS 7 系统）：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">主机名</th>
-<th style="text-align:center">主机 IP</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">pbsmaster</td>
-<td style="text-align:center">192.18.1.1</td>
-</tr>
-<tr>
-<td style="text-align:center">pbsslave</td>
-<td style="text-align:center">192.18.1.2</td>
-</tr>
-</tbody>
-</table>
-<p>修改两台机器的 /etc/hosts 文件，确保两台机器可以 ssh 互相访问。</p>
-<h4 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h4><p><a href="https://github.com/PBSPro/pbspro/releases" target="_blank" rel="noopener">此处</a>下载安装包 pbspro-14.1.0.tar.gz 。</p>
-<h4 id="制作-RPM-包"><a href="#制作-RPM-包" class="headerlink" title="制作 RPM 包"></a>制作 RPM 包</h4><p>先提前安装依赖包：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum -y install rpm-build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> yum -y install gcc autoconf automake libtool hwloc-devel</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> yum -y install libX11-devel libXt-devel libedit-devel libical-devel ncurses-devel postgresql-devel python-devel python-devel tcl-devel tk-devel swig expat-devel openssl-devel libXext libXft</span></span><br></pre></td></tr></table></figure>
-<p>执行以下命令，在 /root/rpmbuild/RPMS/x86_64 目录下生成 pbspro-[ client | debuginfo | execution | server ]-14.1.0-0.x86_64.rpm 包：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p /root/rpmbuild/SOURCES/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mv pbspro-14.1.0.tar.gz /root/rpmbuild/SOURCES/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /root/rpmbuild/SOURCES &amp;&amp; tar zxvf pbspro-14.1.0.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /root/rpmbuild/SOURCES/pbspro-14.1.0 &amp;&amp; rpmbuild -ba pbspro.spec</span></span><br></pre></td></tr></table></figure>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="安装-Master"><a href="#安装-Master" class="headerlink" title="安装 Master"></a>安装 Master</h4><p>登录至 Master 节点，命令 <code>[root@pbsmaster /root/rpmbuild/RPMS/x86_64]$ yum install -y pbspro-server-14.1.0-0.x86_64.rpm</code> （或者 <code>[root@pbsmaster /root/rpmbuild/RPMS/x86_64]$ rpm -ivh pbspro-server-14.1.0-0.x86_64.rpm</code> ）安装作业调度系统，修改 /etc/pbs.conf 文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PBS_SERVER=pbsmaster</span><br><span class="line">PBS_START_MOM=1</span><br></pre></td></tr></table></figure>
-<h4 id="安装-Slave"><a href="#安装-Slave" class="headerlink" title="安装 Slave"></a>安装 Slave</h4><p>登录至 Slave 节点，命令 <code>[root@pbsslave /root/rpmbuild/RPMS/x86_64]$ yum install -y pbspro-execution-14.1.0-0.x86_64.rpm</code> （或者 <code>[root@pbsslave /root/rpmbuild/RPMS/x86_64]$ rpm -ivh pbspro-execution-14.1.0-0.x86_64.rpm</code> ）安装作业调度系统，修改 /etc/pbs.conf 文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PBS_SERVER=pbsmaster</span><br><span class="line">PBS_START_MOM=1</span><br></pre></td></tr></table></figure>
-<p>修改 /var/spool/pbs/mom_priv/config 文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">clienthost pbsmaster</span></span><br><span class="line"><span class="meta">$</span><span class="bash">restrict_user_maxsysid 999</span></span><br></pre></td></tr></table></figure>
-<h4 id="启动-pbs"><a href="#启动-pbs" class="headerlink" title="启动 pbs"></a>启动 pbs</h4><p>以命令 <code>$ /etc/init.d/pbs start</code> 分别在 pbsmaster 和 pbsslave 节点上启动 pbs，以命令 <code>[root@pbsmaster ~]$ qmgr -c &#39;create node pbsslave&#39;</code> 在 pbsmaster 主节点上将 pbsslave 节点加入集群。</p>
-<hr>
-<h2 id="查看-CPU-温度"><a href="#查看-CPU-温度" class="headerlink" title="查看 CPU 温度"></a>查看 CPU 温度</h2><p>以命令 <code>[root@A ~]$ yum install lm_sensors.x86_64</code> 安装 lm_sensors，以 <code>[root@A ~]$ sh -c &quot;yes|sensors-detect&quot;</code> 检测传感器后，即可以命令 <code>[user@A ~]$ sensors</code> 查看 CPU 温度了。</p>
-<hr>
 <h2 id="挂载本地磁盘"><a href="#挂载本地磁盘" class="headerlink" title="挂载本地磁盘"></a>挂载本地磁盘</h2><h3 id="查看本地已挂载磁盘文件系统格式"><a href="#查看本地已挂载磁盘文件系统格式" class="headerlink" title="查看本地已挂载磁盘文件系统格式"></a>查看本地已挂载磁盘文件系统格式</h3><p>以命令 <code>[root@A ~]$ cat /etc/fstab</code> 查看本地已挂载磁盘文件系统格式，如 ntfs 或 ext4 等。</p>
 <h3 id="格式化本地磁盘"><a href="#格式化本地磁盘" class="headerlink" title="格式化本地磁盘"></a>格式化本地磁盘</h3><p>命令 <code>[root@A ~]$ mkfs -t ext4 /dev/sdb</code> 以 ext4 文件格式格式化本地磁盘 /dev/sdb。</p>
 <h3 id="挂载本地磁盘-1"><a href="#挂载本地磁盘-1" class="headerlink" title="挂载本地磁盘"></a>挂载本地磁盘</h3><p>命令 <code>[root@A ~]$ mount /dev/sdb /shdisk/lab</code> 将本地磁盘 /dev/sdb 挂载至 /shdisk/sdb 目录下。</p>
-<hr>
-<h2 id="安装字体"><a href="#安装字体" class="headerlink" title="安装字体"></a>安装字体</h2><h3 id="查看系统字体"><a href="#查看系统字体" class="headerlink" title="查看系统字体"></a>查看系统字体</h3><p>以命令 <code>[user@A ~]$ fc-list</code> 查看所有已安装的系统字体；以命令 <code>[user@A ~]$ fc-list:lang=zh</code> 查看系统中的中文字体。</p>
-<h3 id="安装额外的字体"><a href="#安装额外的字体" class="headerlink" title="安装额外的字体"></a>安装额外的字体</h3><ul>
-<li>以管理员身份将字体文件拷贝到 /usr/share/fonts/ 目录下；</li>
-<li><code>[root@A ~]$ cd /usr/share/fonts</code> ；</li>
-<li><code>[root@A ~]$ mkfontscale</code> （若找不到该命令，可以命令 <code>[root@A ~] yum install mkfontscale</code> 安装）；</li>
-<li><code>[root@A ~]$ mkfontdir</code> 。</li>
-</ul>
-<hr>
-<h2 id="查看已安装的软件包"><a href="#查看已安装的软件包" class="headerlink" title="查看已安装的软件包"></a>查看已安装的软件包</h2><ul>
-<li>以 rpm 包安装的：<code>[root@A ~]$ rpm -qa | grep packagename</code></li>
-<li>以 deb 包安装的：<code>[root@A ~]$ dpkg -l | grep packagename</code></li>
-<li>以 yum 命令安装的：<code>[root@A ~]$ yum list installed | grep packagename</code></li>
-</ul>
-<hr>
-<h2 id="修改-Ubuntu-默认终端"><a href="#修改-Ubuntu-默认终端" class="headerlink" title="修改 Ubuntu 默认终端"></a>修改 Ubuntu 默认终端</h2><p>在考虑到多终端窗口分屏显示时，可以采用命令 <code>[root@A ~]$ apt-get install terminator</code> 安装新的终端工具 <strong>Terminator</strong> 。但在安装该工具后会自动设置默认终端为 Terminator，可通过如下命令重置默认终端为系统自带的 gnome-terminal：</p>
-<ul>
-<li><code>gsettings set org.gnome.desktop.default-applications.terminal exec /usr/bin/gnome-terminal</code></li>
-<li><code>gsettings set org.gnome.desktop.default-applications.terminal exec-arg &quot;-x&quot;</code></li>
-</ul>
-<hr>
-<h2 id="一次性定时任务-at"><a href="#一次性定时任务-at" class="headerlink" title="一次性定时任务 at"></a>一次性定时任务 at</h2><h3 id="检查运行状态"><a href="#检查运行状态" class="headerlink" title="检查运行状态"></a>检查运行状态</h3><p>以命令 <code>[user@A ~]$ service atd status</code> 查看 at 的守护进程 atd 是否正在运行。</p>
-<h3 id="黑白名单"><a href="#黑白名单" class="headerlink" title="黑白名单"></a>黑白名单</h3><p>黑名单文件为 <em>/etc/at.deny</em>，白名单文件为 <em>/etc/at.allow</em>，并遵循如下规则：</p>
-<ul>
-<li>当系统中存在白名单文件时，黑名单文件将被忽略，只有写入白名单的用户才可以运行 at 命令；</li>
-<li>当系统中只有黑名单文件中，被写入名单的用户不能运行 at 命令，且黑名单对 root 无效；</li>
-<li>如果两个文件都不存在时，只有 root 用户可以运行 at 命令。</li>
-</ul>
-<h3 id="at-命令"><a href="#at-命令" class="headerlink" title="at 命令"></a>at 命令</h3><p>以命令 <code>[user@A ~]$ at &lt;time&gt;</code> 启动 at 命令行，并输入要执行的任务命令集合，按 [ctrl + d] 结束输入，at 命令会提示该任务的系统编号为 ##；这里，<code>&lt;time&gt;</code> 格式可以为：</p>
-<ul>
-<li>HH:MM，如 02:30</li>
-<li>HH:MM YYYY-MM-DD，如 08:00 2018-10-10</li>
-<li>HH:MM [am | pm] [month] [date]，如 08:00 Oct 1</li>
-<li>HH:MM [am | pm] + number [minutes | hours | days | weeks]，如 08:00 + 1 days</li>
-<li>now + number [minutes | hours | days | weeks]，如 now + 5 minutes</li>
-</ul>
-<p>以命令 <code>[user@A ~]$ at -l</code> 查看所有等待执行的 at 任务；</p>
-<p>以命令 <code>[user@A ~]$ at -c ##</code> 查看 ## 号 at 任务的任务详情；</p>
-<p>以命令 <code>[user@A ~]$ at -d ##</code> 删除正在等待执行的 ## 号 at 任务。</p>
 <hr>
 <h2 id="挂载-ntfs-硬盘并指定访问权限"><a href="#挂载-ntfs-硬盘并指定访问权限" class="headerlink" title="挂载 ntfs 硬盘并指定访问权限"></a>挂载 ntfs 硬盘并指定访问权限</h2><p>CentOS 系统默认不支持 ntfs 文件系统，需先行以命令 <code>[root@A ~]$ yum install ntfs-3g</code> 安装额外驱动 ntfs-3g。</p>
 <p>若需指定挂载目录为 GID 为 1005 的用户组和 UID 为 1010 的用户所有，且访问权限为 750，则可以如下命令将硬盘 /dev/sdb 挂载在目录 /data 下：</p>
@@ -755,6 +587,178 @@
 </tr>
 </tbody>
 </table>
+<hr>
+<h2 id="挂载远程目录"><a href="#挂载远程目录" class="headerlink" title="挂载远程目录"></a>挂载远程目录</h2><p>以主机 B（ip 为 192.18.1.2）挂载远程主机 A（ip 为 192.18.1.1）的共享目录 /data/share 为例：</p>
+<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><ul>
+<li><code>[root@A ~]$ yum install nfs-utils rpcbind</code> 安装 nfs-utils 和 rpcbind 服务；</li>
+<li><code>[root@A ~]$ chkconfig nfs on</code> 设置 nfs 服务开机自启，<code>[root@A ~]$ chkconfig rpcbind on</code> 设置 rpcbind 服务开机自启；</li>
+<li><code>[root@A ~]$ service rpcbind start</code> 启动 rpcbind 服务，<code>[root@A ~]$ service nfs start</code> 启动 nfs 服务，注意这两条命令的执行顺序；</li>
+<li>在文件 /etc/exports 中添加内容 <code>/data/share 192.18.1.2(rw, no_root_squash, no_subtree_check)</code> ；</li>
+<li><code>[root@A ~]$ exportfs -a</code> 使配置文件生效；</li>
+<li><code>[root@A ~]$ showmount -e</code> 查看是否共享成功。</li>
+</ul>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><ul>
+<li><code>[root@B ~]$ yum install nfs-utils rpcbind</code> 安装 nfs-utils 和 rpcbind 服务；</li>
+<li><code>[root@A ~]$ chkconfig nfs on</code> 设置 nfs 服务开机自启，<code>[root@A ~]$ chkconfig rpcbind on</code> 设置 rpcbind 服务开机自启；</li>
+<li><code>[root@A ~]$ service rpcbind start</code> 启动 rpcbind 服务，<code>[root@A ~]$ service nfs start</code> 启动 nfs 服务，注意这两条命令的执行顺序；</li>
+<li><code>[root@B ~]$ showmount -e 192.18.1.1</code> 查看是否检测到服务端的共享</li>
+<li><code>[root@B ~]$ mkdir /data/share</code> 创建映射目录；</li>
+<li>在文件 /etc/fstab 中添加内容 <code>192.18.1.1:/data/share /data/share nfs rw,defaults 0 0</code> ；</li>
+<li>当前启动下，执行手动挂载 <code>[root@B ~]$ mount -t nfs 192.18.1.1:/data/share /data/share</code> 。</li>
+</ul>
+<p>若出现由于客户端偶然宕机而导致服务端执行 df 或 ls 等与远程挂载目录相关的操作时终端卡死的情况，可以依次执行如下命令手动重启客户端 rpcbind 和 nfs 服务解决：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@A ~]$ service rpcbind stop</span><br><span class="line">[root@A ~]$ service nfs stop</span><br><span class="line">[root@A ~]$ service rpcbind start</span><br><span class="line">[root@A ~]$ service nfs start</span><br></pre></td></tr></table></figure>
+<p>注意，这里如果使用命令 <code>[root@A ~]$ service XXX restart</code> 重启服务可能无法解决该问题。</p>
+<hr>
+<h2 id="安装-PbsPro-作业调度系统"><a href="#安装-PbsPro-作业调度系统" class="headerlink" title="安装 PbsPro 作业调度系统"></a>安装 PbsPro 作业调度系统</h2><h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><h4 id="机器"><a href="#机器" class="headerlink" title="机器"></a>机器</h4><p>假设如下两台机器（CentOS 7 系统）：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">主机名</th>
+<th style="text-align:center">主机 IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">pbsmaster</td>
+<td style="text-align:center">192.18.1.1</td>
+</tr>
+<tr>
+<td style="text-align:center">pbsslave</td>
+<td style="text-align:center">192.18.1.2</td>
+</tr>
+</tbody>
+</table>
+<p>修改两台机器的 /etc/hosts 文件，确保两台机器可以 ssh 互相访问。</p>
+<h4 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h4><p><a href="https://github.com/PBSPro/pbspro/releases" target="_blank" rel="noopener">此处</a>下载安装包 pbspro-14.1.0.tar.gz 。</p>
+<h4 id="制作-RPM-包"><a href="#制作-RPM-包" class="headerlink" title="制作 RPM 包"></a>制作 RPM 包</h4><p>先提前安装依赖包：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> yum -y install rpm-build</span><br><span class="line"><span class="meta">$</span> yum -y install gcc autoconf automake libtool hwloc-devel</span><br><span class="line"><span class="meta">$</span> yum -y install libX11-devel libXt-devel libedit-devel libical-devel ncurses-devel postgresql-devel python-devel python-devel tcl-devel tk-devel swig expat-devel openssl-devel libXext libXft</span><br></pre></td></tr></table></figure>
+<p>执行以下命令，在 /root/rpmbuild/RPMS/x86_64 目录下生成 pbspro-[ client | debuginfo | execution | server ]-14.1.0-0.x86_64.rpm 包：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> mkdir -p /root/rpmbuild/SOURCES/</span><br><span class="line"><span class="meta">$</span> mv pbspro-14.1.0.tar.gz /root/rpmbuild/SOURCES/</span><br><span class="line"><span class="meta">$</span> cd /root/rpmbuild/SOURCES &amp;&amp; tar zxvf pbspro-14.1.0.tar.gz</span><br><span class="line"><span class="meta">$</span> cd /root/rpmbuild/SOURCES/pbspro-14.1.0 &amp;&amp; rpmbuild -ba pbspro.spec</span><br></pre></td></tr></table></figure>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="安装-Master"><a href="#安装-Master" class="headerlink" title="安装 Master"></a>安装 Master</h4><p>登录至 Master 节点，命令 <code>[root@pbsmaster /root/rpmbuild/RPMS/x86_64]$ yum install -y pbspro-server-14.1.0-0.x86_64.rpm</code> （或者 <code>[root@pbsmaster /root/rpmbuild/RPMS/x86_64]$ rpm -ivh pbspro-server-14.1.0-0.x86_64.rpm</code> ）安装作业调度系统，修改 /etc/pbs.conf 文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PBS_SERVER=pbsmaster</span><br><span class="line">PBS_START_MOM=1</span><br></pre></td></tr></table></figure>
+<h4 id="安装-Slave"><a href="#安装-Slave" class="headerlink" title="安装 Slave"></a>安装 Slave</h4><p>登录至 Slave 节点，命令 <code>[root@pbsslave /root/rpmbuild/RPMS/x86_64]$ yum install -y pbspro-execution-14.1.0-0.x86_64.rpm</code> （或者 <code>[root@pbsslave /root/rpmbuild/RPMS/x86_64]$ rpm -ivh pbspro-execution-14.1.0-0.x86_64.rpm</code> ）安装作业调度系统，修改 /etc/pbs.conf 文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PBS_SERVER=pbsmaster</span><br><span class="line">PBS_START_MOM=1</span><br></pre></td></tr></table></figure>
+<p>修改 /var/spool/pbs/mom_priv/config 文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span>clienthost pbsmaster</span><br><span class="line"><span class="meta">$</span>restrict_user_maxsysid 999</span><br></pre></td></tr></table></figure>
+<h4 id="启动-pbs"><a href="#启动-pbs" class="headerlink" title="启动 pbs"></a>启动 pbs</h4><p>以命令 <code>$ /etc/init.d/pbs start</code> 分别在 pbsmaster 和 pbsslave 节点上启动 pbs，以命令 <code>[root@pbsmaster ~]$ qmgr -c &#39;create node pbsslave&#39;</code> 在 pbsmaster 主节点上将 pbsslave 节点加入集群。</p>
+<hr>
+<h2 id="安装字体"><a href="#安装字体" class="headerlink" title="安装字体"></a>安装字体</h2><h3 id="查看系统字体"><a href="#查看系统字体" class="headerlink" title="查看系统字体"></a>查看系统字体</h3><p>以命令 <code>[user@A ~]$ fc-list</code> 查看所有已安装的系统字体；以命令 <code>[user@A ~]$ fc-list:lang=zh</code> 查看系统中的中文字体。</p>
+<h3 id="安装额外的字体"><a href="#安装额外的字体" class="headerlink" title="安装额外的字体"></a>安装额外的字体</h3><ul>
+<li>以管理员身份将字体文件拷贝到 /usr/share/fonts/ 目录下；</li>
+<li><code>[root@A ~]$ cd /usr/share/fonts</code> ；</li>
+<li><code>[root@A ~]$ mkfontscale</code> （若找不到该命令，可以命令 <code>[root@A ~] yum install mkfontscale</code> 安装）；</li>
+<li><code>[root@A ~]$ mkfontdir</code> 。</li>
+</ul>
+<hr>
+<h2 id="修改系统登录提示（欢迎）信息"><a href="#修改系统登录提示（欢迎）信息" class="headerlink" title="修改系统登录提示（欢迎）信息"></a>修改系统登录提示（欢迎）信息</h2><p>Linux 系统 SSH 的欢迎信息可以通过修改 /etc/motd 的内容来进行自定义。</p>
+<p>但是 /etc/motd 只支持纯文本的欢迎信息。想要实现彩色效果，可以通过修改 /etc/profile.d/motd.sh 来实现，如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">echo "==================================================="</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> ATTENTION:</span><br><span class="line">echo -en "\033[01;31m"</span><br><span class="line">echo -e  "ATTENTION:"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>    1. submitting your job at: seislab1, seislab2</span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    1. submitting your job at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab1, seislab2"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>    2. GPU test at: seislab0</span><br><span class="line">echo -en "\033[00m"</span><br><span class="line">echo -en "    2. GPU test at: "</span><br><span class="line">echo -en "\033[01;32m"</span><br><span class="line">echo -e  "seislab0"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span></span><br><span class="line">echo -e  "\033[00m"</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="bashrc、-etc-bashrc-和-etc-profile"><a href="#bashrc、-etc-bashrc-和-etc-profile" class="headerlink" title="~/.bashrc、/etc/bashrc 和 /etc/profile"></a>~/.bashrc、/etc/bashrc 和 /etc/profile</h2><ul>
+<li>~/.bashrc 为用户终端环境设置，仅影响当前用户；/etc/bashrc 和 /etc/profile 为系统终端环境设置，影响所有用户。</li>
+<li>系统登录时，/etc/profile 最先被加载，而后它调用了 /etc/bashrc 以及 ~/.bashrc。</li>
+<li>/etc/profile 对所有 shell 生效，/etc/bashrc 和 ~/.bashrc 仅对 bash 生效。</li>
+</ul>
+<hr>
+<h2 id="修改用户名及删除用户"><a href="#修改用户名及删除用户" class="headerlink" title="修改用户名及删除用户"></a>修改用户名及删除用户</h2><p>以下命令修改旧用户名 test 为新用户名 love：</p>
+<ul>
+<li>修改用户信息及 HOME 目录：<code>[root@A ~]$ usermod -l love -d /home/love -m test</code></li>
+<li>修改用户组信息：<code>[root@A ~]$ groumod -n love test</code></li>
+</ul>
+<p>以命令 <code>[root@A ~]$ userdel -rf test</code> 删除用户 test 。</p>
+<hr>
+<h2 id="发送广播消息"><a href="#发送广播消息" class="headerlink" title="发送广播消息"></a>发送广播消息</h2><h3 id="mesg-命令"><a href="#mesg-命令" class="headerlink" title="mesg 命令"></a>mesg 命令</h3><ul>
+<li>语法：<code>[root@A ~]$ mesg [ny]</code></li>
+<li>功能：设置终端机的写入权限</li>
+<li>参数：<code>n/y</code> 允许/不允许系统用户将信息直接显示在屏幕上</li>
+</ul>
+<h3 id="write-命令"><a href="#write-命令" class="headerlink" title="write 命令"></a>write 命令</h3><ul>
+<li>语法：<code>[user@A ~]$ write 用户名 [终端串口]</code></li>
+<li>功能：向系统某一用户发送消息</li>
+</ul>
+<h3 id="wall-命令"><a href="#wall-命令" class="headerlink" title="wall 命令"></a>wall 命令</h3><ul>
+<li>语法：<code>[root@A ~]$ wall &lt; 文件名</code></li>
+<li>功能：向系统所有已登录用户发送文件内容</li>
+</ul>
+<hr>
+<h2 id="关机-重启"><a href="#关机-重启" class="headerlink" title="关机/重启"></a>关机/重启</h2><h3 id="shutdown-命令"><a href="#shutdown-命令" class="headerlink" title="shutdown 命令"></a>shutdown 命令</h3><ul>
+<li>语法：<code>[root@A ~]$ shutdown [-t sec] [-hkr] time &quot;WARNING INFO.&quot;</code></li>
+<li>参数：<ul>
+<li>h: 停止所有系统服务后立即关机；</li>
+<li>k: 只发送警告信息，实际不执行关机操作；</li>
+<li>r: 停止所有系统服务后重新启动。</li>
+</ul>
+</li>
+<li>实例：<ul>
+<li><code>shutdown -h now</code>: 立即关机；</li>
+<li><code>shutdown -h 20:30</code>: 在下一个 20:30 时刻关机；</li>
+<li><code>shutdown +5 &quot;System will shutdown after 5 minutes</code>: 向所有登入用户发送警告，在 5 分钟后关机。</li>
+</ul>
+</li>
+</ul>
+<h3 id="reboot-命令"><a href="#reboot-命令" class="headerlink" title="reboot 命令"></a>reboot 命令</h3><ul>
+<li>语法：<code>[root@A ~]$ reboot [-w]</code></li>
+<li>参数：<code>w</code> 仅做测试，执行一个重开机模拟，并不真正将系统重启。</li>
+</ul>
+<hr>
+<h2 id="pip-指定安装目录"><a href="#pip-指定安装目录" class="headerlink" title="pip 指定安装目录"></a>pip 指定安装目录</h2><h3 id="临时方法"><a href="#临时方法" class="headerlink" title="临时方法"></a>临时方法</h3><p>安装模块 modulename 到目录 /path/to/directory 可以使用命令：<code>[user@A ~]$ pip install --target=/path/to/directory modulename</code></p>
+<p>此方法会直接在目标目录创建 module 文件夹，因此调用前只需将该目录加入 <code>PYTHONPATH</code> 系统环境变量即可。</p>
+<h3 id="永久方法"><a href="#永久方法" class="headerlink" title="永久方法"></a>永久方法</h3><p>若经常需要安装一些额外的 python 函数包到目录 /path/to/directory，则可以修改用户 HOME 目录下 .pip/pip.conf（若不存在则创建），加入以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[install]</span><br><span class="line">install-option=--prefix=/path/to/directory</span><br></pre></td></tr></table></figure>
+<p>此方法会根据安装 module 版本的不同，在目标目录下进一步创建其他子文件夹，最终在子文件夹下创建 module 文件夹，因此调用前需将子文件夹目录加入到 <code>PYTHONPATH</code> 系统环境变量中。</p>
+<hr>
+<h2 id="强制踢出已登录用户"><a href="#强制踢出已登录用户" class="headerlink" title="强制踢出已登录用户"></a>强制踢出已登录用户</h2><p>以下实现踢出已登录用户 user：</p>
+<ul>
+<li>先使用 <code>w</code> 命令查看用户 user 登录的 TTY 端口号，此处假设端口号为 pts/4；</li>
+<li>再使用命令 <code>[root@A ~]$ pkill -kill -t pts/4</code> 踢出。</li>
+<li>最后使用命令 <code>[root@A ~]$ pkill -u user</code> 杀死该用户的所有进程。</li>
+</ul>
+<hr>
+<h2 id="查看系统信息"><a href="#查看系统信息" class="headerlink" title="查看系统信息"></a>查看系统信息</h2><ul>
+<li>查看系统版本号：<code>[user@A ~]$ cat /etc/centos-release</code></li>
+<li>查看系统内核版本号：<code>[user@A ~]$ uname -r</code></li>
+<li>查看操作系统位数：<code>[user@A ~]$ getconf LONG_BIT</code></li>
+<li>查看系统日志：<code>[root@A ~]$ vim /var/log/messages</code></li>
+<li>查看系统字体：<code>[user@A ~]$ fc-list</code>；查看系统中文字体：<code>[user@A ~]$ fc-list :lang=zh</code></li>
+</ul>
+<hr>
+<h2 id="xz-压缩或解压"><a href="#xz-压缩或解压" class="headerlink" title="xz 压缩或解压"></a>xz 压缩或解压</h2><p>使用 <code>xz -z dir</code> 命令压缩目录 dir，使用 <code>xz -d file</code> 命令解压文件 file。在解压以 <code>.tar.xz</code> 结尾的文件时，可以调用 <code>tar -l xz -cxvf</code> 命令。</p>
+<hr>
+<h2 id="rpm-查看系统安装包安装目录"><a href="#rpm-查看系统安装包安装目录" class="headerlink" title="rpm 查看系统安装包安装目录"></a>rpm 查看系统安装包安装目录</h2><p>先用 <code>rpm -qa | grep libname</code> 命令查询 libname 安装包得到该包完整名字 libname-version.arch ，再用 <code>rpm -ql libname-version.arch</code> 命令查看该包安装位置。</p>
+<hr>
+<h2 id="查看-CPU-温度"><a href="#查看-CPU-温度" class="headerlink" title="查看 CPU 温度"></a>查看 CPU 温度</h2><p>以命令 <code>[root@A ~]$ yum install lm_sensors.x86_64</code> 安装 lm_sensors，以 <code>[root@A ~]$ sh -c &quot;yes|sensors-detect&quot;</code> 检测传感器后，即可以命令 <code>[user@A ~]$ sensors</code> 查看 CPU 温度了。</p>
+<hr>
+<h2 id="查看已安装的软件包"><a href="#查看已安装的软件包" class="headerlink" title="查看已安装的软件包"></a>查看已安装的软件包</h2><ul>
+<li>以 rpm 包安装的：<code>[root@A ~]$ rpm -qa | grep packagename</code></li>
+<li>以 deb 包安装的：<code>[root@A ~]$ dpkg -l | grep packagename</code></li>
+<li>以 yum 命令安装的：<code>[root@A ~]$ yum list installed | grep packagename</code></li>
+</ul>
+<hr>
+<h2 id="修改-Ubuntu-默认终端"><a href="#修改-Ubuntu-默认终端" class="headerlink" title="修改 Ubuntu 默认终端"></a>修改 Ubuntu 默认终端</h2><p>在考虑到多终端窗口分屏显示时，可以采用命令 <code>[root@A ~]$ apt-get install terminator</code> 安装新的终端工具 <strong>Terminator</strong> 。但在安装该工具后会自动设置默认终端为 Terminator，可通过如下命令重置默认终端为系统自带的 gnome-terminal：</p>
+<ul>
+<li><code>gsettings set org.gnome.desktop.default-applications.terminal exec /usr/bin/gnome-terminal</code></li>
+<li><code>gsettings set org.gnome.desktop.default-applications.terminal exec-arg &quot;-x&quot;</code></li>
+</ul>
+<hr>
+<h2 id="一次性定时任务-at"><a href="#一次性定时任务-at" class="headerlink" title="一次性定时任务 at"></a>一次性定时任务 at</h2><h3 id="检查运行状态"><a href="#检查运行状态" class="headerlink" title="检查运行状态"></a>检查运行状态</h3><p>以命令 <code>[user@A ~]$ service atd status</code> 查看 at 的守护进程 atd 是否正在运行。</p>
+<h3 id="黑白名单"><a href="#黑白名单" class="headerlink" title="黑白名单"></a>黑白名单</h3><p>黑名单文件为 <em>/etc/at.deny</em>，白名单文件为 <em>/etc/at.allow</em>，并遵循如下规则：</p>
+<ul>
+<li>当系统中存在白名单文件时，黑名单文件将被忽略，只有写入白名单的用户才可以运行 at 命令；</li>
+<li>当系统中只有黑名单文件中，被写入名单的用户不能运行 at 命令，且黑名单对 root 无效；</li>
+<li>如果两个文件都不存在时，只有 root 用户可以运行 at 命令。</li>
+</ul>
+<h3 id="at-命令"><a href="#at-命令" class="headerlink" title="at 命令"></a>at 命令</h3><p>以命令 <code>[user@A ~]$ at &lt;time&gt;</code> 启动 at 命令行，并输入要执行的任务命令集合，按 [ctrl + d] 结束输入，at 命令会提示该任务的系统编号为 ##；这里，<code>&lt;time&gt;</code> 格式可以为：</p>
+<ul>
+<li>HH:MM，如 02:30</li>
+<li>HH:MM YYYY-MM-DD，如 08:00 2018-10-10</li>
+<li>HH:MM [am | pm] [month] [date]，如 08:00 Oct 1</li>
+<li>HH:MM [am | pm] + number [minutes | hours | days | weeks]，如 08:00 + 1 days</li>
+<li>now + number [minutes | hours | days | weeks]，如 now + 5 minutes</li>
+</ul>
+<p>以命令 <code>[user@A ~]$ at -l</code> 查看所有等待执行的 at 任务；</p>
+<p>以命令 <code>[user@A ~]$ at -c ##</code> 查看 ## 号 at 任务的任务详情；</p>
+<p>以命令 <code>[user@A ~]$ at -d ##</code> 删除正在等待执行的 ## 号 at 任务。</p>
 <hr>
 <h2 id="安装-NVIDIA-显卡驱动及-cuda-库"><a href="#安装-NVIDIA-显卡驱动及-cuda-库" class="headerlink" title="安装 NVIDIA 显卡驱动及 cuda 库"></a>安装 NVIDIA 显卡驱动及 cuda 库</h2><h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><p>在 NVIDIA 官网分别下载<a href="https://www.nvidia.com/Download/Find.aspx" target="_blank" rel="noopener"> NVIDIA 显卡驱动</a>和<a href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" rel="noopener"> cuda 库</a> 安装程序 run 文件。对于 CentOS 7 系统，显卡驱动下载 <code>Linux 64-bit</code> 对应版本即可，若下载 <code>Linux 64-bit RHEL 7</code> 对应版本可能会安装失败。</p>
 <p>可先行以命令 <code>[root@A ~]$ yum install  --enablerepo=epel dkms</code> 安装 DKMS (Dynamic Kernel Module Support) 模块，它可在 kernel 更新后自动为我们重装驱动。</p>
@@ -1074,7 +1078,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH-免密登录"><span class="nav-number">1.</span> <span class="nav-text">SSH 免密登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置系统免密登录"><span class="nav-number">2.</span> <span class="nav-text">设置系统免密登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CentOS-minimal-首次安装后连接网络"><span class="nav-number">3.</span> <span class="nav-text">CentOS minimal 首次安装后连接网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-EPEL-源"><span class="nav-number">4.</span> <span class="nav-text">安装 EPEL 源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-ELRepo-源"><span class="nav-number">5.</span> <span class="nav-text">安装 ELRepo 源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统软件安装"><span class="nav-number">6.</span> <span class="nav-text">系统软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#必要安装"><span class="nav-number">6.1.</span> <span class="nav-text">必要安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可选安装"><span class="nav-number">6.2.</span> <span class="nav-text">可选安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPU-节点安装"><span class="nav-number">6.3.</span> <span class="nav-text">GPU 节点安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bashrc、-etc-bashrc-和-etc-profile"><span class="nav-number">7.</span> <span class="nav-text">~/.bashrc、/etc/bashrc 和 /etc/profile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改系统登录提示（欢迎）信息"><span class="nav-number">8.</span> <span class="nav-text">修改系统登录提示（欢迎）信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改主机名"><span class="nav-number">9.</span> <span class="nav-text">修改主机名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改用户名及删除用户"><span class="nav-number">10.</span> <span class="nav-text">修改用户名及删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发送广播消息"><span class="nav-number">11.</span> <span class="nav-text">发送广播消息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mesg-命令"><span class="nav-number">11.1.</span> <span class="nav-text">mesg 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#write-命令"><span class="nav-number">11.2.</span> <span class="nav-text">write 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wall-命令"><span class="nav-number">11.3.</span> <span class="nav-text">wall 命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关机-重启"><span class="nav-number">12.</span> <span class="nav-text">关机/重启</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shutdown-命令"><span class="nav-number">12.1.</span> <span class="nav-text">shutdown 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reboot-命令"><span class="nav-number">12.2.</span> <span class="nav-text">reboot 命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户到-sudoer-列表"><span class="nav-number">13.</span> <span class="nav-text">添加用户到 sudoer 列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pip-指定安装目录"><span class="nav-number">14.</span> <span class="nav-text">pip 指定安装目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#临时方法"><span class="nav-number">14.1.</span> <span class="nav-text">临时方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#永久方法"><span class="nav-number">14.2.</span> <span class="nav-text">永久方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强制踢出已登录用户"><span class="nav-number">15.</span> <span class="nav-text">强制踢出已登录用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看系统信息"><span class="nav-number">16.</span> <span class="nav-text">查看系统信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xz-压缩或解压"><span class="nav-number">17.</span> <span class="nav-text">xz 压缩或解压</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpm-查看系统安装包安装目录"><span class="nav-number">18.</span> <span class="nav-text">rpm 查看系统安装包安装目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改系统时区"><span class="nav-number">19.</span> <span class="nav-text">修改系统时区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载远程目录"><span class="nav-number">20.</span> <span class="nav-text">挂载远程目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端"><span class="nav-number">20.1.</span> <span class="nav-text">服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端"><span class="nav-number">20.2.</span> <span class="nav-text">客户端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-PbsPro-作业调度系统"><span class="nav-number">21.</span> <span class="nav-text">安装 PbsPro 作业调度系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备"><span class="nav-number">21.1.</span> <span class="nav-text">准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#机器"><span class="nav-number">21.1.1.</span> <span class="nav-text">机器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装包"><span class="nav-number">21.1.2.</span> <span class="nav-text">安装包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#制作-RPM-包"><span class="nav-number">21.1.3.</span> <span class="nav-text">制作 RPM 包</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">21.2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-Master"><span class="nav-number">21.2.1.</span> <span class="nav-text">安装 Master</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-Slave"><span class="nav-number">21.2.2.</span> <span class="nav-text">安装 Slave</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动-pbs"><span class="nav-number">21.2.3.</span> <span class="nav-text">启动 pbs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看-CPU-温度"><span class="nav-number">22.</span> <span class="nav-text">查看 CPU 温度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载本地磁盘"><span class="nav-number">23.</span> <span class="nav-text">挂载本地磁盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看本地已挂载磁盘文件系统格式"><span class="nav-number">23.1.</span> <span class="nav-text">查看本地已挂载磁盘文件系统格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#格式化本地磁盘"><span class="nav-number">23.2.</span> <span class="nav-text">格式化本地磁盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载本地磁盘-1"><span class="nav-number">23.3.</span> <span class="nav-text">挂载本地磁盘</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装字体"><span class="nav-number">24.</span> <span class="nav-text">安装字体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看系统字体"><span class="nav-number">24.1.</span> <span class="nav-text">查看系统字体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装额外的字体"><span class="nav-number">24.2.</span> <span class="nav-text">安装额外的字体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看已安装的软件包"><span class="nav-number">25.</span> <span class="nav-text">查看已安装的软件包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">26.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一次性定时任务-at"><span class="nav-number">27.</span> <span class="nav-text">一次性定时任务 at</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#检查运行状态"><span class="nav-number">27.1.</span> <span class="nav-text">检查运行状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#黑白名单"><span class="nav-number">27.2.</span> <span class="nav-text">黑白名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#at-命令"><span class="nav-number">27.3.</span> <span class="nav-text">at 命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载-ntfs-硬盘并指定访问权限"><span class="nav-number">28.</span> <span class="nav-text">挂载 ntfs 硬盘并指定访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-NVIDIA-显卡驱动及-cuda-库"><span class="nav-number">29.</span> <span class="nav-text">安装 NVIDIA 显卡驱动及 cuda 库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备"><span class="nav-number">29.1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行安装"><span class="nav-number">29.2.</span> <span class="nav-text">执行安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题总结"><span class="nav-number">30.</span> <span class="nav-text">常见问题总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mount-nfs-requested-NFS-version-or-transport-protocol-is-not-supported"><span class="nav-number">30.1.</span> <span class="nav-text">mount.nfs: requested NFS version or transport protocol is not supported</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pbsnodes-工作异常"><span class="nav-number">30.2.</span> <span class="nav-text">pbsnodes 工作异常</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#dd-命令刻录系统启动盘"><span class="nav-number">1.</span> <span class="nav-text">dd 命令刻录系统启动盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH-免密登录"><span class="nav-number">2.</span> <span class="nav-text">SSH 免密登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置系统免密登录"><span class="nav-number">3.</span> <span class="nav-text">设置系统免密登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CentOS-minimal-首次安装后连接网络"><span class="nav-number">4.</span> <span class="nav-text">CentOS minimal 首次安装后连接网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-EPEL-源"><span class="nav-number">5.</span> <span class="nav-text">安装 EPEL 源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-ELRepo-源"><span class="nav-number">6.</span> <span class="nav-text">安装 ELRepo 源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统软件安装"><span class="nav-number">7.</span> <span class="nav-text">系统软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#必要安装"><span class="nav-number">7.1.</span> <span class="nav-text">必要安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可选安装"><span class="nav-number">7.2.</span> <span class="nav-text">可选安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPU-节点安装"><span class="nav-number">7.3.</span> <span class="nav-text">GPU 节点安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改主机名"><span class="nav-number">8.</span> <span class="nav-text">修改主机名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改系统时区"><span class="nav-number">9.</span> <span class="nav-text">修改系统时区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户到-sudoer-列表"><span class="nav-number">10.</span> <span class="nav-text">添加用户到 sudoer 列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载本地磁盘"><span class="nav-number">11.</span> <span class="nav-text">挂载本地磁盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看本地已挂载磁盘文件系统格式"><span class="nav-number">11.1.</span> <span class="nav-text">查看本地已挂载磁盘文件系统格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#格式化本地磁盘"><span class="nav-number">11.2.</span> <span class="nav-text">格式化本地磁盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载本地磁盘-1"><span class="nav-number">11.3.</span> <span class="nav-text">挂载本地磁盘</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载-ntfs-硬盘并指定访问权限"><span class="nav-number">12.</span> <span class="nav-text">挂载 ntfs 硬盘并指定访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载远程目录"><span class="nav-number">13.</span> <span class="nav-text">挂载远程目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端"><span class="nav-number">13.1.</span> <span class="nav-text">服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端"><span class="nav-number">13.2.</span> <span class="nav-text">客户端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-PbsPro-作业调度系统"><span class="nav-number">14.</span> <span class="nav-text">安装 PbsPro 作业调度系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备"><span class="nav-number">14.1.</span> <span class="nav-text">准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#机器"><span class="nav-number">14.1.1.</span> <span class="nav-text">机器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装包"><span class="nav-number">14.1.2.</span> <span class="nav-text">安装包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#制作-RPM-包"><span class="nav-number">14.1.3.</span> <span class="nav-text">制作 RPM 包</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">14.2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-Master"><span class="nav-number">14.2.1.</span> <span class="nav-text">安装 Master</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-Slave"><span class="nav-number">14.2.2.</span> <span class="nav-text">安装 Slave</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动-pbs"><span class="nav-number">14.2.3.</span> <span class="nav-text">启动 pbs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装字体"><span class="nav-number">15.</span> <span class="nav-text">安装字体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看系统字体"><span class="nav-number">15.1.</span> <span class="nav-text">查看系统字体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装额外的字体"><span class="nav-number">15.2.</span> <span class="nav-text">安装额外的字体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改系统登录提示（欢迎）信息"><span class="nav-number">16.</span> <span class="nav-text">修改系统登录提示（欢迎）信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bashrc、-etc-bashrc-和-etc-profile"><span class="nav-number">17.</span> <span class="nav-text">~/.bashrc、/etc/bashrc 和 /etc/profile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改用户名及删除用户"><span class="nav-number">18.</span> <span class="nav-text">修改用户名及删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发送广播消息"><span class="nav-number">19.</span> <span class="nav-text">发送广播消息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mesg-命令"><span class="nav-number">19.1.</span> <span class="nav-text">mesg 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#write-命令"><span class="nav-number">19.2.</span> <span class="nav-text">write 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wall-命令"><span class="nav-number">19.3.</span> <span class="nav-text">wall 命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关机-重启"><span class="nav-number">20.</span> <span class="nav-text">关机/重启</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shutdown-命令"><span class="nav-number">20.1.</span> <span class="nav-text">shutdown 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reboot-命令"><span class="nav-number">20.2.</span> <span class="nav-text">reboot 命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pip-指定安装目录"><span class="nav-number">21.</span> <span class="nav-text">pip 指定安装目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#临时方法"><span class="nav-number">21.1.</span> <span class="nav-text">临时方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#永久方法"><span class="nav-number">21.2.</span> <span class="nav-text">永久方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强制踢出已登录用户"><span class="nav-number">22.</span> <span class="nav-text">强制踢出已登录用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看系统信息"><span class="nav-number">23.</span> <span class="nav-text">查看系统信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xz-压缩或解压"><span class="nav-number">24.</span> <span class="nav-text">xz 压缩或解压</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpm-查看系统安装包安装目录"><span class="nav-number">25.</span> <span class="nav-text">rpm 查看系统安装包安装目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看-CPU-温度"><span class="nav-number">26.</span> <span class="nav-text">查看 CPU 温度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看已安装的软件包"><span class="nav-number">27.</span> <span class="nav-text">查看已安装的软件包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">28.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一次性定时任务-at"><span class="nav-number">29.</span> <span class="nav-text">一次性定时任务 at</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#检查运行状态"><span class="nav-number">29.1.</span> <span class="nav-text">检查运行状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#黑白名单"><span class="nav-number">29.2.</span> <span class="nav-text">黑白名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#at-命令"><span class="nav-number">29.3.</span> <span class="nav-text">at 命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-NVIDIA-显卡驱动及-cuda-库"><span class="nav-number">30.</span> <span class="nav-text">安装 NVIDIA 显卡驱动及 cuda 库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备"><span class="nav-number">30.1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行安装"><span class="nav-number">30.2.</span> <span class="nav-text">执行安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题总结"><span class="nav-number">31.</span> <span class="nav-text">常见问题总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mount-nfs-requested-NFS-version-or-transport-protocol-is-not-supported"><span class="nav-number">31.1.</span> <span class="nav-text">mount.nfs: requested NFS version or transport protocol is not supported</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pbsnodes-工作异常"><span class="nav-number">31.2.</span> <span class="nav-text">pbsnodes 工作异常</span></a></li></ol></li></ol></div>
             
 
           </div>
