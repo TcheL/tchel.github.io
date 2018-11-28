@@ -114,20 +114,25 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Here4U">
-<meta property="og:url" content="http://tchel.github.io/tags/Software/index.html">
+  <meta name="description" content="Ubuntu 不乖的时候，你是要揍他的">
+<meta name="keywords" content="Ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于 Ubuntu 的陈年往事">
+<meta property="og:url" content="http://tchel.github.io/2018/11/28/Tips-of-Ubuntu/index.html">
 <meta property="og:site_name" content="Here4U">
+<meta property="og:description" content="Ubuntu 不乖的时候，你是要揍他的">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-28T03:04:24.203Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Here4U">
+<meta name="twitter:title" content="关于 Ubuntu 的陈年往事">
+<meta name="twitter:description" content="Ubuntu 不乖的时候，你是要揍他的">
 
 
 
 
 
 
-  <link rel="canonical" href="http://tchel.github.io/tags/Software/"/>
+  <link rel="canonical" href="http://tchel.github.io/2018/11/28/Tips-of-Ubuntu/"/>
 
 
 
@@ -137,7 +142,7 @@
   };
 </script>
 
-  <title>Tag: Software | Here4U</title>
+  <title>关于 Ubuntu 的陈年往事 | Here4U</title>
   
 
 
@@ -187,7 +192,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <!-- 小条 Fork me on Github
@@ -249,7 +254,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
   </li>
@@ -329,84 +334,239 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Software<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tchel.github.io/2018/11/28/Tips-of-Ubuntu/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tche LIU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/f58b38472ae7594c1da00001675eb66a?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Here4U">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/11/24/Love-of-Seismology/" itemprop="url">
-              
-                <span itemprop="name">地震学中那些可爱的人和事儿</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">关于 Ubuntu 的陈年往事
+              
+            
+          </h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-11-24T12:39:48+08:00"
-              content="2018-11-24" >
-          11-24
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
 
-    </header>
-  </article>
+            
+            
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-28 10:20:06 / Modified: 11:04:24" itemprop="dateCreated datePublished" datetime="2018-11-28T10:20:06+08:00">2018-11-28</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">Ubuntu 不乖的时候，你是要揍他的</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Ubuntu-启动栏图标自定义设置"><a href="#Ubuntu-启动栏图标自定义设置" class="headerlink" title="Ubuntu 启动栏图标自定义设置"></a>Ubuntu 启动栏图标自定义设置</h2><p>个人有时的误操作会导致 Ubuntu 启动栏某些软件的图标消失，变成一个大大的问号「？」，为了挽救难看的启动栏，这里学习一下 Ubuntu 启动栏图标的实现原理：</p>
+<p>在目录 <code>/usr/share/applications</code> 下可以看到，这里有很多以 <code>.desktop</code> 结尾的文件，其实这些文件就是 Ubuntu 启动栏各个软件图标的设置文件。</p>
+<p>这里以 firefox 火狐浏览器（是的，我就是把它的图标搞丢了 😐）为例介绍启动图标的设置。可自行新建或修改一个以 firefox.desktop 文件，写入或修改内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Name=Firefox 63.0.3</span><br><span class="line">Comment=this is firefox</span><br><span class="line">Exec=/opt/firefox/firefox</span><br><span class="line">Icon=/opt/firefox/browser/chrome/icons/defaults/default128.png</span><br><span class="line">Terminal=false</span><br><span class="line">Type=Application</span><br><span class="line">Categories=Application;Network;</span><br></pre></td></tr></table></figure>
+<p>其中，较为重要的几个，<code>Name</code> 字段即启动图标鼠标悬停提示，<code>Exec</code> 字段即启动图标对应的可执行程序，<code>Icon</code> 字段为启动图标的 icon 文件。</p>
+<hr>
+<h2 id="修改-Ubuntu-默认终端"><a href="#修改-Ubuntu-默认终端" class="headerlink" title="修改 Ubuntu 默认终端"></a>修改 Ubuntu 默认终端</h2><p>在考虑到多终端窗口分屏显示时，可以采用命令 <code>[root@A ~]$ apt-get install terminator</code> 安装新的终端工具 <strong>Terminator</strong> 。但在安装该工具后会自动设置默认终端为 Terminator，可通过如下命令重置默认终端为系统自带的 gnome-terminal：</p>
+<ul>
+<li><code>gsettings set org.gnome.desktop.default-applications.terminal exec /usr/bin/gnome-terminal</code></li>
+<li><code>gsettings set org.gnome.desktop.default-applications.terminal exec-arg &quot;-x&quot;</code></li>
+</ul>
+<hr>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>若蒙小宠，如沐春风</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Tche LIU WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Tche LIU Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+      ---------- 文结至此
+      <i class="fa fa-paw"></i>
+      静待下章 ----------
+    </div>
+  
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Ubuntu/" rel="tag"><i class="fa fa-tag"></i> Ubuntu</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/26/Examples-of-AWK/" rel="next" title="AWK 编程拾锦">
+                <i class="fa fa-chevron-left"></i> AWK 编程拾锦
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE5NS8xNDcyMw=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -427,8 +587,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -569,6 +738,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-启动栏图标自定义设置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 启动栏图标自定义设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">2.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -724,6 +909,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
 
   
 
@@ -742,6 +931,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
