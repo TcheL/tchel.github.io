@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="服务器管理过程中的一些命令技巧">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-10T02:16:13.427Z">
+<meta property="og:updated_time" content="2019-01-21T01:41:41.157Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="服务器管理">
 <meta name="twitter:description" content="服务器管理过程中的一些命令技巧">
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-01-10 10:16:13" itemprop="dateModified" datetime="2019-01-10T10:16:13+08:00">2019-01-10</time>
+                <time title="Modified: 2019-01-21 09:41:41" itemprop="dateModified" datetime="2019-01-21T09:41:41+08:00">2019-01-21</time>
               
             
           </span>
@@ -610,7 +610,7 @@
 <li>若出现由于服务端偶然宕机而导致客户端执行 df 或 ls 等与远程挂载目录相关的操作时终端卡死的情况，可以在服务端依次执行如下命令手动重启 rpcbind 和 nfs 服务解决：</li>
 </ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@A ~]$ service rpcbind stop</span><br><span class="line">[root@A ~]$ service nfs stop</span><br><span class="line">[root@A ~]$ service rpcbind start</span><br><span class="line">[root@A ~]$ service nfs start</span><br></pre></td></tr></table></figure>
-<p>注意，这里如果使用命令 <code>[root@A ~]$ service XXX restart</code> 重启服务可能无法解决该问题。</p>
+<p>有时候使用命令 <code>[root@A ~]$ service rpcbind restart &amp;&amp; service nfs restart</code> 重启服务也可解决该问题。</p>
 <ol start="2">
 <li>若在上一问题中，服务端暂时无法登陆，则在客户端以命令 <code>[root@A ~]$ umount -fl /data/share</code> 强制卸载该远程目录即可（ -f 即强制卸载；-l 为延迟卸载。仅 -f 可能提示目录繁忙，-l 即等待目录不繁忙时再卸载）。</li>
 <li>若在服务端启动 nfs 服务时出现问题，有可能是该服务节点的本地磁盘未挂载，可手动挂载后再重新启动 nfs 服务。</li>
@@ -703,7 +703,7 @@
 <li>在给下载的 cuda 库安装文件添加可执行权限后，即可以管理员权限运行安装。</li>
 </ul>
 <hr>
-<h2 id="安装字体"><a href="#安装字体" class="headerlink" title="安装字体"></a>安装字体</h2><h3 id="查看系统字体"><a href="#查看系统字体" class="headerlink" title="查看系统字体"></a>查看系统字体</h3><p>以命令 <code>[user@A ~]$ fc-list</code> 查看所有已安装的系统字体；以命令 <code>[user@A ~]$ fc-list:lang=zh</code> 查看系统中的中文字体。</p>
+<h2 id="安装字体"><a href="#安装字体" class="headerlink" title="安装字体"></a>安装字体</h2><h3 id="查看系统字体"><a href="#查看系统字体" class="headerlink" title="查看系统字体"></a>查看系统字体</h3><p>以命令 <code>[user@A ~]$ fc-list</code> 查看所有已安装的系统字体；以命令 <code>[user@A ~]$ fc-list :lang=zh</code> 查看系统中的中文字体，注意冒号前面的空格。</p>
 <h3 id="安装额外的字体"><a href="#安装额外的字体" class="headerlink" title="安装额外的字体"></a>安装额外的字体</h3><ul>
 <li>以管理员身份将字体文件拷贝到 /usr/share/fonts/ 目录下；</li>
 <li><code>[root@A ~]$ cd /usr/share/fonts</code> ；</li>
