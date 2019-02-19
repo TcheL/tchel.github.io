@@ -114,18 +114,18 @@
 
 
 
-  <meta name="description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法和 Fixed point 算法。">
-<meta name="keywords" content="BFGS,Fixed point">
+  <meta name="description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法、Fixed point 算法和非线性共轭梯度法。">
+<meta name="keywords" content="BFGS,Fixed point,Conjugate gradient">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一些算法原理">
 <meta property="og:url" content="http://tchel.github.io/2018/07/22/Principle-of-Algorithm/index.html">
 <meta property="og:site_name" content="Here4U">
-<meta property="og:description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法和 Fixed point 算法。">
+<meta property="og:description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法、Fixed point 算法和非线性共轭梯度法。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-19T01:56:47.416Z">
+<meta property="og:updated_time" content="2019-02-19T12:45:53.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些算法原理">
-<meta name="twitter:description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法和 Fixed point 算法。">
+<meta name="twitter:description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法、Fixed point 算法和非线性共轭梯度法。">
 
 
 
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-19 09:56:47" itemprop="dateModified" datetime="2018-12-19T09:56:47+08:00">2018-12-19</time>
+                <time title="Modified: 2019-02-19 20:45:53" itemprop="dateModified" datetime="2019-02-19T20:45:53+08:00">2019-02-19</time>
               
             
           </span>
@@ -450,7 +450,7 @@
           
 
           
-              <div class="post-description">介绍了一些简单算法的基本原理，包括 BFGS 算法和 Fixed point 算法。</div>
+              <div class="post-description">介绍了一些简单算法的基本原理，包括 BFGS 算法、Fixed point 算法和非线性共轭梯度法。</div>
           
 
         </div>
@@ -502,6 +502,36 @@
 <p>so that</p>
 <p>$$\frac{f(x)}{f’(x)}=0$$</p>
 <p>The reciprocal of anything is nonzero, therefore $f(x)=0$: $x$ is a root of $f$.</p>
+<hr>
+<h2 id="非线性共轭梯度法"><a href="#非线性共轭梯度法" class="headerlink" title="非线性共轭梯度法"></a>非线性共轭梯度法</h2><p>参考 <a href="https://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method" target="_blank" rel="noopener">Wikipedia</a> 。</p>
+<p>In numerical optimization, the <strong>nonlinear conjugate gradient method</strong> generalizes the <a href="https://en.wikipedia.org/wiki/Conjugate_gradient_method" target="_blank" rel="noopener">conjugate gradient method</a> to nonlinear optimization.</p>
+<h3 id="线性共轭梯度法"><a href="#线性共轭梯度法" class="headerlink" title="线性共轭梯度法"></a>线性共轭梯度法</h3><p>For a quadratic function</p>
+<p>$$f(x)=||Ax-b||^2$$</p>
+<p>the minimum of $f$ is obtained when the gradient $\nabla_x f=2A^T(Ax-b)=0$.</p>
+<p>Linear conjugate gradient seeks a solution to the linear equation $A^T Ax=A^T b$.</p>
+<h3 id="非线性共轭梯度法-1"><a href="#非线性共轭梯度法-1" class="headerlink" title="非线性共轭梯度法"></a>非线性共轭梯度法</h3><p>The nonlinear conjugate gradient method is generally used to find the local minimum of a nonlinear function using its gradient $\nabla_x f$ alone.</p>
+<h4 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h4><p>Given a function $f(x)$, one simply starts in the steepest descent direction:</p>
+<p>$$\Delta x_0=-\nabla_x f(x_0)$$</p>
+<p>with an step length $\alpha$, and preforms a line search:</p>
+<p>$$\alpha_0:=argmin_\alpha f(x_0+\alpha\Delta x_0)$$</p>
+<p>$$x_1=x_0+\alpha_0\Delta x_0$$</p>
+<p>After the first iteration in $\Delta x_0$, the following steps continue along a subsequent conjugate direction $s_n$, where $s_0=\Delta x_0$:</p>
+<ul>
+<li>Calculate the steepest direction: $\Delta x_n=-\nabla_x f(x_n)$;</li>
+<li>Compute $\beta_n$ according to one of the formulas below;</li>
+<li>Update the conjugate direction: $s_n=\Delta x_n+\beta_n s_{n-1}$;</li>
+<li>Perform a line search: optimize $\alpha_n=argmin_\alpha f(x_n+\alpha s_n)$;</li>
+<li>Update: $x_{n+1}=x_n+\alpha_n s_n$.</li>
+</ul>
+<p>Subsequent search directions lose conjugacy requiring the search<br>direction to be reset to the steepest descent direction at least every $N$ iterations, or sooner if progress stops.</p>
+<h4 id="beta-n-的计算"><a href="#beta-n-的计算" class="headerlink" title="$\beta_n$ 的计算"></a>$\beta_n$ 的计算</h4><p>Four of the best known formulas for $\beta_n​$ are named after their developers:</p>
+<ul>
+<li>Fletcher-Reeves: $\beta_n^{FR}=\frac{\Delta x_n^T \Delta x_n}{\Delta x_{n-1}^T \Delta x_{n-1}}$;</li>
+<li>Polak-Ribiere: $\beta_n^{PR}=\frac{\Delta x_n^T (\Delta x_n-\Delta x_{n-1})}{\Delta x_{n-1}^T \Delta x_{n-1}}$;</li>
+<li>Hestenes-Stiefel: $\beta_n^{HS}=-\frac{\Delta x_n^T (\Delta x_n-\Delta x_{n-1})}{s_{n-1}^T (\Delta x_n-\Delta x_{n-1})}$;</li>
+<li>Dai-Yuan: $\beta_n^{DY}=-\frac{\Delta x_n^T \Delta x_n}{s_{n-1}^T (\Delta x_n-\Delta x_{n-1})}$.</li>
+</ul>
+<p>A popular choice is $\beta=\max\lbrace 0,\beta^{PR}\rbrace$, which provides a direction reset automatically.</p>
 
       
     </div>
@@ -569,6 +599,8 @@
             <a href="/tags/BFGS/" rel="tag"><i class="fa fa-tag"></i> BFGS</a>
           
             <a href="/tags/Fixed-point/" rel="tag"><i class="fa fa-tag"></i> Fixed point</a>
+          
+            <a href="/tags/Conjugate-gradient/" rel="tag"><i class="fa fa-tag"></i> Conjugate gradient</a>
           
         </div>
       
@@ -760,7 +792,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -810,7 +846,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BFGS-算法"><span class="nav-number">1.</span> <span class="nav-text">BFGS 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">1.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">1.2.</span> <span class="nav-text">算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fixed-point-迭代法"><span class="nav-number">2.</span> <span class="nav-text">Fixed point 迭代法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fixed-point"><span class="nav-number">2.1.</span> <span class="nav-text">Fixed point</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fixed-point-迭代"><span class="nav-number">2.2.</span> <span class="nav-text">Fixed point 迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">2.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用"><span class="nav-number">2.2.2.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BFGS-算法"><span class="nav-number">1.</span> <span class="nav-text">BFGS 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">1.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">1.2.</span> <span class="nav-text">算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fixed-point-迭代法"><span class="nav-number">2.</span> <span class="nav-text">Fixed point 迭代法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fixed-point"><span class="nav-number">2.1.</span> <span class="nav-text">Fixed point</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fixed-point-迭代"><span class="nav-number">2.2.</span> <span class="nav-text">Fixed point 迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">2.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用"><span class="nav-number">2.2.2.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非线性共轭梯度法"><span class="nav-number">3.</span> <span class="nav-text">非线性共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性共轭梯度法"><span class="nav-number">3.1.</span> <span class="nav-text">线性共轭梯度法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非线性共轭梯度法-1"><span class="nav-number">3.2.</span> <span class="nav-text">非线性共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法步骤"><span class="nav-number">3.2.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#beta-n-的计算"><span class="nav-number">3.2.2.</span> <span class="nav-text">$\beta_n$ 的计算</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
