@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="地空系并行集群管理过程中的一些命令操作">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-08T05:49:00.955Z">
+<meta property="og:updated_time" content="2019-04-25T11:02:31.022Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="地空系并行集群管理">
 <meta name="twitter:description" content="地空系并行集群管理过程中的一些命令操作">
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-08 13:49:00" itemprop="dateModified" datetime="2019-04-08T13:49:00+08:00">2019-04-08</time>
+                <time title="Modified: 2019-04-25 19:02:31" itemprop="dateModified" datetime="2019-04-25T19:02:31+08:00">2019-04-25</time>
               
             
           </span>
@@ -467,13 +467,20 @@
 
       
         <h2 id="创建或删除用户"><a href="#创建或删除用户" class="headerlink" title="创建或删除用户"></a>创建或删除用户</h2><p>先以命令 <code>[root@mn01 ~]$ adduser username</code> 创建新用户 username 生成相应的用户信息，或以命令 <code>[root@mn01 ~]$ userdel -rf username</code> 删除原用户 username 并删除该用户的用户信息，再以命令 <code>[root@mn01 ~]$ make -C /var/yp</code> 将管理节点（mn01）的用户信息发送到所有计算节点。</p>
+<hr>
 <h2 id="修改用户密码"><a href="#修改用户密码" class="headerlink" title="修改用户密码"></a>修改用户密码</h2><p>先以命令 <code>[root@mn01 ~]$ passwd username</code> 修改管理节点的用户密码，再以命令 <code>[root@mn01 ~]$ make -C /var/yp</code> 将新的用户信息发送出去。</p>
+<hr>
 <h2 id="集群系统关机"><a href="#集群系统关机" class="headerlink" title="集群系统关机"></a>集群系统关机</h2><ul>
-<li><code>[root@mn01 ~]$ psh compute poweroff</code> 关闭所有计算节点；</li>
-<li><code>[root@mn01 ~]$ mmshutdown -N io01,io02,mn01</code> 关闭 io 节点和管理节点的 GPFS 服务；</li>
-<li><code>[root@mn01 ~]$ psh io poweroff</code> 关闭 io 节点；</li>
-<li><code>[root@mn01 ~]$ poweroff</code> 关闭管理节点。</li>
+<li><p><code>[root@mn01 ~]$ psh compute poweroff</code> 关闭所有计算节点；</p>
+</li>
+<li><p><code>[root@mn01 ~]$ mmshutdown -N io01,io02,mn01</code> 关闭 io 节点和管理节点的 GPFS 服务；</p>
+</li>
+<li><p><code>[root@mn01 ~]$ psh io poweroff</code> 关闭 io 节点；</p>
+</li>
+<li><p><code>[root@mn01 ~]$ poweroff</code> 关闭管理节点。</p>
+</li>
 </ul>
+<hr>
 <h2 id="重新启动集群"><a href="#重新启动集群" class="headerlink" title="重新启动集群"></a>重新启动集群</h2><h3 id="启动顺序"><a href="#启动顺序" class="headerlink" title="启动顺序"></a>启动顺序</h3><p>启动时，先启动管理节点（mn01），再启动 io 节点（io*），最后启动计算节点（c0* 和 s0*）。为保险起见，不同类型节点启动适当间隔一段时间，以等待相应的依赖服务启动完成。</p>
 <h3 id="重启检查"><a href="#重启检查" class="headerlink" title="重启检查"></a>重启检查</h3><p>先以命令 <code>[user@mn01 ~]$ lnodes</code> 查看各计算节点连接情况，保证无异常状态（unavail 或 unreach）节点。</p>
 <p>若各别节点出现异常连接状态，可能是该节点 GPFS 或 LSF 服务启动异常，可以 root 身份登录至相应节点，分别以命令 <code>[root@A ~]$ mmstartup</code> 和 <code>[root@A ~]$ systemctl restart lsfd</code> 重启这两个系统服务即可。</p>
@@ -483,6 +490,7 @@
 <p>则说明 GPFS 服务没有启动，以命令 <code>[root@mn01 ~]$ mmstartup -a</code> 启动该服务即可。</p>
 <p>集群启动完成后，若以命令 <code>[user@mn01 ~]$ lnodes</code> 查看节点连接情况，发现部分节点为 unavil 状态，则先以命令 <code>[root@mn01 ~]$ mmstartup -N nodename</code> 启动该节点的 GPFS 服务后，再以命令 <code>[root@mn01 ~]$ psh nodename &quot;systemctl restart lsfd&quot;</code> 启动该节点的 LSF 服务即可。</p>
 <p>集群启动完成后，若发现 LSF 作业系统未启动，可先执行命令 <code>[root@mn01 ~]$ mmstartup -a</code> 确保 GPFS 服务已经启动，再以命令 <code>[root@mn01 ~]$ source /share/lsf/lsf/conf/profile.lsf</code> 导入 LSF 系统配置，再以命令 <code>[root@mn01 ~]$ systemctl restart lsfd</code> 启动管理节点的 LSF 服务，最后以命令 <code>[root@mn01 ~]$ psh compute &quot;systemctl restart lsfd&quot;</code> 启动计算节点的 LSF 服务即可。</p>
+<hr>
 <h2 id="LSF-作业系统的配置"><a href="#LSF-作业系统的配置" class="headerlink" title="LSF 作业系统的配置"></a>LSF 作业系统的配置</h2><p>LSF 作业系统的主要配置文件位于 /share/lsf/lsf/conf 目录下，该目录已软链接到 LSF 的安装目录下，修改配置并重新启动相应的 LSF 服务后，新的配置参数即可生效。具体地，</p>
 <ul>
 <li>用户群组配置文件为 <code>/share/lsf/lsf/conf/lsbatch/sustc_ess/configdir/lsb.users</code>；</li>
@@ -491,6 +499,7 @@
 <li>队列配置文件为 <code>/share/lsf/lsf/conf/lsbatch/sustc_ess/configdir/lsb.queues</code>；</li>
 <li>LSF 主配置文件为 <code>/share/lsf/lsf/conf/lsf.conf</code>。</li>
 </ul>
+<hr>
 <h2 id="GPFS-文件系统磁盘配额"><a href="#GPFS-文件系统磁盘配额" class="headerlink" title="GPFS 文件系统磁盘配额"></a>GPFS 文件系统磁盘配额</h2><p>在创建新的 GPFS 文件系统时，可在 mmcrfs 命令中加入 <code>-Q yes</code> 选项，以激活该文件系统的磁盘配额设置。对于原有的 GPFS 文件系统，可以命令 <code>[root@mn01 ~]$ mmchfs -Q yes</code> 重新激活该系统的磁盘配额设置。若想针对目录进行磁盘配额，需指定 –perfileset-quota 选项。</p>
 <p>GPFS 文件系统可以 mmsetquota 命令设置磁盘配额，具体可根据该命令的帮助（以命令 <code>[user@mn01 ~]$ man mmsetquota</code> 查看）来进行详细的配置。</p>
 <p>当前 fs01 文件系统的用户默认磁盘配额是由 stanza 文件 /share/system/conf/quoatesetting 设置的（设置命令为 <code>[root@mn01 ~]$ mmsetquota -F /share/system/conf/quotasetting</code>）。</p>
@@ -498,6 +507,7 @@
 <p>在设置软硬限制时，指定 <code>0:</code> 即为无任何限制，可用于取消原有限制。</p>
 <p>通过命令行执行命令生效的 GPFS 文件系统的磁盘配置，即永久生效，即使重启集群系统也不会失效。</p>
 <p>注意，当针对整个文件系统进行配额设置（即 mmcrfs 或 mmchfs 命令中不指定 –perfileset-quota 选项）时，则不可在 mmsetquota 命令中指定 fileset 选项，否则该命令不会生效。</p>
+<hr>
 <h2 id="一些疑问"><a href="#一些疑问" class="headerlink" title="一些疑问"></a>一些疑问</h2><p>zsh 启动时报错找不到 complete 命令，该如何解决？</p>
 <blockquote>
 <p>这个命令是 bash 的内建命令，而调用该命令的脚本是用来收集系统管理信息的，若禁止加载该脚本，会导致部分管理功能的缺失。考虑到 zshell 的使用者不多，不建议禁止该脚本的加载。</p>
