@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="地空系并行集群管理过程中的一些命令操作">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-25T11:02:31.022Z">
+<meta property="og:updated_time" content="2019-04-28T07:35:31.612Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="地空系并行集群管理">
 <meta name="twitter:description" content="地空系并行集群管理过程中的一些命令操作">
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-25 19:02:31" itemprop="dateModified" datetime="2019-04-25T19:02:31+08:00">2019-04-25</time>
+                <time title="Modified: 2019-04-28 15:35:31" itemprop="dateModified" datetime="2019-04-28T15:35:31+08:00">2019-04-28</time>
               
             
           </span>
@@ -483,13 +483,18 @@
 <hr>
 <h2 id="重新启动集群"><a href="#重新启动集群" class="headerlink" title="重新启动集群"></a>重新启动集群</h2><h3 id="启动顺序"><a href="#启动顺序" class="headerlink" title="启动顺序"></a>启动顺序</h3><p>启动时，先启动管理节点（mn01），再启动 io 节点（io*），最后启动计算节点（c0* 和 s0*）。为保险起见，不同类型节点启动适当间隔一段时间，以等待相应的依赖服务启动完成。</p>
 <h3 id="重启检查"><a href="#重启检查" class="headerlink" title="重启检查"></a>重启检查</h3><p>先以命令 <code>[user@mn01 ~]$ lnodes</code> 查看各计算节点连接情况，保证无异常状态（unavail 或 unreach）节点。</p>
-<p>若各别节点出现异常连接状态，可能是该节点 GPFS 或 LSF 服务启动异常，可以 root 身份登录至相应节点，分别以命令 <code>[root@A ~]$ mmstartup</code> 和 <code>[root@A ~]$ systemctl restart lsfd</code> 重启这两个系统服务即可。</p>
+<p>若上述命令长时间无响应，说明 LSF 作业系统未完成启动，尝试以如下命令完成启动：</p>
+<ul>
+<li><code>[root@mn01 ~]$ mmstartup -a</code> 确保 GPFS 服务已经启动；</li>
+<li><code>[root@mn01 ~]$ source /share/lsf/lsf/conf/profile.lsf</code> 导入 LSF 系统配置；</li>
+<li><code>[root@mn01 ~]$ systemctl restart lsfd</code> 启动管理节点的 LSF 服务；</li>
+<li><code>[root@mn01 ~]$ psh compute &quot;systemctl restart lsfd&quot;</code> 启动计算节点的 LSF 服务。</li>
+</ul>
 <p>待所有节点连接正常后，再以 test 身份登录至管理节点，以命令 <code>[test@mn01 ~]$ /share/apps/matlab/etc/lmstart</code> 启动 matlab 的 License 管理器，激活该软件的正版授权。</p>
 <h3 id="排查错误"><a href="#排查错误" class="headerlink" title="排查错误"></a>排查错误</h3><p>集群启动完成后，登录管理节点，若出现告错</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-bash: /opt/ibm/lsfsuite/lsf/conf/profile.lsf: No such file or directory</span><br><span class="line">-bash: /opt/ibm/lsfsuite/ext/ppm/conf/profile.js: No such file or directory</span><br></pre></td></tr></table></figure>
 <p>则说明 GPFS 服务没有启动，以命令 <code>[root@mn01 ~]$ mmstartup -a</code> 启动该服务即可。</p>
-<p>集群启动完成后，若以命令 <code>[user@mn01 ~]$ lnodes</code> 查看节点连接情况，发现部分节点为 unavil 状态，则先以命令 <code>[root@mn01 ~]$ mmstartup -N nodename</code> 启动该节点的 GPFS 服务后，再以命令 <code>[root@mn01 ~]$ psh nodename &quot;systemctl restart lsfd&quot;</code> 启动该节点的 LSF 服务即可。</p>
-<p>集群启动完成后，若发现 LSF 作业系统未启动，可先执行命令 <code>[root@mn01 ~]$ mmstartup -a</code> 确保 GPFS 服务已经启动，再以命令 <code>[root@mn01 ~]$ source /share/lsf/lsf/conf/profile.lsf</code> 导入 LSF 系统配置，再以命令 <code>[root@mn01 ~]$ systemctl restart lsfd</code> 启动管理节点的 LSF 服务，最后以命令 <code>[root@mn01 ~]$ psh compute &quot;systemctl restart lsfd&quot;</code> 启动计算节点的 LSF 服务即可。</p>
+<p>集群启动完成后，若以命令 <code>[user@mn01 ~]$ lnodes</code> 查看节点连接情况，发现部分节点为 unavil 状态，则先以命令 <code>[root@mn01 ~]$ mmstartup -N nodename</code> 启动该节点的 GPFS 服务后，再以命令 <code>[root@mn01 ~]$ psh nodename &quot;systemctl restart lsfd&quot;</code> 启动该节点的 LSF 服务即可。或者以 root 身份登录至相应节点，分别以命令 <code>[root@A ~]$ mmstartup</code> 和 <code>[root@A ~]$ systemctl restart lsfd</code> 重启这两个系统服务也可。</p>
 <hr>
 <h2 id="LSF-作业系统的配置"><a href="#LSF-作业系统的配置" class="headerlink" title="LSF 作业系统的配置"></a>LSF 作业系统的配置</h2><p>LSF 作业系统的主要配置文件位于 /share/lsf/lsf/conf 目录下，该目录已软链接到 LSF 的安装目录下，修改配置并重新启动相应的 LSF 服务后，新的配置参数即可生效。具体地，</p>
 <ul>
