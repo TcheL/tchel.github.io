@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="Ubuntu 不乖的时候，你是要揍他的 👊">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-08T05:46:48.624Z">
+<meta property="og:updated_time" content="2019-05-10T02:13:28.480Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于 Ubuntu 的陈年往事">
 <meta name="twitter:description" content="Ubuntu 不乖的时候，你是要揍他的 👊">
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-08 13:46:48" itemprop="dateModified" datetime="2018-12-08T13:46:48+08:00">2018-12-08</time>
+                <time title="Modified: 2019-05-10 10:13:28" itemprop="dateModified" datetime="2019-05-10T10:13:28+08:00">2019-05-10</time>
               
             
           </span>
@@ -478,6 +478,9 @@
 <li><code>gsettings set org.gnome.desktop.default-applications.terminal exec-arg &quot;-x&quot;</code></li>
 </ul>
 <hr>
+<h2 id="FoxitReader-支持中文输入"><a href="#FoxitReader-支持中文输入" class="headerlink" title="FoxitReader 支持中文输入"></a>FoxitReader 支持中文输入</h2><p>在安装完 Linux 平台的 FoxitReader （版本号：2.4.4.0910）后，FoxitReader 默认是不支持中文输入的。修改 FoxitReader 安装目录下的 FoxitReader.sh 脚本文件为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/sh</span><br><span class="line"> appname="FoxitReader"</span><br><span class="line"></span><br><span class="line"> selfpath="/opt/foxitsoftware/foxitreader"</span><br><span class="line"> LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$selfpath/lib:$selfpath/platforms:$selfpath/printsupport:$selfpath/rmssdk:$selfpath/sensors:$selfpath/imageformats:$selfpath/platforminputcontexts</span><br><span class="line"> exec "$selfpath/$appname" "$@"</span><br></pre></td></tr></table></figure>
+<p>加入 LD_LIBRARY_PATH 起始行的内容即可支持中文输入。</p>
 
       
     </div>
@@ -788,7 +791,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-启动栏图标自定义设置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 启动栏图标自定义设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">2.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-启动栏图标自定义设置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 启动栏图标自定义设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">2.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FoxitReader-支持中文输入"><span class="nav-number">3.</span> <span class="nav-text">FoxitReader 支持中文输入</span></a></li></ol></div>
             
 
           </div>
