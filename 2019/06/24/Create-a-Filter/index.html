@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/earth-32x32.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/earth-16x16.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="利用 sinc 函数构造出简单的 FIR 滤波器，包括低通、高通、带通和带阻。">
+<meta name="keywords" content="Singal Process,Filter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="构造一个简单的滤波器">
+<meta property="og:url" content="http://tchel.github.io/2019/06/24/Create-a-Filter/index.html">
+<meta property="og:site_name" content="Here4U">
+<meta property="og:description" content="利用 sinc 函数构造出简单的 FIR 滤波器，包括低通、高通、带通和带阻。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://tchel.github.io/images/inblogs/low-high-pass.png">
+<meta property="og:image" content="http://tchel.github.io/images/inblogs/band-pass-stop.png">
+<meta property="og:updated_time" content="2019-06-24T14:28:35.178Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="构造一个简单的滤波器">
+<meta name="twitter:description" content="利用 sinc 函数构造出简单的 FIR 滤波器，包括低通、高通、带通和带阻。">
+<meta name="twitter:image" content="http://tchel.github.io/images/inblogs/low-high-pass.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://tchel.github.io/2019/06/24/Create-a-Filter/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>构造一个简单的滤波器 | Here4U</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <!-- 小条 Fork me on Github
+     <a href="https://github.com/TcheL"><img style="position:absolute; top:0; right:0; border:0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on Github"></a>
+    -->
+    <a href="https://github.com/TcheL" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Here4U</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Share me with you</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tchel.github.io/2019/06/24/Create-a-Filter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tche LIU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/f58b38472ae7594c1da00001675eb66a?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Here4U">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">构造一个简单的滤波器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-24 11:01:59 / Modified: 22:28:35" itemprop="dateCreated datePublished" datetime="2019-06-24T11:01:59+08:00">2019-06-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">利用 sinc 函数构造出简单的 FIR 滤波器，包括低通、高通、带通和带阻。</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一个简单的低通滤波器"><a href="#一个简单的低通滤波器" class="headerlink" title="一个简单的低通滤波器"></a>一个简单的低通滤波器</h2><p>本文译自 <a href="https://tomroelandts.com/articles/how-to-create-a-simple-low-pass-filter" target="_blank" rel="noopener">How to Create a Simple Low-Pass Filter</a>。</p>
+<p>低通意即仅允许低频通过，阻滞高频。sinc 滤波器就是一个理想的低通滤波器。信号处理中常用的、正则化的 sinc 函数定义为：</p>
+<p>$$\text{sinc} (x)=\frac{\sin(\pi x)}{\pi x}$$</p>
+<p>由于 sinc 函数的傅里叶变换的结果即是关于 $y$ 轴对称的矩形函数（rectangular function），在 $x$ 轴正半部分即为一个理想的低通滤波时窗，当与输入信号褶积时，sinc 滤波器即可得到一个仅包含所有截止频率以下成分的输出信号。</p>
+<h3 id="sinc-滤波器"><a href="#sinc-滤波器" class="headerlink" title="sinc 滤波器"></a>sinc 滤波器</h3><p>为设计一个数字滤波器，需要先将连续的 sinc 函数归一化，再逐点采样生成一个序列。定义 sinc 滤波器的脉冲响应：</p>
+<p>$$h[n] = 2f_c  \text{sinc} (2 f_c n)$$</p>
+<p>这里的 $f_c$ 是经采样频率分数特征化后的截止频率。例如，采样频率为 1000 Hz ，取 $f_c = 0.01 = 10/1000$ 时即将去除信号中高于 10 Hz 的频率成分。</p>
+<p>然而，由于 sinc 函数是无限长的，在设计滤波器时，需要将其在某处截断，这就会在滤波结果中引起持续的振荡。这时，最容易想到的解决方法就是，在 sinc 滤波器上叠加一个时窗，使滤波器在时窗边界处趋近于 $x$ 轴。</p>
+<h3 id="时窗"><a href="#时窗" class="headerlink" title="时窗"></a>时窗</h3><p>窗函数即一个在某一区间外值全为 0 的函数。作为其中比较常用的一种，Blackman 窗的定义为：</p>
+<p>$$w[n] = 0.42 - 0.5 \cos\Big(\frac{2 \pi n}{N - 1}\Big) + 0.08 \cos\Big(\frac{4 \pi n}{N - 1}\Big)$$</p>
+<p>其中 $n\in [0, N - 1]$。</p>
+<h3 id="时窗-sinc-滤波器"><a href="#时窗-sinc-滤波器" class="headerlink" title="时窗 sinc 滤波器"></a>时窗 sinc 滤波器</h3><p>根据上面给出的定义，可以得到时窗 sinc 滤波器在区间 $[0, N - 1]$ 内的表达式为：</p>
+<p>$$h[n] = \text{sinc} \Big(2 f_c \big(n - \frac{N - 1}{2}\big)\Big) \Big(0.42 - 0.5 \cos\big(\frac{2 \pi n}{N - 1}\big) + 0.08 \cos\big(\frac{4 \pi n}{N - 1}\big) \Big)$$</p>
+<p>对于 $n \notin [0, N - 1]$，$h[n] = 0$。这里省略了 sinc 滤波器的系数 $2 f_c$，因为还需要进行正则化，以得到单位滤波增益：</p>
+<p>$$h_{\text{normalized}} [n] = \frac{h[n]}{\sum_{i=0}^{N - 1} h[i]}$$</p>
+<h3 id="过渡带宽"><a href="#过渡带宽" class="headerlink" title="过渡带宽"></a>过渡带宽</h3><p>采样频率分数特征化的过渡带宽 $b$ 和滤波器长度 $N$ 之间有一个近似关系：</p>
+<p>$$b \approx \frac{4}{N}$$</p>
+<p>根据此式，在设定过渡带宽后，即可求出合适的滤波器长度。此外，一般取 N 为奇数，以确保滤波器峰值的两侧有相同的采样点数。例如，采样频率为 1000 Hz，欲得到 1 Hz 的过渡带宽，即 $b = 1/1000 = 0.001$，取 $N = 4001$ 即可。</p>
+<h3 id="Python-代码"><a href="#Python-代码" class="headerlink" title="Python 代码"></a>Python 代码</h3><p>如下即是上述低通滤波器的示例生成代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"> </span><br><span class="line">fc = <span class="number">0.1</span>  <span class="comment"># Cutoff frequency as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line">b = <span class="number">0.08</span>  <span class="comment"># Transition band, as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line">N = int(np.ceil((<span class="number">4</span> / b)))</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> N % <span class="number">2</span>: N += <span class="number">1</span>  <span class="comment"># Make sure that N is odd.</span></span><br><span class="line">n = np.arange(N)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Compute sinc filter.</span></span><br><span class="line">h = np.sinc(<span class="number">2</span> * fc * (n - (N - <span class="number">1</span>) / <span class="number">2</span>))</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Compute Blackman window.</span></span><br><span class="line">w = <span class="number">0.42</span> - <span class="number">0.5</span> * np.cos(<span class="number">2</span> * np.pi * n / (N - <span class="number">1</span>)) + \</span><br><span class="line">    <span class="number">0.08</span> * np.cos(<span class="number">4</span> * np.pi * n / (N - <span class="number">1</span>))</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Multiply sinc filter by window.</span></span><br><span class="line">h = h * w</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Normalize to get unity gain.</span></span><br><span class="line">h = h / np.sum(h)</span><br></pre></td></tr></table></figure>
+<p>通过将滤波器 $h$ 与信号 $s$ 褶积，即可得到低通滤波的结果：<code>s = np.convolve(s, h)</code>。</p>
+<p>在实际信息处理过程中，褶积会导致输出信号与输入信号长度不一致，此时只需将输出信号向后时延 $(N - 1)/2​$ 个数据点后，再截取与输入信号等长的信号段即可。</p>
+<p>另外，Blackman 窗也可通过语句 <code>w = np.balckman(N)</code> 直接生成。</p>
+<hr>
+<h2 id="一个简单的高通滤波器"><a href="#一个简单的高通滤波器" class="headerlink" title="一个简单的高通滤波器"></a>一个简单的高通滤波器</h2><p> 本文译自 <a href="https://tomroelandts.com/articles/how-to-create-a-simple-high-pass-filter" target="_blank" rel="noopener">How to Create a Simple High-Pass Filter</a>。</p>
+<p>前面已经介绍了低通滤波器的构造，通过频谱反转（Spectral inversion）即可将一个低通滤波器转化为一个高通滤波器。</p>
+<h3 id="从低通到高通"><a href="#从低通到高通" class="headerlink" title="从低通到高通"></a>从低通到高通</h3><p>低通滤波会去除信号中的高频成分，如果我们从信号中减去低通滤波信号，剩下的便只是信号中的高频成分。据此，我们可以构造一个简单的高通滤波器。</p>
+<p>首先，对信号作低通滤波：</p>
+<p>$$x_{\text{lpf}}[n] = x[n] * h_{\text{lpf}}[n]​$$</p>
+<p>其中，$x[n]$ 为原始信号，$h_{\text{lpf}}[n]$ 为低通滤波器，$x_{\text{lpf}}[n]$ 即低通滤波信号，$*$ 表示褶积。接着，从原始信号中减去低通滤波信号：</p>
+<p>$$x_{\text{hpf}}[n] = x[n] - x_{\text{lpf}}[n]$$</p>
+<p>得到的 $x_{\text{hpf}}[n]​$ 即为高通滤波信号。</p>
+<p>从上述各式中，我们可以得到：</p>
+<p>$$x_{\text{hpf}}[n] = x[n] - x_{\text{lpf}}[n] = x[n] * \delta[n] - x[n] * h_{\text{lpf}}[n] = x[n] * (\delta[n] - h_{\text{lpf}}[n])$$</p>
+<p>因此，高通滤波器可以定义为：</p>
+<p>$$h_{\text{hpf}}[n] = \delta[n] - h_{\text{lpf}}[n]$$</p>
+<h3 id="频谱反转"><a href="#频谱反转" class="headerlink" title="频谱反转"></a>频谱反转</h3><p>上述即为频谱反转的理论原理，其具体做法为：</p>
+<blockquote>
+<ol>
+<li>构造一个简单的低通滤波器 $h[n]$；</li>
+<li>改变低通滤波器中所有元素的符号；</li>
+<li>给滤波器中心的元素加上 1。</li>
+</ol>
+</blockquote>
+<h3 id="Python-代码-1"><a href="#Python-代码-1" class="headerlink" title="Python 代码"></a>Python 代码</h3><p>如下即是上述高通滤波器的示例生成代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"> </span><br><span class="line">fc = <span class="number">0.1</span>  <span class="comment"># Cutoff frequency as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line">b = <span class="number">0.08</span>  <span class="comment"># Transition band, as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line">N = int(np.ceil((<span class="number">4</span> / b)))</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> N % <span class="number">2</span>: N += <span class="number">1</span>  <span class="comment"># Make sure that N is odd.</span></span><br><span class="line">n = np.arange(N)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Compute a low-pass filter.</span></span><br><span class="line">h = np.sinc(<span class="number">2</span> * fc * (n - (N - <span class="number">1</span>) / <span class="number">2</span>))</span><br><span class="line">w = np.blackman(N)</span><br><span class="line">h = h * w</span><br><span class="line">h = h / np.sum(h)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Create a high-pass filter from the low-pass filter through spectral inversion.</span></span><br><span class="line">h = -h</span><br><span class="line">h[(N - <span class="number">1</span>) // <span class="number">2</span>] += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="一个简单的带通滤波器"><a href="#一个简单的带通滤波器" class="headerlink" title="一个简单的带通滤波器"></a>一个简单的带通滤波器</h2><p>本文译自 <a href="https://tomroelandts.com/articles/how-to-create-simple-band-pass-and-band-reject-filters" target="_blank" rel="noopener">How to Create Simple Band-Pass and Band-Reject Filters</a>。</p>
+<p>前面已经介绍了低通和高通滤波器的构造，通过简单组合即可利用一个低通滤波器和一个高通滤波器构造出一个带通滤波器。</p>
+<h3 id="带通滤波"><a href="#带通滤波" class="headerlink" title="带通滤波"></a>带通滤波</h3><p>带通滤波即保留下截止频率 $f_L$ 和上截止频率 $f_H$ 之间的频率成分，阻滞区间外的所有频率。为此，我们首先以 $f_H$ 为截止频率对原始信号进行低通滤波：</p>
+<p>$$x_{\text{lpf,H}}[n] = x[n] * h_{\text{lpf,H}}[n]$$</p>
+<p>其中，$x[n]$ 为原始信号， $h_{\text{lpf,H}}[n]$ 为以 $f_H$ 为截止频率的低通滤波器，$x_{\text{lpf,H}}[n]$ 为低通滤波信号，$*$ 表示褶积。再以 $f_L$ 为截止频率对低通滤波信号进行高通滤波：</p>
+<p>$$x_{\text{bpf,LH}}[n] = x_{\text{lpf,H}}[n] * h_{\text{hpf,L}}[n]$$</p>
+<p>其中，$h_{\text{hpf,L}}[n]$ 为以 $f_L$ 为截止频率的高通滤波器，$x_{\text{bpf,LH}}[n]$ 即为最终的带通滤波信号。</p>
+<p>根据褶积的结合律，由：</p>
+<p>$$x_{\text{bpf,LH}}[n] = (x[n] * h_{\text{lpf,H}}[n]) * h_{\text{hpf,L}}[n] = x[n] * (h_{\text{lpf,H}}[n] * h_{\text{hpf,L}}[n])$$</p>
+<p>定义带通滤波器为：</p>
+<p>$$h_{\text{bpf,LH}}[n] = h_{\text{lpf,H}}[n] * h_{\text{hpf,L}}[n]$$</p>
+<h3 id="Python-代码-2"><a href="#Python-代码-2" class="headerlink" title="Python 代码"></a>Python 代码</h3><p>如下即是上述带通滤波器的示例生成代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"> </span><br><span class="line">fL = <span class="number">0.1</span>  <span class="comment"># Cutoff frequency as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line">fH = <span class="number">0.4</span>  <span class="comment"># Cutoff frequency as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line">b = <span class="number">0.08</span>  <span class="comment"># Transition band, as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line">N = int(np.ceil((<span class="number">4</span> / b)))</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> N % <span class="number">2</span>: N += <span class="number">1</span>  <span class="comment"># Make sure that N is odd.</span></span><br><span class="line">n = np.arange(N)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Compute a low-pass filter with cutoff frequency fH.</span></span><br><span class="line">hlpf = np.sinc(<span class="number">2</span> * fH * (n - (N - <span class="number">1</span>) / <span class="number">2</span>))</span><br><span class="line">hlpf *= np.blackman(N)</span><br><span class="line">hlpf = hlpf / np.sum(hlpf)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Compute a high-pass filter with cutoff frequency fL.</span></span><br><span class="line">hhpf = np.sinc(<span class="number">2</span> * fL * (n - (N - <span class="number">1</span>) / <span class="number">2</span>))</span><br><span class="line">hhpf *= np.blackman(N)</span><br><span class="line">hhpf = hhpf / np.sum(hhpf)</span><br><span class="line">hhpf = -hhpf</span><br><span class="line">hhpf[(N - <span class="number">1</span>) // <span class="number">2</span>] += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># Convolve both filters.</span></span><br><span class="line">h = np.convolve(hlpf, hhpf)</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="一个简单的带阻滤波器"><a href="#一个简单的带阻滤波器" class="headerlink" title="一个简单的带阻滤波器"></a>一个简单的带阻滤波器</h2><p>本文译自 <a href="https://tomroelandts.com/articles/how-to-create-simple-band-pass-and-band-reject-filters" target="_blank" rel="noopener">How to Create Simple Band-Pass and Band-Reject Filters</a>。</p>
+<p>前面已经介绍了低通和高通滤波器的构造，通过简单组合即可利用一个低通滤波器和一个高通滤波器构造出一个带通滤波器。</p>
+<h3 id="带阻滤波"><a href="#带阻滤波" class="headerlink" title="带阻滤波"></a>带阻滤波</h3><p>带阻滤波即保留下截止频率 $f_L$ 和上截止频率 $f_H$ 之外的频率成分，阻滞区间内的所有频率。为此，我们首先以 $f_L$ 为截止频率对原始信号进行低通滤波：</p>
+<p>$$x_{\text{lpf,L}}[n] = x[n] * h_{\text{lpf,L}}[n]$$</p>
+<p>其中，$x[n]$ 为原始信号，$h_{\text{lpf,L}}[n]$ 为以 $f_L$ 为截止频率的低通滤波器，$x_{\text{lpf,L}}[n]$ 为低通滤波信号，$*$ 表示褶积。再以 $f_H$ 为截止频率对原始信号进行高通滤波：</p>
+<p>$$x_{\text{hpf,H}}[n] = x[n] * h_{\text{hpf,H}}[n]$$</p>
+<p>其中，$h_{\text{hpf,H}}[n]$ 为以 $f_H$ 为截止频率的高通滤波器，$x_{\text{hpf,H}}[n]$ 为带通滤波信号。将低通滤波信号与高通滤波信号叠加：</p>
+<p>$$x_{\text{brf,LH}}[n] = x_{\text{lpf,L}}[n] + x_{\text{hpf,H}}[n]$$</p>
+<p>这里 $x_{\text{brf,LH}}[n]$ 即为最终的带阻滤波信号。</p>
+<p>根据褶积的分配律，由：</p>
+<p>$$x_{\text{brf,LH}}[n] = x[n] * h_{\text{lpf,L}}[n] + x[n] * h_{\text{hpf,H}}[n] = x[n] * (h_{\text{lpf,L}}[n] + h_{\text{hpf,H}}[n])$$</p>
+<p>定义带阻滤波器：</p>
+<p>$$h_{\text{brf,LH}}[n] = h_{\text{lpf,L}}[n] + h_{\text{hpf,H}}[n]$$</p>
+<h3 id="Python-代码-3"><a href="#Python-代码-3" class="headerlink" title="Python 代码"></a>Python 代码</h3><p>如下即是上述带阻滤波器的示例生成代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"> </span><br><span class="line">fL = <span class="number">0.1</span>  <span class="comment"># Cutoff frequency as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line">fH = <span class="number">0.4</span>  <span class="comment"># Cutoff frequency as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line">b = <span class="number">0.08</span>  <span class="comment"># Transition band, as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line">N = int(np.ceil((<span class="number">4</span> / b)))</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> N % <span class="number">2</span>: N += <span class="number">1</span>  <span class="comment"># Make sure that N is odd.</span></span><br><span class="line">n = np.arange(N)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Compute a low-pass filter with cutoff frequency fL.</span></span><br><span class="line">hlpf = np.sinc(<span class="number">2</span> * fL * (n - (N - <span class="number">1</span>) / <span class="number">2</span>))</span><br><span class="line">hlpf *= np.blackman(N)</span><br><span class="line">hlpf /= np.sum(hlpf)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Compute a high-pass filter with cutoff frequency fH.</span></span><br><span class="line">hhpf = np.sinc(<span class="number">2</span> * fH * (n - (N - <span class="number">1</span>) / <span class="number">2</span>))</span><br><span class="line">hhpf *= np.blackman(N)</span><br><span class="line">hhpf /= np.sum(hhpf)</span><br><span class="line">hhpf = -hhpf</span><br><span class="line">hhpf[(N - <span class="number">1</span>) // <span class="number">2</span>] += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># Add both filters.</span></span><br><span class="line">h = hlpf + hhpf</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="一个简单的应用示例"><a href="#一个简单的应用示例" class="headerlink" title="一个简单的应用示例"></a>一个简单的应用示例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lowFIR</span><span class="params">(fc  = <span class="number">0.1</span>, b = <span class="number">0.08</span>)</span>:</span></span><br><span class="line">  <span class="comment">#fc: Cutoff frequency as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line">  <span class="comment">#b: Transition band, as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line"></span><br><span class="line">  N = int(np.ceil((<span class="number">4</span> / b)))</span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">not</span> N % <span class="number">2</span>: N += <span class="number">1</span>  <span class="comment"># Make sure that N is odd.</span></span><br><span class="line">  n = np.arange(N)</span><br><span class="line">   </span><br><span class="line">  <span class="comment"># Compute sinc filter.</span></span><br><span class="line">  h = np.sinc(<span class="number">2</span> * fc * (n - (N - <span class="number">1</span>) / <span class="number">2</span>))</span><br><span class="line">   </span><br><span class="line">  <span class="comment"># Compute Blackman window.</span></span><br><span class="line">  w = <span class="number">0.42</span> - <span class="number">0.5</span> * np.cos(<span class="number">2</span> * np.pi * n / (N - <span class="number">1</span>)) + \</span><br><span class="line">      <span class="number">0.08</span> * np.cos(<span class="number">4</span> * np.pi * n / (N - <span class="number">1</span>))</span><br><span class="line">   </span><br><span class="line">  <span class="comment"># Multiply sinc filter by window.</span></span><br><span class="line">  h = h * w</span><br><span class="line">   </span><br><span class="line">  <span class="comment"># Normalize to get unity gain.</span></span><br><span class="line">  h = h / np.sum(h)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> N, h</span><br><span class="line"></span><br><span class="line"><span class="comment">#-------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">highFIR</span><span class="params">(fc = <span class="number">0.1</span>, b = <span class="number">0.08</span>)</span>:</span></span><br><span class="line">  <span class="comment">#fc: Cutoff frequency as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line">  <span class="comment">#b: Transition band, as a fraction of the sampling rate (in (0, 0.5)).</span></span><br><span class="line"></span><br><span class="line">  N = int(np.ceil((<span class="number">4</span> / b)))</span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">not</span> N % <span class="number">2</span>: N += <span class="number">1</span>  <span class="comment"># Make sure that N is odd.</span></span><br><span class="line">  n = np.arange(N)</span><br><span class="line">   </span><br><span class="line">  <span class="comment"># Compute sinc filter.</span></span><br><span class="line">  h = np.sinc(<span class="number">2</span> * fc * (n - (N - <span class="number">1</span>) / <span class="number">2</span>))</span><br><span class="line">   </span><br><span class="line">  <span class="comment"># Compute Blackman window.</span></span><br><span class="line">  w = <span class="number">0.42</span> - <span class="number">0.5</span> * np.cos(<span class="number">2</span> * np.pi * n / (N - <span class="number">1</span>)) + \</span><br><span class="line">      <span class="number">0.08</span> * np.cos(<span class="number">4</span> * np.pi * n / (N - <span class="number">1</span>))</span><br><span class="line">   </span><br><span class="line">  <span class="comment"># Multiply sinc filter by window.</span></span><br><span class="line">  h = h * w</span><br><span class="line">   </span><br><span class="line">  <span class="comment"># Normalize to get unity gain.</span></span><br><span class="line">  h = h / np.sum(h)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Create a high-pass filter from the low-pass filter through spectral inversion.</span></span><br><span class="line">  h *= - <span class="number">1</span></span><br><span class="line">  h[(N - <span class="number">1</span>) // <span class="number">2</span>] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> N, h</span><br><span class="line"></span><br><span class="line"><span class="comment">#-------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">passFIR</span><span class="params">(fL = <span class="number">0.1</span>, fH = <span class="number">0.4</span>, b = <span class="number">0.08</span>)</span>:</span></span><br><span class="line">  N = int(np.ceil(<span class="number">4</span> / b))</span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">not</span> N % <span class="number">2</span>: N += <span class="number">1</span></span><br><span class="line">  n = np.arange(N)</span><br><span class="line"></span><br><span class="line">  hlpf = np.sinc(<span class="number">2</span> * fH * (n - (N - <span class="number">1</span>) / <span class="number">2</span>))</span><br><span class="line">  hlpf *= np.blackman(N)</span><br><span class="line">  hlpf /= np.sum(hlpf)</span><br><span class="line"></span><br><span class="line">  hhpf = np.sinc(<span class="number">2</span> * fL * (n - (N - <span class="number">1</span>) / <span class="number">2</span>))</span><br><span class="line">  hhpf *= np.blackman(N)</span><br><span class="line">  hhpf /= np.sum(hhpf)</span><br><span class="line">  hhpf *= - <span class="number">1</span></span><br><span class="line">  hhpf[(N - <span class="number">1</span>) // <span class="number">2</span>] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">  h = np.convolve(hlpf, hhpf)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">2</span>*N - <span class="number">1</span>, h</span><br><span class="line"></span><br><span class="line"><span class="comment">#-------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">stopFIR</span><span class="params">(fL = <span class="number">0.1</span>, fH = <span class="number">0.4</span>, b = <span class="number">0.08</span>)</span>:</span></span><br><span class="line">  N = int(np.ceil(<span class="number">4</span> / b))</span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">not</span> N % <span class="number">2</span>: N += <span class="number">1</span></span><br><span class="line">  n = np.arange(N)</span><br><span class="line"></span><br><span class="line">  hlpf = np.sinc(<span class="number">2</span> * fL * (n - (N - <span class="number">1</span>) / <span class="number">2</span>))</span><br><span class="line">  hlpf *= np.blackman(N)</span><br><span class="line">  hlpf /= np.sum(hlpf)</span><br><span class="line"></span><br><span class="line">  hhpf = np.sinc(<span class="number">2</span> * fH * (n - (N - <span class="number">1</span>) / <span class="number">2</span>))</span><br><span class="line">  hhpf *= np.blackman(N)</span><br><span class="line">  hhpf /= np.sum(hhpf)</span><br><span class="line">  hhpf *= - <span class="number">1</span></span><br><span class="line">  hhpf[(N - <span class="number">1</span>) // <span class="number">2</span>] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">  h = hlpf + hhpf</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> N, h</span><br><span class="line"></span><br><span class="line"><span class="comment">#-------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> signal</span><br><span class="line"></span><br><span class="line">fs = <span class="number">1000</span> <span class="comment"># sampling frequency</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># generate properly the time vector</span></span><br><span class="line">t = np.arange(<span class="number">1000</span>)/fs</span><br><span class="line">sga = np.sin(<span class="number">2</span>*np.pi*<span class="number">2</span>*t)   <span class="comment"># signal with f = 2</span></span><br><span class="line">sgb = np.sin(<span class="number">2</span>*np.pi*<span class="number">6</span>*t)   <span class="comment"># signal with f = 6</span></span><br><span class="line">sgc = np.sin(<span class="number">2</span>*np.pi*<span class="number">10</span>*t)  <span class="comment"># signal with f = 10</span></span><br><span class="line"></span><br><span class="line">sgd = sga + sgc</span><br><span class="line">sge = sga + sgb + sgc</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="number">1</span>:</span><br><span class="line">  plt.plot(t, sga, label = <span class="string">'f = 2'</span>)</span><br><span class="line">  plt.plot(t, sgc, label = <span class="string">'f = 10'</span>)</span><br><span class="line">  plt.plot(t, sgd, label = <span class="string">'f = 2 + 10'</span>)</span><br><span class="line"></span><br><span class="line">  N, h = lowFIR(fc = <span class="number">5</span>/fs, b = <span class="number">2</span>/fs)</span><br><span class="line">  sgf = np.convolve(sgd, h)</span><br><span class="line">  plt.plot(t, sgf[int(N/<span class="number">2</span>):<span class="number">1000</span> + int(N/<span class="number">2</span>)], label = <span class="string">'low-pass'</span>)</span><br><span class="line"></span><br><span class="line">  N, h = highFIR(fc = <span class="number">5</span>/fs, b = <span class="number">2</span>/fs)</span><br><span class="line">  sgf = np.convolve(sgd, h)</span><br><span class="line">  plt.plot(t, sgf[int(N/<span class="number">2</span>):<span class="number">1000</span> + int(N/<span class="number">2</span>)], label = <span class="string">'high-pass'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  plt.plot(t, sgb, label = <span class="string">'f = 6'</span>)</span><br><span class="line">  plt.plot(t, sgd, label = <span class="string">'f = 2 + 10'</span>)</span><br><span class="line"></span><br><span class="line">  plt.plot(t, sge, label = <span class="string">'f = 2 + 6 + 10'</span>)</span><br><span class="line"></span><br><span class="line">  N, h = passFIR(fL = <span class="number">4</span>/fs, fH = <span class="number">8</span>/fs, b = <span class="number">1</span>/fs)</span><br><span class="line">  sgf = np.convolve(sge, h)</span><br><span class="line">  plt.plot(t, sgf[int(N/<span class="number">2</span>):<span class="number">1000</span> + int(N/<span class="number">2</span>)], label = <span class="string">'band-pass'</span>)</span><br><span class="line"></span><br><span class="line">  N, h = stopFIR(fL = <span class="number">4</span>/fs, fH = <span class="number">8</span>/fs, b = <span class="number">1</span>/fs)</span><br><span class="line">  sgf = np.convolve(sge, h)</span><br><span class="line">  plt.plot(t, sgf[int(N/<span class="number">2</span>):<span class="number">1000</span> + int(N/<span class="number">2</span>)], label = <span class="string">'band-stop'</span>)</span><br><span class="line"></span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../images/inblogs/low-high-pass.png" alt="Low-Pass and High-Pass"></p>
+<p><img src="../../../../images/inblogs/band-pass-stop.png" alt="Band-Pass and Band-Stop"></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>若蒙小宠，如沐春风</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Tche LIU WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Tche LIU Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <div>
+      
+        <div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+      ---------- 文结至此
+      <i class="fa fa-paw"></i>
+      静待下章 ----------
+    </div>
+  
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Singal-Process/" rel="tag"><i class="fa fa-tag"></i> Singal Process</a>
+          
+            <a href="/tags/Filter/" rel="tag"><i class="fa fa-tag"></i> Filter</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/05/ESS-Cluster/" rel="next" title="地空系并行集群管理">
+                <i class="fa fa-chevron-left"></i> 地空系并行集群管理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE5NS8xNDcyMw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://s.gravatar.com/avatar/f58b38472ae7594c1da00001675eb66a?s=80"
+                alt="Tche LIU" />
+            
+              <p class="site-author-name" itemprop="name">Tche LIU</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/TcheL" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:seistche@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一个简单的低通滤波器"><span class="nav-number">1.</span> <span class="nav-text">一个简单的低通滤波器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sinc-滤波器"><span class="nav-number">1.1.</span> <span class="nav-text">sinc 滤波器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时窗"><span class="nav-number">1.2.</span> <span class="nav-text">时窗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时窗-sinc-滤波器"><span class="nav-number">1.3.</span> <span class="nav-text">时窗 sinc 滤波器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过渡带宽"><span class="nav-number">1.4.</span> <span class="nav-text">过渡带宽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-代码"><span class="nav-number">1.5.</span> <span class="nav-text">Python 代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个简单的高通滤波器"><span class="nav-number">2.</span> <span class="nav-text">一个简单的高通滤波器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从低通到高通"><span class="nav-number">2.1.</span> <span class="nav-text">从低通到高通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#频谱反转"><span class="nav-number">2.2.</span> <span class="nav-text">频谱反转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-代码-1"><span class="nav-number">2.3.</span> <span class="nav-text">Python 代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个简单的带通滤波器"><span class="nav-number">3.</span> <span class="nav-text">一个简单的带通滤波器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#带通滤波"><span class="nav-number">3.1.</span> <span class="nav-text">带通滤波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-代码-2"><span class="nav-number">3.2.</span> <span class="nav-text">Python 代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个简单的带阻滤波器"><span class="nav-number">4.</span> <span class="nav-text">一个简单的带阻滤波器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#带阻滤波"><span class="nav-number">4.1.</span> <span class="nav-text">带阻滤波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-代码-3"><span class="nav-number">4.2.</span> <span class="nav-text">Python 代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个简单的应用示例"><span class="nav-number">5.</span> <span class="nav-text">一个简单的应用示例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tche LIU</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme - <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a> v6.3.0</div>
+
+
+
+
+<div class="busuanzi-count">
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span class="site-uv">
+    <i class="fa fa-user"></i>
+    Vistor: <span id="busuanzi_value_site_uv"></span>
+  </span>
+  <span class="post-meta-divider">|</span>
+  <span class="site-pv">
+    <i class="fa fa-eye"></i>
+    View: <span id="busuanzi_value_site_pv"></span>
+  </span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+</body>
+</html>
