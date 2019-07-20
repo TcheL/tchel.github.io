@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="地空系并行集群管理过程中的一些命令操作">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-05T06:22:24.158Z">
+<meta property="og:updated_time" content="2019-07-20T02:25:47.016Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="地空系并行集群管理">
 <meta name="twitter:description" content="地空系并行集群管理过程中的一些命令操作">
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-06-05 14:22:24" itemprop="dateModified" datetime="2019-06-05T14:22:24+08:00">2019-06-05</time>
+                <time title="Modified: 2019-07-20 10:25:47" itemprop="dateModified" datetime="2019-07-20T10:25:47+08:00">2019-07-20</time>
               
             
           </span>
@@ -495,6 +495,45 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-bash: /opt/ibm/lsfsuite/lsf/conf/profile.lsf: No such file or directory</span><br><span class="line">-bash: /opt/ibm/lsfsuite/ext/ppm/conf/profile.js: No such file or directory</span><br></pre></td></tr></table></figure>
 <p>则说明 GPFS 服务没有启动，以命令 <code>[root@mn01 ~]$ mmstartup -a</code> 启动该服务即可。</p>
 <p>集群启动完成后，若以命令 <code>[user@mn01 ~]$ lnodes</code> 查看节点连接情况，发现部分节点为 unavil 状态，则先以命令 <code>[root@mn01 ~]$ mmstartup -N nodename</code> 启动该节点的 GPFS 服务后，再以命令 <code>[root@mn01 ~]$ psh nodename &quot;systemctl restart lsfd&quot;</code> 启动该节点的 LSF 服务即可。或者以 root 身份登录至相应节点，分别以命令 <code>[root@A ~]$ mmstartup</code> 和 <code>[root@A ~]$ systemctl restart lsfd</code> 重启这两个系统服务也可。</p>
+<hr>
+<h2 id="LSF-队列管理"><a href="#LSF-队列管理" class="headerlink" title="LSF 队列管理"></a>LSF 队列管理</h2><h3 id="队列状态"><a href="#队列状态" class="headerlink" title="队列状态"></a>队列状态</h3><p>通过命令 <code>[user@mn01 ~]$ bqueues</code> 可查看各个队列的当前状态。队列状态描述的是队列接收和派发作业的能力，有如下组合：</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open: Active</td>
+<td>接收并派发作业，正常处理中</td>
+</tr>
+<tr>
+<td>Open: Inactive</td>
+<td>只接收但不派发作业，正在收集作业</td>
+</tr>
+<tr>
+<td>Closed: Active</td>
+<td>只派发但不接收作业，正在排空队列</td>
+</tr>
+<tr>
+<td>Closed: Inactive</td>
+<td>既不接收也不派发作业，停止所有活动</td>
+</tr>
+</tbody>
+</table>
+<h3 id="队列控制"><a href="#队列控制" class="headerlink" title="队列控制"></a>队列控制</h3><p>LSF 管理员或 root 用户可以通过以下命令来控制队列 queuename：</p>
+<ul>
+<li><p>以命令 <code>[root@mn01 ~]$ badmin qopen queuename</code> 开启队列，该队列开始接收新的作业；</p>
+</li>
+<li><p>以命令 <code>[root@mn01 ~]$ badmin qclose queuename</code> 关闭队列，该队列不再接收新的作业；</p>
+</li>
+<li><p>以命令 <code>[root@mn01 ~]$ badmin qact queuename</code> 激活队列，该队列开始派发作业；</p>
+</li>
+<li><p>以命令 <code>[root@mn01 ~]$ badmin qinact queuename</code> 阻塞队列，该队列停止派发作业。</p>
+</li>
+</ul>
 <hr>
 <h2 id="LSF-作业系统的配置"><a href="#LSF-作业系统的配置" class="headerlink" title="LSF 作业系统的配置"></a>LSF 作业系统的配置</h2><p>LSF 作业系统的主要配置文件位于 /share/lsf/lsf/conf 目录下，该目录已软链接到 LSF 的安装目录下，修改配置并重新启动相应的 LSF 服务后，新的配置参数即可生效。具体地，</p>
 <ul>
@@ -855,7 +894,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建或删除用户"><span class="nav-number">1.</span> <span class="nav-text">创建或删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改用户密码"><span class="nav-number">2.</span> <span class="nav-text">修改用户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群系统关机"><span class="nav-number">3.</span> <span class="nav-text">集群系统关机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新启动集群"><span class="nav-number">4.</span> <span class="nav-text">重新启动集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动顺序"><span class="nav-number">4.1.</span> <span class="nav-text">启动顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启检查"><span class="nav-number">4.2.</span> <span class="nav-text">重启检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排查错误"><span class="nav-number">4.3.</span> <span class="nav-text">排查错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-作业系统的配置"><span class="nav-number">5.</span> <span class="nav-text">LSF 作业系统的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-系统动态优先级的计算"><span class="nav-number">6.</span> <span class="nav-text">LSF 系统动态优先级的计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPFS-文件系统磁盘配额"><span class="nav-number">7.</span> <span class="nav-text">GPFS 文件系统磁盘配额</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些疑问"><span class="nav-number">8.</span> <span class="nav-text">一些疑问</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建或删除用户"><span class="nav-number">1.</span> <span class="nav-text">创建或删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改用户密码"><span class="nav-number">2.</span> <span class="nav-text">修改用户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群系统关机"><span class="nav-number">3.</span> <span class="nav-text">集群系统关机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新启动集群"><span class="nav-number">4.</span> <span class="nav-text">重新启动集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动顺序"><span class="nav-number">4.1.</span> <span class="nav-text">启动顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启检查"><span class="nav-number">4.2.</span> <span class="nav-text">重启检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排查错误"><span class="nav-number">4.3.</span> <span class="nav-text">排查错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-队列管理"><span class="nav-number">5.</span> <span class="nav-text">LSF 队列管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#队列状态"><span class="nav-number">5.1.</span> <span class="nav-text">队列状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#队列控制"><span class="nav-number">5.2.</span> <span class="nav-text">队列控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-作业系统的配置"><span class="nav-number">6.</span> <span class="nav-text">LSF 作业系统的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-系统动态优先级的计算"><span class="nav-number">7.</span> <span class="nav-text">LSF 系统动态优先级的计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPFS-文件系统磁盘配额"><span class="nav-number">8.</span> <span class="nav-text">GPFS 文件系统磁盘配额</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些疑问"><span class="nav-number">9.</span> <span class="nav-text">一些疑问</span></a></li></ol></div>
             
 
           </div>
