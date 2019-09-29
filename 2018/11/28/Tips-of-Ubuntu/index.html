@@ -479,7 +479,7 @@
 </ul>
 <hr>
 <h2 id="FoxitReader-支持中文输入"><a href="#FoxitReader-支持中文输入" class="headerlink" title="FoxitReader 支持中文输入"></a>FoxitReader 支持中文输入</h2><p>在安装完 Linux 平台的 FoxitReader （版本号：2.4.4.0910）后，FoxitReader 默认是不支持中文输入的。在 FoxitReader 安装目录下的 FoxitReader.sh 脚本文件中加入环境变量 GTK_IM_MODULE、QT_IM_MODULE 和 XMODIFIERS 的设置，即添加 gtk、qt 等对 fcitx 的支持：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/sh</span><br><span class="line"> appname="FoxitReader"</span><br><span class="line"></span><br><span class="line"> selfpath="/opt/foxitsoftware/foxitreader"</span><br><span class="line"> export GTK_IM_MODULE=fcitx</span><br><span class="line"> export QT_IM_MODULE=fcitx</span><br><span class="line"> export XMODIFIERS=@im=fcitx</span><br><span class="line"> exec "$selfpath/$appname" "$@"</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line"> appname="FoxitReader"</span><br><span class="line"></span><br><span class="line"> selfpath="/opt/foxitsoftware/foxitreader"</span><br><span class="line"> export GTK_IM_MODULE=fcitx</span><br><span class="line"> export QT_IM_MODULE=fcitx</span><br><span class="line"> export XMODIFIERS=@im=fcitx</span><br><span class="line"> exec "$selfpath/$appname" "$@"</span><br></pre></td></tr></table></figure>
 <p>注意，需将 export 语言添加在 exec 语句之前。</p>
 
       
@@ -653,7 +653,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
