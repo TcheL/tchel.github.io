@@ -114,18 +114,20 @@
 
 
 
-  <meta name="description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法、Fixed point 算法和非线性共轭梯度法。">
+  <meta name="description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法、固定点算法和非线性共轭梯度法等。">
 <meta name="keywords" content="BFGS,Fixed point,Conjugate gradient">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一些算法原理">
 <meta property="og:url" content="http://tchel.github.io/2018/07/22/Principle-of-Algorithm/index.html">
 <meta property="og:site_name" content="Here4U">
-<meta property="og:description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法、Fixed point 算法和非线性共轭梯度法。">
+<meta property="og:description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法、固定点算法和非线性共轭梯度法等。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-02-19T12:45:53.367Z">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Euclidean_Voronoi_diagram.svg/330px-Euclidean_Voronoi_diagram.svg.png">
+<meta property="og:updated_time" content="2019-11-14T02:25:11.156Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些算法原理">
-<meta name="twitter:description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法、Fixed point 算法和非线性共轭梯度法。">
+<meta name="twitter:description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法、固定点算法和非线性共轭梯度法等。">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Euclidean_Voronoi_diagram.svg/330px-Euclidean_Voronoi_diagram.svg.png">
 
 
 
@@ -413,7 +415,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-19 20:45:53" itemprop="dateModified" datetime="2019-02-19T20:45:53+08:00">2019-02-19</time>
+                <time title="Modified: 2019-11-14 10:25:11" itemprop="dateModified" datetime="2019-11-14T10:25:11+08:00">2019-11-14</time>
               
             
           </span>
@@ -460,7 +462,7 @@
           
 
           
-              <div class="post-description">介绍了一些简单算法的基本原理，包括 BFGS 算法、Fixed point 算法和非线性共轭梯度法。</div>
+              <div class="post-description">介绍了一些简单算法的基本原理，包括 BFGS 算法、固定点算法和非线性共轭梯度法等。</div>
           
 
         </div>
@@ -477,7 +479,7 @@
 
       
         <h2 id="BFGS-算法"><a href="#BFGS-算法" class="headerlink" title="BFGS 算法"></a>BFGS 算法</h2><p>也即 Broyden-Fletcher-Goldfarb-Shanno 算法。参考 <a href="https://en.wikipedia.org/wiki/Broyden-Fletcher-Goldfarb-Shanno_algorithm" target="_blank" rel="noopener">Wikipedia</a> 。</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>The search direction at stage $k$ is given by the Newton method:</p>
+<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>The search direction at stage $k$ is given by the Newton method:</p>
 <p>$$p_k=-B_k\nabla f(x_k)$$</p>
 <p>where $B_k$ is an approximation of the Hessian matrix, and $\nabla f(x_k)$ is the gradient of the function at $x_k$</p>
 <p>The <strong>quasi-Newton condition</strong> imposed on the update of $B_k$ is:</p>
@@ -488,7 +490,7 @@
 <p>$$B_{k+1}^{-1}=\left(I-\frac{s_ky_k^T}{y_k^Ts_k}\right)B_k^{-1}\left(I-\frac{y_ks_k^T}{y_k^Ts_k}\right)+\frac{s_ks_k^T}{y_k^Ts_k}$$</p>
 <p>or</p>
 <p>$$B_{k+1}^{-1}=B_k^{-1}+\frac{(s_k^Ty_k+y_k^TB_k^{-1}y_k)(s_ks_k^T)}{(s_k^Ty_k)^2}-\frac{B_k^{-1}y_ks_k^T+s_ky_k^TB_k^{-1}}{s_k^Ty_k}$$</p>
-<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>From an initial guess $x_0$ and an approximate Hessian matrix $B_0$ (generally the identity matrix), the following steps are repeated as $x_k$ converges to the solution:</p>
+<h3 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h3><p>From an initial guess $x_0$ and an approximate Hessian matrix $B_0$ (generally the identity matrix), the following steps are repeated as $x_k$ converges to the solution:</p>
 <ul>
 <li>Obtain a direction: $p_k=-B_k^{-1}\nabla f(x_k)$;</li>
 <li>Perform a line search to find an acceptable stepsize $\alpha_k$ in the direction found in the first step;</li>
@@ -497,10 +499,10 @@
 <li>$B_{k+1}=B_k+\frac{y_ky_k^T}{y_k^Ts_k}-\frac{B_ks_ks_k^TB_k}{s_k^TB_ks_k}$.</li>
 </ul>
 <hr>
-<h2 id="Fixed-point-迭代法"><a href="#Fixed-point-迭代法" class="headerlink" title="Fixed point 迭代法"></a>Fixed point 迭代法</h2><h3 id="Fixed-point"><a href="#Fixed-point" class="headerlink" title="Fixed point"></a>Fixed point</h3><p>参考 Wikipedia <a href="https://en.wikipedia.org/wiki/Fixed_point_(mathematics)" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Fixed_point_(mathematics)</a> 。</p>
+<h2 id="固定点迭代法"><a href="#固定点迭代法" class="headerlink" title="固定点迭代法"></a>固定点迭代法</h2><h3 id="固定点（Fixed-point）"><a href="#固定点（Fixed-point）" class="headerlink" title="固定点（Fixed point）"></a>固定点（Fixed point）</h3><p>参考 Wikipedia <a href="https://en.wikipedia.org/wiki/Fixed_point_(mathematics)" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Fixed_point_(mathematics)</a> 。</p>
 <p>Not to be confused with a <strong>stationary point</strong> where $f’(x)=0$ . In mathematics, $c$ is a <strong>fixed point</strong> of the function $f(x)$ if $f(c) = c$.</p>
 <p>Points that come back to the same value after a finite number of iterations of the function are called <strong>periodic points</strong>. A fixed point is a periodic point with period equal to one.</p>
-<h3 id="Fixed-point-迭代"><a href="#Fixed-point-迭代" class="headerlink" title="Fixed point 迭代"></a>Fixed point 迭代</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>参考 <a href="https://en.wikipedia.org/wiki/Fixed-point_iteration" target="_blank" rel="noopener">Wikipedia</a> 。</p>
+<h3 id="固定点迭代"><a href="#固定点迭代" class="headerlink" title="固定点迭代"></a>固定点迭代</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>参考 <a href="https://en.wikipedia.org/wiki/Fixed-point_iteration" target="_blank" rel="noopener">Wikipedia</a> 。</p>
 <p>In numerical analysis, given a function $f$ defined on the real number with real values and given a point $x_0$ in the domain of $f$, the <strong>fixed point iteration</strong> is</p>
 <p>$$x_{n+1}=f(x_n), n=0,1,2,…$$</p>
 <h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><p><strong>Newton’s method</strong> for finding roots of a given differentiable function $f(x)$ is</p>
@@ -520,17 +522,17 @@
 <p>the minimum of $f$ is obtained when the gradient $\nabla_x f=2A^T(Ax-b)=0$.</p>
 <p>Linear conjugate gradient seeks a solution to the linear equation $A^T Ax=A^T b$.</p>
 <h3 id="非线性共轭梯度法-1"><a href="#非线性共轭梯度法-1" class="headerlink" title="非线性共轭梯度法"></a>非线性共轭梯度法</h3><p>The nonlinear conjugate gradient method is generally used to find the local minimum of a nonlinear function using its gradient $\nabla_x f$ alone.</p>
-<h4 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h4><p>Given a function $f(x)$, one simply starts in the steepest descent direction:</p>
+<h4 id="算法步骤-1"><a href="#算法步骤-1" class="headerlink" title="算法步骤"></a>算法步骤</h4><p>Given a function $f(x)$, one simply starts in the steepest descent direction:</p>
 <p>$$\Delta x_0=-\nabla_x f(x_0)$$</p>
 <p>with an step length $\alpha$, and preforms a line search:</p>
-<p>$$\alpha_0:=argmin_\alpha f(x_0+\alpha\Delta x_0)$$</p>
+<p>$$\alpha_0:=\text{argmin}_\alpha f(x_0+\alpha\Delta x_0)$$</p>
 <p>$$x_1=x_0+\alpha_0\Delta x_0$$</p>
 <p>After the first iteration in $\Delta x_0$, the following steps continue along a subsequent conjugate direction $s_n$, where $s_0=\Delta x_0$:</p>
 <ul>
 <li>Calculate the steepest direction: $\Delta x_n=-\nabla_x f(x_n)$;</li>
 <li>Compute $\beta_n$ according to one of the formulas below;</li>
 <li>Update the conjugate direction: $s_n=\Delta x_n+\beta_n s_{n-1}$;</li>
-<li>Perform a line search: optimize $\alpha_n=argmin_\alpha f(x_n+\alpha s_n)$;</li>
+<li>Perform a line search: optimize $\alpha_n=\text{argmin}_\alpha f(x_n+\alpha s_n)$;</li>
 <li>Update: $x_{n+1}=x_n+\alpha_n s_n$.</li>
 </ul>
 <p>Subsequent search directions lose conjugacy requiring the search<br>direction to be reset to the steepest descent direction at least every $N$ iterations, or sooner if progress stops.</p>
@@ -542,6 +544,30 @@
 <li>Dai-Yuan: $\beta_n^{DY}=-\frac{\Delta x_n^T \Delta x_n}{s_{n-1}^T (\Delta x_n-\Delta x_{n-1})}$.</li>
 </ul>
 <p>A popular choice is $\beta=\max\lbrace 0,\beta^{PR}\rbrace$, which provides a direction reset automatically.</p>
+<hr>
+<h2 id="邻域算法"><a href="#邻域算法" class="headerlink" title="邻域算法"></a>邻域算法</h2><p>邻域算法（Neighborhood Algorithm）是由 <a href="https://doi.org/10.1046/j.1365-246x.1999.00876.x" target="_blank" rel="noopener">(Sambridge, 1999)</a> 引入到地球物理反演的应用中的。在该文中，作者发出了灵魂拷问：</p>
+<blockquote>
+<p>How can a search for new models be best guided by all previous models for which the forward problem has been solved (and hence the data-misfit value evaluated) ?</p>
+</blockquote>
+<h3 id="Voronoi-图"><a href="#Voronoi-图" class="headerlink" title="Voronoi 图"></a>Voronoi 图</h3><p>参考 <a href="https://en.wikipedia.org/wiki/Voronoi_diagram" target="_blank" rel="noopener">Wikipedia</a> 。</p>
+<p>In mathematics, a Voronoi diagram is a partition of a plane into regions close to each of a given set of objects.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Euclidean_Voronoi_diagram.svg/330px-Euclidean_Voronoi_diagram.svg.png" alt="Voronoi diagrams under Euclidean metric"></p>
+<p>Let $X$ be a metric space with distance function $d$. Let $K$ be a set of indices and let $(P_k)_{k \in K}$ be a tuple (ordered collection) of nonempty subsets (the sites) in the space $X$. The Voronoi cell, or Voronoi region, $R_k$, associated with the site $P_k$ is the set of all points in $X$ whose distance to $P_k$ is not greater than their distance to the other sites $P_j$, where $j$ is any index different from $k$:</p>
+<p>$$ R_k = { x \in X \vert d(x, P_k) \leq d(x, P_j) \text{ for all } j \neq k } $$</p>
+<h3 id="算法步骤-2"><a href="#算法步骤-2" class="headerlink" title="算法步骤"></a>算法步骤</h3><p>The Neighborhood Algorithm can be summarized as follows <a href="https://doi.org/10.1046/j.1365-246x.1999.00876.x" target="_blank" rel="noopener">(Sambridge, 1999)</a>:</p>
+<ol>
+<li>Generate an initinal set of $n_s$ models uniformly in parameter space;</li>
+<li>Calculate the misfit function for the most recently generated set of $n_s$ models, and determine the $n_r$ models with the lowest misfit of all models generated so far;</li>
+<li>Generate $n_s$ new models by perfoming a uniform random walk in the Voronoi cell of each of the $n_r$ chosen models (i.e., $n_s/n_r$ samples in each cell);</li>
+<li>Go to step 2.</li>
+</ol>
+<p>首先，在一个预定义的模型空间中随机生成 $n_s$ 个模型（即 Voronoi 中心），并计算出这些模型的目标函数值。接着，根据定义的距离测量公式构建出 Voronoi 元胞（Voronoi cell），赋予元胞中每个点与 Voronoi 中心相同的目标函数值。在这个过程中，我们实质上生成了一组等目标函数面。从目前生成的这 $n_s$ 个模型中，选出误差最小的 $n_r$ 个模型，去掉剩下的 $(n_s - n_r)$ 个模型。现在，在这 $n_r$ 个 Voronoi 元胞中，每个元胞生成 $n_s/n_r$ 个新模型，总共产生 $n_s$ 个新模型。再次，选出 $n_r$ 个误差最小的模型，去掉剩下的 $(n_s - n_r)$ 个模型。重复以上过程直到满足预定义的收敛条件。（本段译自：<em>Global Optimization Methods in Geophysical Inversion</em>，第二版，6.1.3 小节）</p>
+<h3 id="算法优点"><a href="#算法优点" class="headerlink" title="算法优点"></a>算法优点</h3><p>According to the section 6.1.3 of <em>Global Optimization Methods in Geophysical Inversion</em> (2nd edition, Sen and Stoffa, 2013), following are the advantages of the Neighborhood Algorithm:</p>
+<ul>
+<li>It uses previous smaples to determine the next step of the search, or in other words, the algorithm is self-adaptive.</li>
+<li>The algorithm requires only two tuning parameters, namely, $n_s$ and $n_r$.</li>
+<li>The process generates an ensemble of models with low misfit values; thus the method can be used for uncertainty quantification as well.</li>
+</ul>
 
       
     </div>
@@ -866,7 +892,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BFGS-算法"><span class="nav-number">1.</span> <span class="nav-text">BFGS 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">1.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">1.2.</span> <span class="nav-text">算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fixed-point-迭代法"><span class="nav-number">2.</span> <span class="nav-text">Fixed point 迭代法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fixed-point"><span class="nav-number">2.1.</span> <span class="nav-text">Fixed point</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fixed-point-迭代"><span class="nav-number">2.2.</span> <span class="nav-text">Fixed point 迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">2.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用"><span class="nav-number">2.2.2.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非线性共轭梯度法"><span class="nav-number">3.</span> <span class="nav-text">非线性共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性共轭梯度法"><span class="nav-number">3.1.</span> <span class="nav-text">线性共轭梯度法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非线性共轭梯度法-1"><span class="nav-number">3.2.</span> <span class="nav-text">非线性共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法步骤"><span class="nav-number">3.2.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#beta-n-的计算"><span class="nav-number">3.2.2.</span> <span class="nav-text">$\beta_n$ 的计算</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BFGS-算法"><span class="nav-number">1.</span> <span class="nav-text">BFGS 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本原理"><span class="nav-number">1.1.</span> <span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤"><span class="nav-number">1.2.</span> <span class="nav-text">算法步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#固定点迭代法"><span class="nav-number">2.</span> <span class="nav-text">固定点迭代法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#固定点（Fixed-point）"><span class="nav-number">2.1.</span> <span class="nav-text">固定点（Fixed point）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#固定点迭代"><span class="nav-number">2.2.</span> <span class="nav-text">固定点迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">2.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用"><span class="nav-number">2.2.2.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非线性共轭梯度法"><span class="nav-number">3.</span> <span class="nav-text">非线性共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性共轭梯度法"><span class="nav-number">3.1.</span> <span class="nav-text">线性共轭梯度法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非线性共轭梯度法-1"><span class="nav-number">3.2.</span> <span class="nav-text">非线性共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法步骤-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#beta-n-的计算"><span class="nav-number">3.2.2.</span> <span class="nav-text">$\beta_n$ 的计算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻域算法"><span class="nav-number">4.</span> <span class="nav-text">邻域算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Voronoi-图"><span class="nav-number">4.1.</span> <span class="nav-text">Voronoi 图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤-2"><span class="nav-number">4.2.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法优点"><span class="nav-number">4.3.</span> <span class="nav-text">算法优点</span></a></li></ol></li></ol></div>
             
 
           </div>
