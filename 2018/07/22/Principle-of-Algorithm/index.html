@@ -123,7 +123,7 @@
 <meta property="og:description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法、固定点算法和非线性共轭梯度法等。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Euclidean_Voronoi_diagram.svg/330px-Euclidean_Voronoi_diagram.svg.png">
-<meta property="og:updated_time" content="2019-11-14T02:25:11.156Z">
+<meta property="og:updated_time" content="2019-11-14T03:16:25.683Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些算法原理">
 <meta name="twitter:description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法、固定点算法和非线性共轭梯度法等。">
@@ -415,7 +415,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-11-14 10:25:11" itemprop="dateModified" datetime="2019-11-14T10:25:11+08:00">2019-11-14</time>
+                <time title="Modified: 2019-11-14 11:16:25" itemprop="dateModified" datetime="2019-11-14T11:16:25+08:00">2019-11-14</time>
               
             
           </span>
@@ -549,6 +549,7 @@
 <blockquote>
 <p>How can a search for new models be best guided by all previous models for which the forward problem has been solved (and hence the data-misfit value evaluated) ?</p>
 </blockquote>
+<p>邻域算法采用简单的几何概念指导参数空间中的模型搜索，是一种非线性的无导数反演方法 <a href="https://doi.org/10.1029/2003GL019058" target="_blank" rel="noopener">(Peyrat and Olsen, 2004)</a> 。</p>
 <h3 id="Voronoi-图"><a href="#Voronoi-图" class="headerlink" title="Voronoi 图"></a>Voronoi 图</h3><p>参考 <a href="https://en.wikipedia.org/wiki/Voronoi_diagram" target="_blank" rel="noopener">Wikipedia</a> 。</p>
 <p>In mathematics, a Voronoi diagram is a partition of a plane into regions close to each of a given set of objects.</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Euclidean_Voronoi_diagram.svg/330px-Euclidean_Voronoi_diagram.svg.png" alt="Voronoi diagrams under Euclidean metric"></p>
@@ -568,6 +569,7 @@
 <li>The algorithm requires only two tuning parameters, namely, $n_s$ and $n_r$.</li>
 <li>The process generates an ensemble of models with low misfit values; thus the method can be used for uncertainty quantification as well.</li>
 </ul>
+<p>根据 <a href="https://doi.org/10.1029/2003GL019058" target="_blank" rel="noopener">(Peyrat and Olsen, 2004)</a>：（1）在迭代中，新模型只在上一步误差最小的若干个模型的 Voronoi 元胞中产生，因此邻域算法比蒙特卡罗算法具有更少的计算消耗；（2）与遗传算法和模拟退火算法相比，在模型搜索中邻域算法仅需要两个控制参数，需要更少的主观“指导”。</p>
 
       
     </div>
