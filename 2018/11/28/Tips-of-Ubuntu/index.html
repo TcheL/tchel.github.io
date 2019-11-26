@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="Ubuntu 不乖的时候，你是要揍他的 👊">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-10T03:01:04.393Z">
+<meta property="og:updated_time" content="2019-11-26T14:09:12.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于 Ubuntu 的陈年往事">
 <meta name="twitter:description" content="Ubuntu 不乖的时候，你是要揍他的 👊">
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-05-10 11:01:04" itemprop="dateModified" datetime="2019-05-10T11:01:04+08:00">2019-05-10</time>
+                <time title="Modified: 2019-11-26 22:09:12" itemprop="dateModified" datetime="2019-11-26T22:09:12+08:00">2019-11-26</time>
               
             
           </span>
@@ -489,8 +489,11 @@
 </ul>
 <hr>
 <h2 id="FoxitReader-支持中文输入"><a href="#FoxitReader-支持中文输入" class="headerlink" title="FoxitReader 支持中文输入"></a>FoxitReader 支持中文输入</h2><p>在安装完 Linux 平台的 FoxitReader （版本号：2.4.4.0910）后，FoxitReader 默认是不支持中文输入的。在 FoxitReader 安装目录下的 FoxitReader.sh 脚本文件中加入环境变量 GTK_IM_MODULE、QT_IM_MODULE 和 XMODIFIERS 的设置，即添加 gtk、qt 等对 fcitx 的支持：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line"> appname="FoxitReader"</span><br><span class="line"></span><br><span class="line"> selfpath="/opt/foxitsoftware/foxitreader"</span><br><span class="line"> export GTK_IM_MODULE=fcitx</span><br><span class="line"> export QT_IM_MODULE=fcitx</span><br><span class="line"> export XMODIFIERS=@im=fcitx</span><br><span class="line"> exec "$selfpath/$appname" "$@"</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/sh</span><br><span class="line"> appname="FoxitReader"</span><br><span class="line"></span><br><span class="line"> selfpath="/opt/foxitsoftware/foxitreader"</span><br><span class="line"> export GTK_IM_MODULE=fcitx</span><br><span class="line"> export QT_IM_MODULE=fcitx</span><br><span class="line"> export XMODIFIERS=@im=fcitx</span><br><span class="line"> exec "$selfpath/$appname" "$@"</span><br></pre></td></tr></table></figure>
 <p>注意，需将 export 语言添加在 exec 语句之前。</p>
+<hr>
+<h2 id="用-ImageMagick-convert-拼贴多张图片"><a href="#用-ImageMagick-convert-拼贴多张图片" class="headerlink" title="用 ImageMagick convert 拼贴多张图片"></a>用 ImageMagick convert 拼贴多张图片</h2><p>命令 <code>$ convert Screenshot*.png -background black -splice 0x10+0+0 -gravity Center -append -chop 0x10+0+0 new.png</code> 将所有匹配到 Screenshot*.png 的图片文件从上至下拼接成一整个名为 new.png 的图片，拼接时所有单个 Screenshot*.png 按水平居中对齐，在每两个图片中间插入 10 像素的空隙，并取背景底色为黑色。</p>
+<p>命令 <code>$ convert Screenshot*.png -background white -splice 10x0+0+0 -gravity Center +append -chop 10x0+0+0 new.png</code> 将所有匹配到 Screenshot*.png 的图片文件从左至右拼接成一整个名为 new.png 的图片，拼接时所有单个 Screenshot*.png 按垂直居中对齐，在每两个图片中间插入 10 像素的空隙，并取前景底色为白色。</p>
 
       
     </div>
@@ -819,7 +822,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-启动栏图标自定义设置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 启动栏图标自定义设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">2.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FoxitReader-支持中文输入"><span class="nav-number">3.</span> <span class="nav-text">FoxitReader 支持中文输入</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-启动栏图标自定义设置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 启动栏图标自定义设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">2.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FoxitReader-支持中文输入"><span class="nav-number">3.</span> <span class="nav-text">FoxitReader 支持中文输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用-ImageMagick-convert-拼贴多张图片"><span class="nav-number">4.</span> <span class="nav-text">用 ImageMagick convert 拼贴多张图片</span></a></li></ol></div>
             
 
           </div>
