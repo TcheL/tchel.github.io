@@ -122,10 +122,12 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="许久未曾编写 C 程序，重新学习，现在此记录一些 Cuda C 编程学习过程中遇到的小知识，可能仅适用于本人所使用的编译运行平台。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-16T11:59:02.506Z">
+<meta property="og:image" content="http://tchel.github.io/inblogs/C-if-else.png">
+<meta property="og:updated_time" content="2019-11-27T05:36:45.459Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cuda C 学习之路">
 <meta name="twitter:description" content="许久未曾编写 C 程序，重新学习，现在此记录一些 Cuda C 编程学习过程中遇到的小知识，可能仅适用于本人所使用的编译运行平台。">
+<meta name="twitter:image" content="http://tchel.github.io/inblogs/C-if-else.png">
 
 
 
@@ -413,7 +415,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-16 19:59:02" itemprop="dateModified" datetime="2018-11-16T19:59:02+08:00">2018-11-16</time>
+                <time title="Modified: 2019-11-27 13:36:45" itemprop="dateModified" datetime="2019-11-27T13:36:45+08:00">2019-11-27</time>
               
             
           </span>
@@ -479,6 +481,7 @@
         <h2 id="C-相关"><a href="#C-相关" class="headerlink" title="C 相关"></a>C 相关</h2><ul>
 <li>C 语言中函数形参默认传值，即函数内部修改形参不会改变实参的值；但可以通过指针形参传递实参地址，修改指针引用值可以改变实参的值。</li>
 <li>在变量单双精度切换时，使用  <code>scanf</code>  函数读入数据到变量也需在格式字符串 <code>%f</code> 和 <code>%lf</code> 之间切换，但使用 <code>printf</code> 函数输出变量数据则不需切换。</li>
+<li>else 优先与上文最近的不具备完整 if-else 结构的 if 结合组成判断分支结构：<img src="../../../../inblogs/C-if-else.png" alt="C-if-else"></li>
 </ul>
 <hr>
 <h2 id="Cuda-相关"><a href="#Cuda-相关" class="headerlink" title="Cuda 相关"></a>Cuda 相关</h2><ul>
