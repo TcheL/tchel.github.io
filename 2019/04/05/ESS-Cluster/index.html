@@ -115,17 +115,16 @@
 
 
   <meta name="description" content="地空系并行集群管理过程中的一些命令操作">
-<meta name="keywords" content="Server">
 <meta property="og:type" content="article">
 <meta property="og:title" content="地空系并行集群管理">
-<meta property="og:url" content="http://tchel.github.io/2019/04/05/ESS-Cluster/index.html">
+<meta property="og:url" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;2019&#x2F;04&#x2F;05&#x2F;ESS-Cluster&#x2F;index.html">
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="地空系并行集群管理过程中的一些命令操作">
-<meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-20T02:25:47.016Z">
+<meta property="article:published_time" content="2019-04-05T13:06:23.000Z">
+<meta property="article:modified_time" content="2020-04-23T04:24:36.706Z">
+<meta property="article:author" content="Tche LIU">
+<meta property="article:tag" content="Server">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="地空系并行集群管理">
-<meta name="twitter:description" content="地空系并行集群管理过程中的一些命令操作">
 
 
 
@@ -178,9 +177,9 @@
       .logo-line-after i { right: initial; }
     }
   </style>
-</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</noscript>
 
-</head>
+<meta name="generator" content="Hexo 4.1.1"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 <!-- 页面点击小红心 -->
 <script type="text/javascript" src="/js/src/love.js"></script>
@@ -196,9 +195,9 @@
     <div class="headband"></div>
 
     <!-- 小条 Fork me on Github
-     <a href="https://github.com/TcheL"><img style="position:absolute; top:0; right:0; border:0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on Github"></a>
+     <a href="https://github.com/TcheL" target="_blank" rel="noopener"><img style="position:absolute; top:0; right:0; border:0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on Github"></a>
     -->
-    <a href="https://github.com/TcheL" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <a href="https://github.com/TcheL" target="_blank" rel="noopener" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
@@ -413,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-20 10:25:47" itemprop="dateModified" datetime="2019-07-20T10:25:47+08:00">2019-07-20</time>
+                <time title="Modified: 2020-04-23 12:24:36" itemprop="dateModified" datetime="2020-04-23T12:24:36+08:00">2020-04-23</time>
               
             
           </span>
@@ -478,7 +477,10 @@
       
         <h2 id="创建或删除用户"><a href="#创建或删除用户" class="headerlink" title="创建或删除用户"></a>创建或删除用户</h2><p>先以命令 <code>[root@mn01 ~]$ adduser username</code> 创建新用户 username 生成相应的用户信息，或以命令 <code>[root@mn01 ~]$ userdel -rf username</code> 删除原用户 username 并删除该用户的用户信息，再以命令 <code>[root@mn01 ~]$ make -C /var/yp</code> 将管理节点（mn01）的用户信息发送到所有计算节点。</p>
 <hr>
-<h2 id="修改用户密码"><a href="#修改用户密码" class="headerlink" title="修改用户密码"></a>修改用户密码</h2><p>先以命令 <code>[root@mn01 ~]$ passwd username</code> 修改管理节点的用户密码，再以命令 <code>[root@mn01 ~]$ make -C /var/yp</code> 将新的用户信息发送出去。</p>
+<h2 id="修改用户密码"><a href="#修改用户密码" class="headerlink" title="修改用户密码"></a>修改用户密码</h2><p>先以命令 <code>[root@mn01 ~]$ passwd username</code> 修改管理节点的用户密码，再以命令 <code>[root@mn01 ~]$ make -C /var/yp</code> 将新的用户信息发送到所有计算节点。</p>
+<hr>
+<h2 id="修改用户公共数据访问权限"><a href="#修改用户公共数据访问权限" class="headerlink" title="修改用户公共数据访问权限"></a>修改用户公共数据访问权限</h2><p>以中国地震台网中心地震数据（/share/data/CENC 目录）为例，该数据所属用户组为 cenc，该数据目录访问权限为 <strong>rwxr-xr-x</strong>，目录下数据文件的访问权限为 <strong>rw-r—–</strong> 。</p>
+<p>先以命令 <code>[root@mn01 ~]$ usermod -G cenc username</code> 为用户添加附加用户组 cenc，再以命令 <code>[root@mn01 ~]$ make -C /var/yp</code> 将修改后的用户信息发送到所有计算节点。至此，用户即可在任一节点读取该数据目录下的所有数据文件。</p>
 <hr>
 <h2 id="集群系统关机"><a href="#集群系统关机" class="headerlink" title="集群系统关机"></a>集群系统关机</h2><ul>
 <li><p><code>[root@mn01 ~]$ psh compute poweroff</code> 关闭所有计算节点；</p>
@@ -514,8 +516,7 @@
 <th>描述</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>Open: Active</td>
 <td>接收并派发作业，正常处理中</td>
 </tr>
@@ -531,8 +532,7 @@
 <td>Closed: Inactive</td>
 <td>既不接收也不派发作业，停止所有活动</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <h3 id="队列控制"><a href="#队列控制" class="headerlink" title="队列控制"></a>队列控制</h3><p>LSF 管理员或 root 用户可以通过以下命令来控制队列 queuename：</p>
 <ul>
 <li><p>以命令 <code>[root@mn01 ~]$ badmin qopen queuename</code> 开启队列，该队列开始接收新的作业；</p>
@@ -762,7 +762,7 @@
               
                 <div class="site-state-item site-state-posts">
                 
-                  <a href="/archives/">
+                  <a href="/archives/%20%7C%7C%20archive">
                 
                     <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">posts</span>
@@ -791,12 +791,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
@@ -809,8 +803,6 @@
                 <div class="site-state-item site-state-tags">
                   <a href="/tags/index.html">
                     
-                    
-                      
                     
                       
                     
@@ -918,7 +910,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建或删除用户"><span class="nav-number">1.</span> <span class="nav-text">创建或删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改用户密码"><span class="nav-number">2.</span> <span class="nav-text">修改用户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群系统关机"><span class="nav-number">3.</span> <span class="nav-text">集群系统关机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新启动集群"><span class="nav-number">4.</span> <span class="nav-text">重新启动集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动顺序"><span class="nav-number">4.1.</span> <span class="nav-text">启动顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启检查"><span class="nav-number">4.2.</span> <span class="nav-text">重启检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排查错误"><span class="nav-number">4.3.</span> <span class="nav-text">排查错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-队列管理"><span class="nav-number">5.</span> <span class="nav-text">LSF 队列管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#队列状态"><span class="nav-number">5.1.</span> <span class="nav-text">队列状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#队列控制"><span class="nav-number">5.2.</span> <span class="nav-text">队列控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-作业系统的配置"><span class="nav-number">6.</span> <span class="nav-text">LSF 作业系统的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-系统动态优先级的计算"><span class="nav-number">7.</span> <span class="nav-text">LSF 系统动态优先级的计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPFS-文件系统磁盘配额"><span class="nav-number">8.</span> <span class="nav-text">GPFS 文件系统磁盘配额</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些疑问"><span class="nav-number">9.</span> <span class="nav-text">一些疑问</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建或删除用户"><span class="nav-number">1.</span> <span class="nav-text">创建或删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改用户密码"><span class="nav-number">2.</span> <span class="nav-text">修改用户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改用户公共数据访问权限"><span class="nav-number">3.</span> <span class="nav-text">修改用户公共数据访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群系统关机"><span class="nav-number">4.</span> <span class="nav-text">集群系统关机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新启动集群"><span class="nav-number">5.</span> <span class="nav-text">重新启动集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动顺序"><span class="nav-number">5.1.</span> <span class="nav-text">启动顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启检查"><span class="nav-number">5.2.</span> <span class="nav-text">重启检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排查错误"><span class="nav-number">5.3.</span> <span class="nav-text">排查错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-队列管理"><span class="nav-number">6.</span> <span class="nav-text">LSF 队列管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#队列状态"><span class="nav-number">6.1.</span> <span class="nav-text">队列状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#队列控制"><span class="nav-number">6.2.</span> <span class="nav-text">队列控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-作业系统的配置"><span class="nav-number">7.</span> <span class="nav-text">LSF 作业系统的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-系统动态优先级的计算"><span class="nav-number">8.</span> <span class="nav-text">LSF 系统动态优先级的计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPFS-文件系统磁盘配额"><span class="nav-number">9.</span> <span class="nav-text">GPFS 文件系统磁盘配额</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些疑问"><span class="nav-number">10.</span> <span class="nav-text">一些疑问</span></a></li></ol></div>
             
 
           </div>
@@ -938,7 +930,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -952,7 +944,7 @@
 
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v4.1.1</div>
 
 
 
