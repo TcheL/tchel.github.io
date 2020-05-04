@@ -498,173 +498,182 @@
 <p>Expand the file wildcards in expr . The result is a String .<br>When the result of expr starts with% , # or &lt; , the expansion is done like for the cmdline- special variables with their associated modifiers. There cannot be a white space between the variables and the following modifier. When the current or alternate file name is not defined, % or # use an empty string. Using %:p in a buffer with no name results in the current directory, with a “/ ”added.<br>When {expr} starts with ‘%’, ‘#’ or ‘&lt;’, the expansion is done like for the |cmdline-special| variables with their associated modifiers.  Here is a short overview:<br>“%” current file name;<br>“#“ alternate file name;<br>“#n” alternate file name n.<br>Modifiers:<br>:p expand to full path;<br>:h head (last path component removed);<br>:t tail (last path component only);<br>:r root (one extension removed);<br>:e extension only.</p>
 </blockquote>
 <p>函数的返回值是一个字符串。功能就是将参数 expr 这个通配符进行扩展。各个通配符的含义上面列出来了。<br>例如：call append(2, “File Name: “.expand(“%”)) 在文件的第三行写入这句话 “File Name: ${filename}”，这边%表示当前文件的名称，通过函数expand（”%”）将其还原成了文件名字符串。let sourcefilepath=expand(“%:p”) 获取到当前文件的完全路径（绝对路径）。</p>
-<h3 id="配置函数应用举例"><a href="#配置函数应用举例" class="headerlink" title="配置函数应用举例"></a>配置函数应用举例</h3><p>在用 Vim 打开文件后，在命令模式下，输入命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="built_in">echo</span> col(<span class="string">"."</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="配置函数应用举例"><a href="#配置函数应用举例" class="headerlink" title="配置函数应用举例"></a>配置函数应用举例</h3><p>在用 Vim 打开文件后，在命令模式下，输入命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="built_in">echo</span> col(<span class="string">"."</span>)</span><br></pre></td></tr></table></figure>
+
 <p>即返回光标所在的列号。<br>在「<strong>$HOME/.vimrc</strong>」文件中添加如下语句</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if has("autocmd")</span><br><span class="line">  au BufReadPost * if line("'.") &gt; 0 &amp;&amp; line("'.") &lt;= line("$") | exe "normal! `." | endif</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
-<p>此设置即在文件打开时，如果文件上次编辑的位置存在（即不在 1 行和最大行数以外），自动跳转至上次编辑的位置。<br>此外，可以使用<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">au BufReadPost * if line("'\"") &gt; 1 &amp;&amp; line("'\"") &lt;= line("$") | exe "normal! '\"" | endif</span><br></pre></td></tr></table></figure></p>
-<p>跳转至上次离开的行首。使用<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">au BufReadPost * if line("'\"") &gt; 0 &amp;&amp; line("'\"") &lt;= line("$") | exe "normal! `\"" | endif</span><br></pre></td></tr></table></figure></p>
+<p>此设置即在文件打开时，如果文件上次编辑的位置存在（即不在 1 行和最大行数以外），自动跳转至上次编辑的位置。<br>此外，可以使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">au BufReadPost * if line("'\"") &gt; 1 &amp;&amp; line("'\"") &lt;= line("$") | exe "normal! '\"" | endif</span><br></pre></td></tr></table></figure>
+<p>跳转至上次离开的行首。使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">au BufReadPost * if line("'\"") &gt; 0 &amp;&amp; line("'\"") &lt;= line("$") | exe "normal! `\"" | endif</span><br></pre></td></tr></table></figure>
 <p>跳转至上次离开的位置。</p>
 <hr>
 <h2 id="Vim-配置收录"><a href="#Vim-配置收录" class="headerlink" title="Vim 配置收录"></a>Vim 配置收录</h2><p>以下：</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:center">配置</th>
-<th style="text-align:center">功能</th>
+<th align="center">配置</th>
+<th align="center">功能</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">set hlsearch</td>
-<td style="text-align:center">搜索时高亮反白匹配字符串</td>
+<tbody><tr>
+<td align="center">set hlsearch</td>
+<td align="center">搜索时高亮反白匹配字符串</td>
 </tr>
 <tr>
-<td style="text-align:center">set autoindent</td>
-<td style="text-align:center">自动缩排</td>
+<td align="center">set autoindent</td>
+<td align="center">自动缩排</td>
 </tr>
 <tr>
-<td style="text-align:center">set ruler</td>
-<td style="text-align:center">底边显示状态栏</td>
+<td align="center">set ruler</td>
+<td align="center">底边显示状态栏</td>
 </tr>
 <tr>
-<td style="text-align:center">set showmode</td>
-<td style="text-align:center">左下角显示模式状态</td>
+<td align="center">set showmode</td>
+<td align="center">左下角显示模式状态</td>
 </tr>
 <tr>
-<td style="text-align:center">set nu</td>
-<td style="text-align:center">行首显示行号</td>
+<td align="center">set nu</td>
+<td align="center">行首显示行号</td>
 </tr>
 <tr>
-<td style="text-align:center">set bg=dark</td>
-<td style="text-align:center">设置底色色调</td>
+<td align="center">set bg=dark</td>
+<td align="center">设置底色色调</td>
 </tr>
 <tr>
-<td style="text-align:center">syntax on</td>
-<td style="text-align:center">开启语法检查</td>
+<td align="center">syntax on</td>
+<td align="center">开启语法检查</td>
 </tr>
 <tr>
-<td style="text-align:center">set nocompatible</td>
-<td style="text-align:center">不使用兼容模式</td>
+<td align="center">set nocompatible</td>
+<td align="center">不使用兼容模式</td>
 </tr>
 <tr>
-<td style="text-align:center">set textwidth=0 或 set tw=0</td>
-<td style="text-align:center">设置行宽，为 0 时即不自动换行</td>
+<td align="center">set textwidth=0 或 set tw=0</td>
+<td align="center">设置行宽，为 0 时即不自动换行</td>
 </tr>
 <tr>
-<td style="text-align:center">set backup</td>
-<td style="text-align:center">开启自动备份</td>
+<td align="center">set backup</td>
+<td align="center">开启自动备份</td>
 </tr>
 <tr>
-<td style="text-align:center">set bdir=~/.vim</td>
-<td style="text-align:center">设置备份目录</td>
+<td align="center">set bdir=~/.vim</td>
+<td align="center">设置备份目录</td>
 </tr>
 <tr>
-<td style="text-align:center">set history=50</td>
-<td style="text-align:center">设置命令历史长度</td>
+<td align="center">set history=50</td>
+<td align="center">设置命令历史长度</td>
 </tr>
 <tr>
-<td style="text-align:center">set tabstop=4 或 set ts=4</td>
-<td style="text-align:center">设置制表符 tab 长度</td>
+<td align="center">set tabstop=4 或 set ts=4</td>
+<td align="center">设置制表符 tab 长度</td>
 </tr>
 <tr>
-<td style="text-align:center">set shiftwidth=2 或 set sw=2</td>
-<td style="text-align:center">设置自动缩进空格数</td>
+<td align="center">set shiftwidth=2 或 set sw=2</td>
+<td align="center">设置自动缩进空格数</td>
 </tr>
 <tr>
-<td style="text-align:center">set showcmd</td>
-<td style="text-align:center">显示命令</td>
+<td align="center">set showcmd</td>
+<td align="center">显示命令</td>
 </tr>
 <tr>
-<td style="text-align:center">set showmatch</td>
-<td style="text-align:center">显示匹配</td>
+<td align="center">set showmatch</td>
+<td align="center">显示匹配</td>
 </tr>
 <tr>
-<td style="text-align:center">set ignorecase</td>
-<td style="text-align:center">忽略大小写</td>
+<td align="center">set ignorecase</td>
+<td align="center">忽略大小写</td>
 </tr>
 <tr>
-<td style="text-align:center">set incsearch</td>
-<td style="text-align:center">输入搜索命令时显示当前匹配</td>
+<td align="center">set incsearch</td>
+<td align="center">输入搜索命令时显示当前匹配</td>
 </tr>
 <tr>
-<td style="text-align:center">set autowrite</td>
-<td style="text-align:center">执行外部命令时自动保存</td>
+<td align="center">set autowrite</td>
+<td align="center">执行外部命令时自动保存</td>
 </tr>
 <tr>
-<td style="text-align:center">set nolist</td>
-<td style="text-align:center">不显示不可见字符</td>
+<td align="center">set nolist</td>
+<td align="center">不显示不可见字符</td>
 </tr>
 <tr>
-<td style="text-align:center">set mouse=a</td>
-<td style="text-align:center">鼠标可用</td>
+<td align="center">set mouse=a</td>
+<td align="center">鼠标可用</td>
 </tr>
 <tr>
-<td style="text-align:center">set nowrap</td>
-<td style="text-align:center">不自动折行</td>
+<td align="center">set nowrap</td>
+<td align="center">不自动折行</td>
 </tr>
 <tr>
-<td style="text-align:center">set expandtab</td>
-<td style="text-align:center">采用空格代替制表符 tab 缩进</td>
+<td align="center">set expandtab</td>
+<td align="center">采用空格代替制表符 tab 缩进</td>
 </tr>
 <tr>
-<td style="text-align:center">set cursorline</td>
-<td style="text-align:center">高亮当前行</td>
+<td align="center">set cursorline</td>
+<td align="center">高亮当前行</td>
 </tr>
 <tr>
-<td style="text-align:center">set cursorcolumn</td>
-<td style="text-align:center">高亮当前列</td>
+<td align="center">set cursorcolumn</td>
+<td align="center">高亮当前列</td>
 </tr>
 <tr>
-<td style="text-align:center">set relativenumber</td>
-<td style="text-align:center">显示相对行号</td>
+<td align="center">set relativenumber</td>
+<td align="center">显示相对行号</td>
 </tr>
 <tr>
-<td style="text-align:center">set colorcolumn=80</td>
-<td style="text-align:center">设置高亮某列</td>
+<td align="center">set colorcolumn=80</td>
+<td align="center">设置高亮某列</td>
 </tr>
 <tr>
-<td style="text-align:center">highlight ColorColumn ctermfg=9 ctermbg=242</td>
-<td style="text-align:center">设置列高亮背景色</td>
+<td align="center">highlight ColorColumn ctermfg=9 ctermbg=242</td>
+<td align="center">设置列高亮背景色</td>
 </tr>
-</tbody>
-</table>
-<p><code>注：本表持续更新中</code></p>
-<p>将以上配置写入「<strong> $HOME/.vimrc </strong>」文件，即可对所有文件打开生效。<br>如果想要对某些文件采用不同的打开初始配置，可在相应的文件末尾加入类似如下语句<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">vim</span>:ft=<span class="keyword">make</span>:<span class="keyword">sw</span>=<span class="number">4</span>:wrap</span><br></pre></td></tr></table></figure></p>
+<tr>
+<td align="center"><code>注：本表持续更新中</code></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>将以上配置写入「** $HOME/.vimrc **」文件，即可对所有文件打开生效。<br>如果想要对某些文件采用不同的打开初始配置，可在相应的文件末尾加入类似如下语句</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">vim</span>:ft=<span class="keyword">make</span>:<span class="keyword">sw</span>=<span class="number">4</span>:wrap</span><br></pre></td></tr></table></figure>
 <p>该文件为一个 makefile 文件，第一个字符 “#” 为 makefile 文件的注释符，不同的文件可以采用各自相应的注释符。”ft=make” 即指文件格式为 makefile 文件，Vim 自动按 makefile 语法高亮文本，”sw=4” 即设置自动缩进空格数为 4，”wrap” 即设置自动折行，在这里，省去配置语句中的 set，不同的配置语句间用 “:” 隔开。</p>
 <hr>
 <h2 id="Vim-命令技巧收录"><a href="#Vim-命令技巧收录" class="headerlink" title="Vim 命令技巧收录"></a>Vim 命令技巧收录</h2><p>以下：</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:center">命令</th>
-<th style="text-align:center">作用</th>
+<th align="center">命令</th>
+<th align="center">作用</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">:se cuc</td>
-<td style="text-align:center">垂直竖杠（即 set cursorcolum）</td>
+<tbody><tr>
+<td align="center">:se cuc</td>
+<td align="center">垂直竖杠（即 set cursorcolum）</td>
 </tr>
 <tr>
-<td style="text-align:center">:Sex</td>
-<td style="text-align:center">浏览目录</td>
+<td align="center">:Sex</td>
+<td align="center">浏览目录</td>
 </tr>
 <tr>
-<td style="text-align:center">:helpgrep ColorColumn</td>
-<td style="text-align:center">查找与 ColorColumn 相关的帮助</td>
+<td align="center">:helpgrep ColorColumn</td>
+<td align="center">查找与 ColorColumn 相关的帮助</td>
 </tr>
 <tr>
-<td style="text-align:center">:hi</td>
-<td style="text-align:center">查看 highlight 的系统配色方案</td>
+<td align="center">:hi</td>
+<td align="center">查看 highlight 的系统配色方案</td>
 </tr>
-</tbody>
-</table>
-<p><code>注：本表持续更新中</code></p>
+<tr>
+<td align="center"><code>注：本表持续更新中</code></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <hr>
 <h2 id="vim-plug-管理插件"><a href="#vim-plug-管理插件" class="headerlink" title="vim-plug 管理插件"></a>vim-plug 管理插件</h2><p><a href="https://github.com/junegunn/vim-plug" target="_blank" rel="noopener">vim-plug</a> 是一款轻量的 Vim 插件管理器，通过如下一条命令即可完成安装：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -fLo ~/.vim/<span class="built_in">autoload</span>/plug.vim --create-dirs \</span></span><br><span class="line">    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim</span><br></pre></td></tr></table></figure>
+
 <p>之后再在 ~/.vimrc 文件中加入类似如下内容即可启用：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">call plug#begin('~/.vim/plugged')</span><br><span class="line">  Plug 'SirVer/ultisnips'</span><br><span class="line">  Plug 'lervag/vimtex'</span><br><span class="line">call plug#end()</span><br></pre></td></tr></table></figure>
+
 <p>上例中直接加载了 <a href="https://github.com/SirVer/ultisnips" target="_blank" rel="noopener">SirVer/ultisnips</a> 和 <a href="https://github.com/lervag/vimtex" target="_blank" rel="noopener">lervag/vimtex</a> 插件，Plug 起始行可根据自己的需要加载不同的第三方插件。</p>
 <p>保存上述修改之后，重新打开 Vim，在命令模式下执行 <code>:PlugInstall</code> 即可安装上述加载的插件，再次重启 Vim 正确加载插件后，在命令模式下执行 <code>:h vimtex</code> 即可查看插件 vimtex 的帮助，再根据自己的需要在 ~/.vimrc 中设置不同的环境变量以更改插件的默认设置。</p>
 
@@ -937,7 +946,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

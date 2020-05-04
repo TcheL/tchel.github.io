@@ -476,7 +476,7 @@
 
       
         <blockquote>
-<p>本文翻译自 Michael Thorne (<a href="mailto:michael.thorne@utah.edu" target="_blank" rel="noopener">michael.thorne@utah.edu</a>) 所执笔的 <a href="http://web.utah.edu/thorne/computing/Examples_netCDF.pdf" target="_blank" rel="noopener">Introduction to using the netCDF data format with Fortran 90</a>（故而文中所有自称均指代原文作者），谨供学习在 Fortran 中使用 netCDF 数据格式之用。</p>
+<p>本文翻译自 Michael Thorne (<a href="mailto:michael.thorne@utah.edu">michael.thorne@utah.edu</a>) 所执笔的 <a href="http://web.utah.edu/thorne/computing/Examples_netCDF.pdf" target="_blank" rel="noopener">Introduction to using the netCDF data format with Fortran 90</a>（故而文中所有自称均指代原文作者），谨供学习在 Fortran 中使用 netCDF 数据格式之用。</p>
 </blockquote>
 <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><strong>netCDF</strong>（即 network Common Data Form）为存储多维数据而产生的一种基于数组的数据结构。一个 netCDF 文件采用 ASCII 头书写，以二进制格式存储数据。因为我们不必担心字节序的问题，以二进制文件来保存数据具有明显的优势。字节交换可以通过调用 netCDF 库来实现，netCDF 文件可以在任何平台上读取。与使用 netCDF 数据格式相关的特性如下：</p>
 <ul>
@@ -519,29 +519,27 @@
 <table>
 <thead>
 <tr>
-<th style="text-align:left">netCDF 文件结构</th>
-<th style="text-align:left">作用</th>
+<th align="left">netCDF 文件结构</th>
+<th align="left">作用</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:left">全局属性</td>
-<td style="text-align:left">描述文件内容</td>
+<tbody><tr>
+<td align="left">全局属性</td>
+<td align="left">描述文件内容</td>
 </tr>
 <tr>
-<td style="text-align:left">维度</td>
-<td style="text-align:left">描述数据结构（如，时间，深度，纬度，经度）</td>
+<td align="left">维度</td>
+<td align="left">描述数据结构（如，时间，深度，纬度，经度）</td>
 </tr>
 <tr>
-<td style="text-align:left">变量</td>
-<td style="text-align:left">按照维度存储数据的数组</td>
+<td align="left">变量</td>
+<td align="left">按照维度存储数据的数组</td>
 </tr>
 <tr>
-<td style="text-align:left">变量属性</td>
-<td style="text-align:left">描述每个变量的内容</td>
+<td align="left">变量属性</td>
+<td align="left">描述每个变量的内容</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>另参见 <a href="http://www.cnblogs.com/alex-bn-lee/p/5815388.html" target="_blank" rel="noopener">博文</a></p>
 
       
@@ -813,7 +811,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

@@ -122,8 +122,10 @@
 <meta property="og:description" content="收录了一些数学基础概念，包括 Hilbert 变换、共轭转置、Kronecker 乘积等。">
 <meta property="og:image" content="https:&#x2F;&#x2F;upload.wikimedia.org&#x2F;wikipedia&#x2F;commons&#x2F;thumb&#x2F;4&#x2F;49&#x2F;Dirac_comb.svg&#x2F;300px-Dirac_comb.svg.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;upload.wikimedia.org&#x2F;wikipedia&#x2F;commons&#x2F;thumb&#x2F;0&#x2F;08&#x2F;Manhattan_distance.svg&#x2F;300px-Manhattan_distance.svg.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload.wikimedia.org&#x2F;wikipedia&#x2F;commons&#x2F;thumb&#x2F;2&#x2F;20&#x2F;MonteCarloIntegrationCircle.svg&#x2F;330px-MonteCarloIntegrationCircle.svg.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload.wikimedia.org&#x2F;wikipedia&#x2F;commons&#x2F;thumb&#x2F;b&#x2F;b7&#x2F;Front_pareto.svg&#x2F;450px-Front_pareto.svg.png">
 <meta property="article:published_time" content="2018-07-22T13:05:46.000Z">
-<meta property="article:modified_time" content="2019-11-18T14:01:27.810Z">
+<meta property="article:modified_time" content="2020-05-04T12:20:21.327Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="Hilbert">
 <meta property="article:tag" content="Kronecker">
@@ -133,6 +135,9 @@
 <meta property="article:tag" content="Dirac">
 <meta property="article:tag" content="Euclidean">
 <meta property="article:tag" content="Manhattan">
+<meta property="article:tag" content="Monte Carlo">
+<meta property="article:tag" content="Heaviside">
+<meta property="article:tag" content="Pareto">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;upload.wikimedia.org&#x2F;wikipedia&#x2F;commons&#x2F;thumb&#x2F;4&#x2F;49&#x2F;Dirac_comb.svg&#x2F;300px-Dirac_comb.svg.png">
 
@@ -422,7 +427,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-11-18 22:01:27" itemprop="dateModified" datetime="2019-11-18T22:01:27+08:00">2019-11-18</time>
+                <time title="Modified: 2020-05-04 20:20:21" itemprop="dateModified" datetime="2020-05-04T20:20:21+08:00">2020-05-04</time>
               
             
           </span>
@@ -490,6 +495,7 @@
 <p>Because $h(t)$ is not integrable, the integrals defining the convolution do not converge. Instead, the Hilbert transform is defined using the <strong>Cauchy principal value</strong> (denoted here by $p$ ):</p>
 <p>$$\mathcal{H}\lbrace u(t)\rbrace=p\int_{-\infty}^{\infty}u(\tau)h(t-\tau)d\tau=\frac{1}{\pi}p\int_{-\infty}^{\infty}\frac{u(\tau)}{t-\tau}d\tau$$</p>
 <a id="more"></a>
+
 <h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><p>A property of Hilbert transform is: $\mathcal{H}\lbrace\mathcal{H}\lbrace u(t)\rbrace\rbrace=-u(t)​$.</p>
 <h3 id="解析信号"><a href="#解析信号" class="headerlink" title="解析信号"></a>解析信号</h3><p>The <code>analytic signal</code> is constructed from a real signal $f(t)$ and its Hilbert transform $\mathcal{H}\lbrace f(t)\rbrace$ :</p>
 <p>$$\tilde f(t)=f(t)-i\mathcal H\lbrace f(t)\rbrace$$</p>
@@ -499,8 +505,8 @@
 <p>$$\phi(t)=\arctan\frac{\mathfrak I\lbrace\tilde f(t)\rbrace}{\mathfrak R\lbrace\tilde f(t)\rbrace}=\arctan\frac{\mathcal H\lbrace f(t)\rbrace}{f(t)}$$</p>
 <p>$$E(t)=\sqrt{\mathfrak R\lbrace\tilde f(t)\rbrace^2+\mathfrak I\lbrace\tilde f(t)\rbrace^2}=\sqrt{f(t)^2+\mathcal H\lbrace f(t)\rbrace^2}$$</p>
 <hr>
-<h2 id="共轭转置"><a href="#共轭转置" class="headerlink" title="共轭转置"></a>共轭转置</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>又称 Hermitian 转置。参考 <a href="https://en.wikipedia.org/wiki/Conjugate_transpose" target="_blank" rel="noopener">Wikipedia</a> 。</p>
-<p>In mathematics, the <code>conjugate transpose</code> and <code>Hermitian transpose</code> of an $m\times n$ matrix $A$ with complex entries is the $n\times m$ matrix $A^*$ obtained from $A$ by taking the <strong>transpose</strong> and then taking the <strong>complex conjugate</strong> of each entry.</p>
+<h2 id="共轭转置"><a href="#共轭转置" class="headerlink" title="共轭转置"></a>共轭转置</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>即 Hermitian 转置，参考 <a href="https://en.wikipedia.org/wiki/Conjugate_transpose" target="_blank" rel="noopener">Wikipedia</a> 。</p>
+<p>In mathematics, the <code>conjugate transpose</code> and <code>Hermitian transpose</code> of an $m\times n$ matrix $A$ with complex entries is the $n\times m$ matrix $A^<em>$ obtained from $A$ by taking the *</em>transpose** and then taking the <strong>complex conjugate</strong> of each entry.</p>
 <p>The definition can also be written as</p>
 <p>$$A^*=(\bar{A})^T=\overline{A^T}$$</p>
 <p>The commonly used symbols for the conjugate transpose:</p>
@@ -519,16 +525,16 @@
 <p>$$a_{ij}B=\left[ \begin{array}{c} a_{ij}b_{11} &amp; a_{ij}b_{12} &amp; \cdots &amp; a_{ij}b_{1q} \newline a_{ij}b_{21} &amp; a_{ij}b_{22} &amp; \cdots &amp; a_{ij}b_{2q} \newline \vdots &amp; \vdots &amp; \ddots &amp; \vdots \newline a_{ij}b_{p1} &amp; a_{ij}b_{p2} &amp; \cdots &amp; a_{ij}b_{pq} \end{array} \right]$$</p>
 <h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><p>$$\left[\begin{array}{c} 1 &amp; 2 \newline 3 &amp; 4 \end{array}\right] \otimes \left[\begin{array}{c} 0 &amp; 5 \newline 6 &amp; 7 \end{array}\right]=\left[\begin{array}{c} 1\cdot \left[\begin{array}{c} 0 &amp; 5 \newline 6 &amp; 7 \end{array}\right] &amp; 2\cdot \left[\begin{array}{c} 0 &amp; 5 \newline 6 &amp; 7 \end{array}\right] \newline 3\cdot \left[\begin{array}{c} 0 &amp; 5 \newline 6 &amp; 7 \end{array}\right] &amp; 4\cdot \left[\begin{array}{c} 0 &amp; 5 \newline 6 &amp; 7 \end{array}\right] \end{array}\right]=\left[\begin{array}{c} 0 &amp; 5 &amp; 0 &amp; 10 \newline 6 &amp; 7 &amp; 12 &amp; 14 \newline 0 &amp; 15 &amp; 0 &amp; 20 \newline 18 &amp; 21 &amp; 24 &amp; 28 \end{array}\right]$$</p>
 <hr>
-<h2 id="Frobenius-范数"><a href="#Frobenius-范数" class="headerlink" title="Frobenius 范数"></a>Frobenius 范数</h2><h3 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h3><p>也即 Hilbert-Schmidt 范数。参考 <a href="https://en.wikipedia.org/wiki/Matrix_norm" target="_blank" rel="noopener">Wikipedia</a> 。</p>
+<h2 id="Frobenius-范数"><a href="#Frobenius-范数" class="headerlink" title="Frobenius 范数"></a>Frobenius 范数</h2><h3 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h3><p>即 Hilbert-Schmidt 范数，参考 <a href="https://en.wikipedia.org/wiki/Matrix_norm" target="_blank" rel="noopener">Wikipedia</a> 。</p>
 <p>The norm can be defined in various ways:</p>
-<p>$$||A||_F=\sqrt{\sum_{i=1}^m\sum_{j=1}^n|a_{ij}|^2}=\sqrt{trace(A^\dagger A)}=\sqrt{\sum_{i=1}^{\min\lbrace m,n\rbrace}\sigma_i^2(A)}$$</p>
+<p>$$||A||_F=\sqrt{\sum_{i=1}^m\sum_{j=1}^n|a_{ij}|^2}=\sqrt{\text{trace}(A^\dagger A)}=\sqrt{\sum_{i=1}^{\min\lbrace m,n\rbrace}\sigma_i^2(A)}$$</p>
 <p>where $A^\dagger$ denotes the <strong>conjugate transpose</strong> of $A$, and $\sigma_i(A)$ are the <strong>singular value</strong> of $A$.</p>
 <h3 id="Frobenius-内积"><a href="#Frobenius-内积" class="headerlink" title="Frobenius 内积"></a>Frobenius 内积</h3><p>参考 <a href="https://en.wikipedia.org/wiki/Frobenius_inner_product" target="_blank" rel="noopener">Wikipedia</a> 。</p>
 <p>$$||A||_F=\sqrt{\langle A,A\rangle_F}$$</p>
 <p>where the <strong>Frobenius inner product</strong> is defined by:</p>
 <p>$$\langle A,B\rangle_F=\sum_{i,j}\overline{A_{ij}}B_{ij}=trace(\overline{A^T}B)$$</p>
 <hr>
-<h2 id="Hadamard-乘积"><a href="#Hadamard-乘积" class="headerlink" title="Hadamard 乘积"></a>Hadamard 乘积</h2><h3 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h3><p>也即 Hadamard matrices 。参考 Wikipedia <a href="https://en.wikipedia.org/wiki/Hadamard_product_(matrices)" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Hadamard_product_(matrices)</a> 。</p>
+<h2 id="Hadamard-乘积"><a href="#Hadamard-乘积" class="headerlink" title="Hadamard 乘积"></a>Hadamard 乘积</h2><h3 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h3><p>即 Hadamard matrices ，参考 Wikipedia <a href="https://en.wikipedia.org/wiki/Hadamard_product_(matrices)" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Hadamard_product_(matrices)</a> 。</p>
 <p>For two matrices, $A, B$, of the same dimension, $m\times n$, the <code>Hadamard product</code>, $A\circ B​$, is a matrix of the same dimension as the operands, with elements given by</p>
 <p>$$(A\circ B)_{i,j}=A_{i,j}B_{i,j}$$</p>
 <p>The <strong>Hadamard division</strong> $A\oslash B$ is defined as:</p>
@@ -576,7 +582,7 @@
 </ul>
 <p>另外，<a href="http://tutorial.math.lamar.edu/" target="_blank" rel="noopener">这里</a>还有在线数学笔记。</p>
 <hr>
-<h2 id="Dirac-comb-函数"><a href="#Dirac-comb-函数" class="headerlink" title="Dirac comb 函数"></a>Dirac comb 函数</h2><p>也即 Shah 函数。参考 <a href="https://en.wikipedia.org/wiki/Dirac_comb" target="_blank" rel="noopener">Wikipedia</a> 。</p>
+<h2 id="Dirac-comb-函数"><a href="#Dirac-comb-函数" class="headerlink" title="Dirac comb 函数"></a>Dirac comb 函数</h2><p>即 Shah 函数，参考 <a href="https://en.wikipedia.org/wiki/Dirac_comb" target="_blank" rel="noopener">Wikipedia</a> 。</p>
 <p>在数学上，Dirac comb 即一个由 Dirac delta 函数构成的周期性调和分布（periodic tempered distribution）。也即电子工程中的脉冲序列（impulse train）或采样函数（sampling function）。</p>
 <p>A Dirac comb is an infinite series of Dirac delta functions spaced at intervals of $T$.</p>
 <p>函数表达式为：</p>
@@ -593,10 +599,11 @@
 <p>The taxicab distance between two points, $\textbf p = (p_1, p_2, \ldots, p_n)$ and $\textbf q = (q_1, q_2, \ldots, q_n)$, in an n-dimensional space with fixed Cartesian coordinate system, is the sum of the lengths of the projections of the line segment between the points onto the coordinate axes:</p>
 <p>$$ d (\textbf p, \textbf q) = \lVert \textbf p - \textbf q \rVert_1 = \sum_{i = 1}^n \lvert p_i - q_i \rvert $$</p>
 <h3 id="二者差异"><a href="#二者差异" class="headerlink" title="二者差异"></a>二者差异</h3><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Manhattan_distance.svg/300px-Manhattan_distance.svg.png" alt="Euclidean distance vs. Manhattan distance"></p>
-<p>In taxicab geometry, the red, yellow, and blue paths all have the same shortest path length of 12. In Euclidean geometry, the green line has length $ 6\sqrt{2} \approx 8.49 $ and is the unique shortest path.</p>
+<p>In taxicab geometry, the red, yellow, and blue paths all have the same shortest path length of 12. In Euclidean geometry, the green line has length $ 6\sqrt{2} \approx 8.49 ​$ and is the unique shortest path.</p>
 <hr>
 <h2 id="Monte-Carlo-积分"><a href="#Monte-Carlo-积分" class="headerlink" title="Monte Carlo 积分"></a>Monte Carlo 积分</h2><p>参考 <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration" target="_blank" rel="noopener">Wikipedia</a> 。</p>
-<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>In mathematics, Monte Carlo integration is a technique of numerical integration using random numbers. It is a particular Monte Carlo method that numerically computes a definite integral. This method is particularly useful for higher-dimensional integrals.</p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/MonteCarloIntegrationCircle.svg/330px-MonteCarloIntegrationCircle.svg.png" alt="An illustration of Monte Carlo integration"></p>
+<p>In mathematics, Monte Carlo integration is a technique of numerical integration using random numbers. It is a particular Monte Carlo method that numerically computes a definite integral. This method is particularly useful for higher-dimensional integrals.</p>
 <p>Monte Carlo integration employs a non-deterministic approach: each realization provides a different outcome. In Monte Carlo, the final outcome is an approximation of the correct value with respective error bars, and the correct value is likely to be within those error bars.</p>
 <h3 id="公式化表达"><a href="#公式化表达" class="headerlink" title="公式化表达"></a>公式化表达</h3><p>The problem Monte Carlo integration addresses is the computation of a multidimensional definite integral</p>
 <p>$$ I = \int_\Omega f(\mathbf x) d\mathbf x $$</p>
@@ -604,6 +611,29 @@
 <p>$$ V = \int_\Omega d\mathbf x $$</p>
 <p>The naive Monte Carlo approach is to sample points uniformly on $\Omega$: given $N$ uniform samples $\mathbf x_1, \mathbf x_2, \ldots, \mathbf x_N \in \Omega$, $I$ can be approximated by</p>
 <p>$$ I \approx Q_N \equiv V \frac{1}{N} \sum_{i = 1}^N f(\mathbf x_i) = V \langle f \rangle $$</p>
+<p>This is because the law of large numbers ensures that $\lim_{N \rightarrow \infty} Q_N = I$.</p>
+<hr>
+<h2 id="Heaviside-阶跃函数"><a href="#Heaviside-阶跃函数" class="headerlink" title="Heaviside 阶跃函数"></a>Heaviside 阶跃函数</h2><p>即单位阶跃函数，参考 <a href="https://en.wikipedia.org/wiki/Heaviside_step_function" target="_blank" rel="noopener">Wikipedia</a>。</p>
+<h3 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h3><p>The Heaviside step function, usually denoted by $H$ (but sometimes $u$), is a discontinuous function, whose value is zero for negative arguments and one for positive arguments.</p>
+<p>The Heaviside function can also be defined as the integral of the Dirac delta function:</p>
+<p>$$ H(x) = \int_{ - \infty}^x \delta(s) ds $$</p>
+<h3 id="离散形式"><a href="#离散形式" class="headerlink" title="离散形式"></a>离散形式</h3><p>An alternative form of the unit step, as a function of a discrete variable $n$:</p>
+<p>$$ H[n] = \begin{cases} 0, &amp; n &lt; 0 \newline 1, &amp; n \geq 0 \end{cases} ​$$</p>
+<p>or using the half-maximum convention:</p>
+<p>$$ H[n] = \begin{cases} 0, &amp; n &lt; 0 \newline \frac{1}{2}, &amp; n = 0 \newline 1, &amp; n &gt; 0 \end{cases} $$</p>
+<p>where $n$ is an integer.</p>
+<p>The discrete-time unit impulse is the first difference of the discrete-time step</p>
+<p>$$ \delta[n] = H[n] - H[n - 1] $$</p>
+<hr>
+<h2 id="多目标最优化"><a href="#多目标最优化" class="headerlink" title="多目标最优化"></a>多目标最优化</h2><p>即矢量最优化、Pareto 最优化、multicriteria 最优化或 multiattribute 最优化，参考 <a href="https://en.wikipedia.org/wiki/Multi-objective_optimization" target="_blank" rel="noopener">Wikipedia</a>。</p>
+<h3 id="概述-2"><a href="#概述-2" class="headerlink" title="概述"></a>概述</h3><p>Multi-objectvie optimization is an area that is concerned with mathematical optimization problems involving more than one objective function to be optimized simultaneously, where optimal decisions need to be taken in the presence of trade-offs between two or more conflicting objectives.</p>
+<h3 id="Pareto-解"><a href="#Pareto-解" class="headerlink" title="Pareto 解"></a>Pareto 解</h3><p>For a nontrivial multi-objective optimization problem, no single solution exists that simultaneously optimizes each objective. In that case, the objective functions are said to be conflicting, and there exists a (possibly infinite) number of Pareto optimal solutions.</p>
+<p>A solution is called nondominated or Pareto optimal solution, if none of the objective functions can be improved in value without degrading some of the other objective values. Without additional subjective preference information, all Pareto optimal solutions are considered equally good.</p>
+<h3 id="Pareto-前沿"><a href="#Pareto-前沿" class="headerlink" title="Pareto 前沿"></a>Pareto 前沿</h3><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Front_pareto.svg/450px-Front_pareto.svg.png" alt="Example of a Pareto front (in red)"></p>
+<p>In mathematical terms, a feasible solution $x_1 \in X​$ is said to <strong>(Pareto) dominate</strong> another solution $x_2 \in X​$, if</p>
+<p>$$ \begin{cases} f_i(x_1) \leq f_i(x_2) &amp; \text{ for all indices } i \in {1, 2, \ldots, k} \newline f_j(x_1) &lt; f_j(x_2) &amp; \text{ for at least one index } j \in {1, 2, \ldots, k} \end{cases} $$</p>
+<p>where $k \geq 2​$ is the number of objectives.</p>
+<p>A solution $x_* \in X$ (and the corresponding outcome $f(x_*)$) is called Pareto optimal, if there does not exist another solution that dominates it. The set of Pareto optimal outcomes is called the Pareto front or Pareto boundary.</p>
 
       
     </div>
@@ -683,6 +713,12 @@
             <a href="/tags/Euclidean/" rel="tag"><i class="fa fa-tag"></i> Euclidean</a>
           
             <a href="/tags/Manhattan/" rel="tag"><i class="fa fa-tag"></i> Manhattan</a>
+          
+            <a href="/tags/Monte-Carlo/" rel="tag"><i class="fa fa-tag"></i> Monte Carlo</a>
+          
+            <a href="/tags/Heaviside/" rel="tag"><i class="fa fa-tag"></i> Heaviside</a>
+          
+            <a href="/tags/Pareto/" rel="tag"><i class="fa fa-tag"></i> Pareto</a>
           
         </div>
       
@@ -888,7 +924,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -938,7 +980,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hilbert-变换"><span class="nav-number">1.</span> <span class="nav-text">Hilbert 变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性质"><span class="nav-number">1.2.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解析信号"><span class="nav-number">1.3.</span> <span class="nav-text">解析信号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共轭转置"><span class="nav-number">2.</span> <span class="nav-text">共轭转置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-1"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">2.2.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kronecker-乘积"><span class="nav-number">3.</span> <span class="nav-text">Kronecker 乘积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-2"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子-1"><span class="nav-number">3.2.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Frobenius-范数"><span class="nav-number">4.</span> <span class="nav-text">Frobenius 范数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-3"><span class="nav-number">4.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Frobenius-内积"><span class="nav-number">4.2.</span> <span class="nav-text">Frobenius 内积</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadamard-乘积"><span class="nav-number">5.</span> <span class="nav-text">Hadamard 乘积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-4"><span class="nav-number">5.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性质-1"><span class="nav-number">5.2.</span> <span class="nav-text">性质</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hilbert-矩阵"><span class="nav-number">6.</span> <span class="nav-text">Hilbert 矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-5"><span class="nav-number">6.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用"><span class="nav-number">6.2.</span> <span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵的条件数"><span class="nav-number">7.</span> <span class="nav-text">矩阵的条件数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#积分函数表"><span class="nav-number">8.</span> <span class="nav-text">积分函数表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dirac-comb-函数"><span class="nav-number">9.</span> <span class="nav-text">Dirac comb 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Euclidean-距离-vs-Manhattan-距离"><span class="nav-number">10.</span> <span class="nav-text">Euclidean 距离 vs Manhattan 距离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Euclidean-距离"><span class="nav-number">10.1.</span> <span class="nav-text">Euclidean 距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Manhattan-距离"><span class="nav-number">10.2.</span> <span class="nav-text">Manhattan 距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二者差异"><span class="nav-number">10.3.</span> <span class="nav-text">二者差异</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Monte-Carlo-积分"><span class="nav-number">11.</span> <span class="nav-text">Monte Carlo 积分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">11.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公式化表达"><span class="nav-number">11.2.</span> <span class="nav-text">公式化表达</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hilbert-变换"><span class="nav-number">1.</span> <span class="nav-text">Hilbert 变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性质"><span class="nav-number">1.2.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解析信号"><span class="nav-number">1.3.</span> <span class="nav-text">解析信号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共轭转置"><span class="nav-number">2.</span> <span class="nav-text">共轭转置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-1"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">2.2.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kronecker-乘积"><span class="nav-number">3.</span> <span class="nav-text">Kronecker 乘积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-2"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子-1"><span class="nav-number">3.2.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Frobenius-范数"><span class="nav-number">4.</span> <span class="nav-text">Frobenius 范数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-3"><span class="nav-number">4.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Frobenius-内积"><span class="nav-number">4.2.</span> <span class="nav-text">Frobenius 内积</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadamard-乘积"><span class="nav-number">5.</span> <span class="nav-text">Hadamard 乘积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-4"><span class="nav-number">5.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性质-1"><span class="nav-number">5.2.</span> <span class="nav-text">性质</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hilbert-矩阵"><span class="nav-number">6.</span> <span class="nav-text">Hilbert 矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-5"><span class="nav-number">6.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用"><span class="nav-number">6.2.</span> <span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵的条件数"><span class="nav-number">7.</span> <span class="nav-text">矩阵的条件数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#积分函数表"><span class="nav-number">8.</span> <span class="nav-text">积分函数表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dirac-comb-函数"><span class="nav-number">9.</span> <span class="nav-text">Dirac comb 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Euclidean-距离-vs-Manhattan-距离"><span class="nav-number">10.</span> <span class="nav-text">Euclidean 距离 vs Manhattan 距离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Euclidean-距离"><span class="nav-number">10.1.</span> <span class="nav-text">Euclidean 距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Manhattan-距离"><span class="nav-number">10.2.</span> <span class="nav-text">Manhattan 距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二者差异"><span class="nav-number">10.3.</span> <span class="nav-text">二者差异</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Monte-Carlo-积分"><span class="nav-number">11.</span> <span class="nav-text">Monte Carlo 积分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">11.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公式化表达"><span class="nav-number">11.2.</span> <span class="nav-text">公式化表达</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Heaviside-阶跃函数"><span class="nav-number">12.</span> <span class="nav-text">Heaviside 阶跃函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述-1"><span class="nav-number">12.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#离散形式"><span class="nav-number">12.2.</span> <span class="nav-text">离散形式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多目标最优化"><span class="nav-number">13.</span> <span class="nav-text">多目标最优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述-2"><span class="nav-number">13.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pareto-解"><span class="nav-number">13.2.</span> <span class="nav-text">Pareto 解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pareto-前沿"><span class="nav-number">13.3.</span> <span class="nav-text">Pareto 前沿</span></a></li></ol></li></ol></div>
             
 
           </div>

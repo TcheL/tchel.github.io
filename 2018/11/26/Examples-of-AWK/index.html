@@ -478,14 +478,18 @@
         <h2 id="以相同的列首字段分割文件"><a href="#以相同的列首字段分割文件" class="headerlink" title="以相同的列首字段分割文件"></a>以相同的列首字段分割文件</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>文件的第一列为分类标志，以相同的每行第一列内容为分隔，将文件分为不同的多个文件。</p>
 <h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>假设有文件 “run” 内容如下：</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">0 </span>one</span><br><span class="line"><span class="symbol">0 </span>two</span><br><span class="line"><span class="symbol">1 </span>three</span><br><span class="line"><span class="symbol">1 </span>four</span><br><span class="line"><span class="symbol">1 </span>five</span><br><span class="line"><span class="symbol">2 </span>six</span><br><span class="line"><span class="symbol">2 </span>seven</span><br><span class="line"><span class="symbol">2 </span>eigth</span><br></pre></td></tr></table></figure>
+
 <p>首先，需要一个变量 <code>fs</code> 来记录每相同首列部分的首列内容，在 <code>BEGIN</code> 阶段需要对此变量初始化，在判断出 fs 与当前行的首列内容 <code>$1</code> 不同时重新给 fs 赋值并创建新文件；同时，还需要一个变量 <code>fn</code> 记录不同部分对应的输出文件名。具体实现为：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[user@A ~]$ cat run | awk 'BEGIN &#123;fs=""&#125; &#123;if(fs!=$1) &#123;fs=$1; fn="file" $1; print $1, $2 &gt; fn&#125; else &#123;print $1, $2 &gt;&gt; fn&#125;&#125;'</span><br><span class="line">[user@A ~]$ cat file0</span><br><span class="line">0 one</span><br><span class="line">0 two</span><br><span class="line">[user@A ~]$ cat file1</span><br><span class="line">1 three</span><br><span class="line">1 four</span><br><span class="line">1 five</span><br><span class="line">[user@A ~]$ cat file2</span><br><span class="line">2 six</span><br><span class="line">2 seven</span><br><span class="line">2 eigth</span><br></pre></td></tr></table></figure>
+
 <hr>
 <h2 id="同模式重复多行块重组"><a href="#同模式重复多行块重组" class="headerlink" title="同模式重复多行块重组"></a>同模式重复多行块重组</h2><h3 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h3><p>文件按同一模式多行重复不同对象的内容，现需要将同一对象的信息以同一行内容保存。</p>
 <h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><p>假设有文件 “run” 内容如下：</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">学号</span><br><span class="line">姓名</span><br><span class="line">年龄</span><br><span class="line">成绩</span><br><span class="line"><span class="number">200101</span></span><br><span class="line">张三</span><br><span class="line"><span class="number">18</span></span><br><span class="line"><span class="number">74</span></span><br><span class="line"><span class="number">200102</span></span><br><span class="line">李四</span><br><span class="line"><span class="number">17</span></span><br><span class="line"><span class="number">39</span></span><br><span class="line"><span class="number">200103</span></span><br><span class="line">王二</span><br><span class="line"><span class="number">19</span></span><br><span class="line"><span class="number">56</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">学号</span><br><span class="line">姓名</span><br><span class="line">年龄</span><br><span class="line">成绩</span><br><span class="line"><span class="number">200101</span></span><br><span class="line">张三</span><br><span class="line"><span class="number">18</span></span><br><span class="line"><span class="number">74</span></span><br><span class="line"><span class="number">200102</span></span><br><span class="line">李四</span><br><span class="line"><span class="number">17</span></span><br><span class="line"><span class="number">39</span></span><br><span class="line"><span class="number">200103</span></span><br><span class="line">王二</span><br><span class="line"><span class="number">19</span></span><br><span class="line"><span class="number">56</span></span><br></pre></td></tr></table></figure>
+
 <p>可见，该文件以每四行分别为“学号”、“姓名”、“年龄”和“成绩”内容的模式呈多行重复，这里要将每四行重新整合为一行，借助内置变量已读记录数 <code>NR</code> 和输出记录分隔符 <code>ORS</code> ，可以如下命令实现：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[user@A ~]$ cat run | awk '&#123;if(NR%4!=0) ORS=" "; else ORS="\n"; print $0&#125;'                                                          </span><br><span class="line">学号 姓名 年龄 成绩</span><br><span class="line">200101 张三 18 74</span><br><span class="line">200102 李四 17 39</span><br><span class="line">200103 王二 19 56</span><br></pre></td></tr></table></figure>
+
 <hr>
 
       
@@ -757,7 +761,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
