@@ -122,7 +122,7 @@
 <meta property="og:description" content="介绍了一些简单算法的基本原理，包括 BFGS 算法、固定点算法和非线性共轭梯度法等。">
 <meta property="og:image" content="https:&#x2F;&#x2F;upload.wikimedia.org&#x2F;wikipedia&#x2F;commons&#x2F;thumb&#x2F;5&#x2F;54&#x2F;Euclidean_Voronoi_diagram.svg&#x2F;330px-Euclidean_Voronoi_diagram.svg.png">
 <meta property="article:published_time" content="2018-07-22T12:59:34.000Z">
-<meta property="article:modified_time" content="2019-11-14T03:16:25.683Z">
+<meta property="article:modified_time" content="2020-06-03T13:13:35.087Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="BFGS">
 <meta property="article:tag" content="Fixed point">
@@ -416,7 +416,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-11-14 11:16:25" itemprop="dateModified" datetime="2019-11-14T11:16:25+08:00">2019-11-14</time>
+                <time title="Modified: 2020-06-03 21:13:35" itemprop="dateModified" datetime="2020-06-03T21:13:35+08:00">2020-06-03</time>
               
             
           </span>
@@ -536,7 +536,7 @@
 <li>Perform a line search: optimize $\alpha_n=\text{argmin}_\alpha f(x_n+\alpha s_n)$;</li>
 <li>Update: $x_{n+1}=x_n+\alpha_n s_n$.</li>
 </ul>
-<p>Subsequent search directions lose conjugacy requiring the search<br>direction to be reset to the steepest descent direction at least every $N$ iterations, or sooner if progress stops.</p>
+<p>Subsequent search directions lose conjugacy requiring the search direction to be reset to the steepest descent direction at least every $N$ iterations, or sooner if progress stops.</p>
 <h4 id="beta-n-的计算"><a href="#beta-n-的计算" class="headerlink" title="$\beta_n$ 的计算"></a>$\beta_n$ 的计算</h4><p>Four of the best known formulas for $\beta_n​$ are named after their developers:</p>
 <ul>
 <li>Fletcher-Reeves: $\beta_n^{FR}=\frac{\Delta x_n^T \Delta x_n}{\Delta x_{n-1}^T \Delta x_{n-1}}$;</li>
@@ -554,7 +554,7 @@
 <h3 id="Voronoi-图"><a href="#Voronoi-图" class="headerlink" title="Voronoi 图"></a>Voronoi 图</h3><p>参考 <a href="https://en.wikipedia.org/wiki/Voronoi_diagram" target="_blank" rel="noopener">Wikipedia</a> 。</p>
 <p>In mathematics, a Voronoi diagram is a partition of a plane into regions close to each of a given set of objects.</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Euclidean_Voronoi_diagram.svg/330px-Euclidean_Voronoi_diagram.svg.png" alt="Voronoi diagrams under Euclidean metric"></p>
-<p>Let $X$ be a metric space with distance function $d$. Let $K$ be a set of indices and let $(P_k)_{k \in K}$ be a tuple (ordered collection) of nonempty subsets (the sites) in the space $X$. The Voronoi cell, or Voronoi region, $R_k$, associated with the site $P_k$ is the set of all points in $X$ whose distance to $P_k$ is not greater than their distance to the other sites $P_j$, where $j$ is any index different from $k$:</p>
+<p>Let $X​$ be a metric space with distance function $d​$. Let $K​$ be a set of indices and let $(P_k)_{k \in K}​$ be a tuple (ordered collection) of nonempty subsets (the sites) in the space $X​$. The Voronoi cell, or Voronoi region, $R_k​$, associated with the site $P_k​$ is the set of all points in $X​$ whose distance to $P_k​$ is not greater than their distance to the other sites $P_j​$, where $j​$ is any index different from $k​$:</p>
 <p>$$ R_k = { x \in X \vert d(x, P_k) \leq d(x, P_j) \text{ for all } j \neq k } $$</p>
 <h3 id="算法步骤-2"><a href="#算法步骤-2" class="headerlink" title="算法步骤"></a>算法步骤</h3><p>The Neighborhood Algorithm can be summarized as follows <a href="https://doi.org/10.1046/j.1365-246x.1999.00876.x" target="_blank" rel="noopener">(Sambridge, 1999)</a>:</p>
 <ol>
@@ -571,6 +571,23 @@
 <li>The process generates an ensemble of models with low misfit values; thus the method can be used for uncertainty quantification as well.</li>
 </ul>
 <p>根据 <a href="https://doi.org/10.1029/2003GL019058" target="_blank" rel="noopener">(Peyrat and Olsen, 2004)</a>：（1）在迭代中，新模型只在上一步误差最小的若干个模型的 Voronoi 元胞中产生，因此邻域算法比蒙特卡罗算法具有更少的计算消耗；（2）与遗传算法和模拟退火算法相比，在模型搜索中邻域算法仅需要两个控制参数，需要更少的主观“指导”。</p>
+<hr>
+<h2 id="Householder-方法"><a href="#Householder-方法" class="headerlink" title="Householder 方法"></a>Householder 方法</h2><p>参考 <a href="https://en.wikipedia.org/wiki/Householder' target="_blank" rel="noopener"s_method">Wikipedia</a>。</p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>In mathematics, Householder’s methods are a class of root-finding algorithms that are used for functions of one real variable with continuous derivatives up to some order $d + 1$. Each of these methods is characterized by the number $d$, which is known as the order of the method. The algorithm is iterative and has a rate of convergence of order $d + 1$.</p>
+<h3 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h3><p>For solving the nonlinear equation $f(x) = 0$, Householder’s method consists of a sequence of iterations:</p>
+<p>$$ x_{n + 1} = x_n + d \frac{ (1/f)^{(d - 1)} (x_n) }{ (1/f)^{(d)} (x_n) } $$</p>
+<p>beginning with an initial guess $x_0$.</p>
+<h3 id="低阶方法"><a href="#低阶方法" class="headerlink" title="低阶方法"></a>低阶方法</h3><h4 id="一阶：Newton-方法"><a href="#一阶：Newton-方法" class="headerlink" title="一阶：Newton 方法"></a>一阶：Newton 方法</h4><p>Since</p>
+<p>$$ (1/f)(x) = \frac{1}{f(x_n)} \quad\text{ and }\quad (1/f)’(x) = - \frac{f’(x)}{f(x)^2} $$</p>
+<p>result in</p>
+<p>$$ x_{n + 1} = x_n + 1 \cdot \frac{(1/f)(x_n)}{(1/f)’ (x_n)} = x_n - \frac{f(x_n)}{f’(x_n)} $$</p>
+<h4 id="二阶：Halley-方法"><a href="#二阶：Halley-方法" class="headerlink" title="二阶：Halley 方法"></a>二阶：Halley 方法</h4><p>Since</p>
+<p>$$ (1/f)’(x) = - \frac{f’(x)}{f(x)^2} \quad\text{ and }\quad (1/f)’’(x) = - \frac{f’’(x)}{f(x)^2} + 2 \cdot \frac{f’(x)^2}{f(x)^3} $$</p>
+<p>result in</p>
+<p>$$ x_{n + 1} = x_n + 2 \cdot \frac{ (1/f)’ (x_n) }{ (1/f)’’ (x_n) } = x_n - \frac{ 2 f(x_n) f’(x_n) }{ 2 f’(x_n)^2 - f(x_n) f’’(x_n) } $$</p>
+<p>The following alternative formulation shows the similarity between Halley’s method and Newton’s method. The expression $f(x_n)/f’(x_n)​$ is computed only once, and it is particularly useful when $f’’(x_n)/f’(x_n)​$ can be simplified:</p>
+<p>$$ x_{n + 1} = x_n - \frac{f(x_n)}{f’(x_n)} \left[ 1 - \frac{f(x_n)}{f’(x_n)} \cdot \frac{f’’(x_n)}{2 f’(x_n)} \right]^{ - 1} $$</p>
+<p>When the second derivative is very close to zero, the Halley’s method iteration is almost the same as the Newton’s method iteration.</p>
 
       
     </div>
@@ -901,7 +918,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BFGS-算法"><span class="nav-number">1.</span> <span class="nav-text">BFGS 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本原理"><span class="nav-number">1.1.</span> <span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤"><span class="nav-number">1.2.</span> <span class="nav-text">算法步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#固定点迭代法"><span class="nav-number">2.</span> <span class="nav-text">固定点迭代法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#固定点（Fixed-point）"><span class="nav-number">2.1.</span> <span class="nav-text">固定点（Fixed point）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#固定点迭代"><span class="nav-number">2.2.</span> <span class="nav-text">固定点迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">2.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用"><span class="nav-number">2.2.2.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非线性共轭梯度法"><span class="nav-number">3.</span> <span class="nav-text">非线性共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性共轭梯度法"><span class="nav-number">3.1.</span> <span class="nav-text">线性共轭梯度法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非线性共轭梯度法-1"><span class="nav-number">3.2.</span> <span class="nav-text">非线性共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法步骤-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#beta-n-的计算"><span class="nav-number">3.2.2.</span> <span class="nav-text">$\beta_n$ 的计算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻域算法"><span class="nav-number">4.</span> <span class="nav-text">邻域算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Voronoi-图"><span class="nav-number">4.1.</span> <span class="nav-text">Voronoi 图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤-2"><span class="nav-number">4.2.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法优点"><span class="nav-number">4.3.</span> <span class="nav-text">算法优点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BFGS-算法"><span class="nav-number">1.</span> <span class="nav-text">BFGS 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本原理"><span class="nav-number">1.1.</span> <span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤"><span class="nav-number">1.2.</span> <span class="nav-text">算法步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#固定点迭代法"><span class="nav-number">2.</span> <span class="nav-text">固定点迭代法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#固定点（Fixed-point）"><span class="nav-number">2.1.</span> <span class="nav-text">固定点（Fixed point）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#固定点迭代"><span class="nav-number">2.2.</span> <span class="nav-text">固定点迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">2.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用"><span class="nav-number">2.2.2.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非线性共轭梯度法"><span class="nav-number">3.</span> <span class="nav-text">非线性共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性共轭梯度法"><span class="nav-number">3.1.</span> <span class="nav-text">线性共轭梯度法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非线性共轭梯度法-1"><span class="nav-number">3.2.</span> <span class="nav-text">非线性共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法步骤-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#beta-n-的计算"><span class="nav-number">3.2.2.</span> <span class="nav-text">$\beta_n$ 的计算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻域算法"><span class="nav-number">4.</span> <span class="nav-text">邻域算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Voronoi-图"><span class="nav-number">4.1.</span> <span class="nav-text">Voronoi 图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法步骤-2"><span class="nav-number">4.2.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法优点"><span class="nav-number">4.3.</span> <span class="nav-text">算法优点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Householder-方法"><span class="nav-number">5.</span> <span class="nav-text">Householder 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">5.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法论"><span class="nav-number">5.2.</span> <span class="nav-text">方法论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#低阶方法"><span class="nav-number">5.3.</span> <span class="nav-text">低阶方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一阶：Newton-方法"><span class="nav-number">5.3.1.</span> <span class="nav-text">一阶：Newton 方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二阶：Halley-方法"><span class="nav-number">5.3.2.</span> <span class="nav-text">二阶：Halley 方法</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
