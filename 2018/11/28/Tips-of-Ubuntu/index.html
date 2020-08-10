@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="Ubuntu 不乖的时候，你是要揍他的 👊">
 <meta property="article:published_time" content="2018-11-28T02:20:06.000Z">
-<meta property="article:modified_time" content="2020-07-04T03:11:22.363Z">
+<meta property="article:modified_time" content="2020-08-10T02:17:13.958Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="Ubuntu">
 <meta name="twitter:card" content="summary">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-07-04 11:11:22" itemprop="dateModified" datetime="2020-07-04T11:11:22+08:00">2020-07-04</time>
+                <time title="Modified: 2020-08-10 10:17:13" itemprop="dateModified" datetime="2020-08-10T10:17:13+08:00">2020-08-10</time>
               
             
           </span>
@@ -477,10 +477,12 @@
       
         <h2 id="Ubuntu-启动栏图标自定义设置"><a href="#Ubuntu-启动栏图标自定义设置" class="headerlink" title="Ubuntu 启动栏图标自定义设置"></a>Ubuntu 启动栏图标自定义设置</h2><p>个人有时的误操作会导致 Ubuntu 启动栏某些软件的图标消失，变成一个大大的问号「？」，为了挽救难看的启动栏，这里学习一下 Ubuntu 启动栏图标的实现原理：</p>
 <p>在目录 <code>/usr/share/applications</code> 下可以看到，这里有很多以 <code>.desktop</code> 结尾的文件，其实这些文件就是 Ubuntu 启动栏各个软件图标的设置文件。</p>
-<p>这里以 firefox 火狐浏览器（是的，我就是把它的图标搞丢了 😐）为例介绍启动图标的设置。可自行新建或修改一个以 firefox.desktop 文件，写入或修改内容：</p>
+<p>这里以 firefox 火狐浏览器（是的，我就是把它的图标搞丢了 😐）为例介绍启动图标的设置。可自行新建或修改一个以 firefox.desktop 命令的文件，写入或修改内容：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Name=Firefox 63.0.3</span><br><span class="line">Comment=this is firefox</span><br><span class="line">Exec=/opt/firefox/firefox</span><br><span class="line">Icon=/opt/firefox/browser/chrome/icons/defaults/default128.png</span><br><span class="line">Terminal=false</span><br><span class="line">Type=Application</span><br><span class="line">Categories=Application;Network;</span><br></pre></td></tr></table></figure>
 
 <p>其中，较为重要的几个，<code>Name</code> 字段即启动图标鼠标悬停提示，<code>Exec</code> 字段即启动图标对应的可执行程序，<code>Icon</code> 字段为启动图标的 icon 文件。</p>
+<hr>
+<h2 id="Ubuntu-20-添加自定义程序到启动栏"><a href="#Ubuntu-20-添加自定义程序到启动栏" class="headerlink" title="Ubuntu 20 添加自定义程序到启动栏"></a>Ubuntu 20 添加自定义程序到启动栏</h2><p>同样地，在目录 /usr/share/applications 下，参照上节 firefox 的示例，自行创建一个以 xxxx.desktop 命令的文件，并以命令 <code>[user@host /usr/share/applications]$ sudo chmod +x xxxx.desktop</code> 赋予其可执行权限，至此即可在启动栏尾部选择「Show Applications」菜单，在所有应用列表中找到刚才创建的应用启动图标（以 <code>Name</code> 字段为名称，以 <code>Icon</code> 字段指向的图片为图标），在该图标上右键选择「Add to Favorites」即可将此自定义程序（即 <code>Exec</code> 字段指向的可执行程序）添加到系统的快速启动栏。</p>
 <hr>
 <h2 id="修改-Ubuntu-默认终端"><a href="#修改-Ubuntu-默认终端" class="headerlink" title="修改 Ubuntu 默认终端"></a>修改 Ubuntu 默认终端</h2><p>在考虑到多终端窗口分屏显示时，可以采用命令 <code>[root@A ~]$ apt-get install terminator</code> 安装新的终端工具 <strong>Terminator</strong> 。但在安装该工具后会自动设置默认终端为 Terminator，对于 Ubuntu 16.04，可通过如下命令重置默认终端为系统自带的 gnome-terminal：</p>
 <ul>
@@ -827,7 +829,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-启动栏图标自定义设置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 启动栏图标自定义设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">2.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FoxitReader-支持中文输入"><span class="nav-number">3.</span> <span class="nav-text">FoxitReader 支持中文输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用-ImageMagick-convert-拼贴多张图片"><span class="nav-number">4.</span> <span class="nav-text">用 ImageMagick convert 拼贴多张图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批量修改目录下所有文件夹或文件的属性"><span class="nav-number">5.</span> <span class="nav-text">批量修改目录下所有文件夹或文件的属性</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-启动栏图标自定义设置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 启动栏图标自定义设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-20-添加自定义程序到启动栏"><span class="nav-number">2.</span> <span class="nav-text">Ubuntu 20 添加自定义程序到启动栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">3.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FoxitReader-支持中文输入"><span class="nav-number">4.</span> <span class="nav-text">FoxitReader 支持中文输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用-ImageMagick-convert-拼贴多张图片"><span class="nav-number">5.</span> <span class="nav-text">用 ImageMagick convert 拼贴多张图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批量修改目录下所有文件夹或文件的属性"><span class="nav-number">6.</span> <span class="nav-text">批量修改目录下所有文件夹或文件的属性</span></a></li></ol></div>
             
 
           </div>
