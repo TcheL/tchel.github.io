@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="包括 Vim 常用配置函数，以及常用配置命令收录。">
 <meta property="article:published_time" content="2018-07-20T05:55:42.000Z">
-<meta property="article:modified_time" content="2019-12-11T03:07:59.835Z">
+<meta property="article:modified_time" content="2020-10-07T02:27:38.927Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="Vim">
 <meta name="twitter:card" content="summary">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-12-11 11:07:59" itemprop="dateModified" datetime="2019-12-11T11:07:59+08:00">2019-12-11</time>
+                <time title="Modified: 2020-10-07 10:27:38" itemprop="dateModified" datetime="2020-10-07T10:27:38+08:00">2020-10-07</time>
               
             
           </span>
@@ -505,7 +505,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if has("autocmd")</span><br><span class="line">  au BufReadPost * if line("'.") &gt; 0 &amp;&amp; line("'.") &lt;= line("$") | exe "normal! `." | endif</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
 <p>此设置即在文件打开时，如果文件上次编辑的位置存在（即不在 1 行和最大行数以外），自动跳转至上次编辑的位置。<br>此外，可以使用</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">au BufReadPost * if line("'\"") &gt; 1 &amp;&amp; line("'\"") &lt;= line("$") | exe "normal! '\"" | endif</span><br></pre></td></tr></table></figure>
-<p>跳转至上次离开的行首。使用</p>
+<p>跳转至上次离开的行首。或使用</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">au BufReadPost * if line("'\"") &gt; 0 &amp;&amp; line("'\"") &lt;= line("$") | exe "normal! `\"" | endif</span><br></pre></td></tr></table></figure>
 <p>跳转至上次离开的位置。</p>
 <hr>
@@ -630,11 +630,16 @@
 <td align="center">设置列高亮背景色</td>
 </tr>
 <tr>
-<td align="center"><code>注：本表持续更新中</code></td>
-<td align="center"></td>
+<td align="center">imap tt &lt;esc&gt;</td>
+<td align="center">用 tt 连续按键代替 ESC 键</td>
+</tr>
+<tr>
+<td align="center">set encoding=utf-8 fileencodings=ucs-bom,utf-8,cp936,gb2312</td>
+<td align="center">解决部分字符乱码问题</td>
 </tr>
 </tbody></table>
-<p>将以上配置写入「** $HOME/.vimrc **」文件，即可对所有文件打开生效。<br>如果想要对某些文件采用不同的打开初始配置，可在相应的文件末尾加入类似如下语句</p>
+<p><code>注：本表持续更新中</code></p>
+<p>将以上配置写入「<strong>$HOME/.vimrc</strong>」文件，即可对所有文件打开生效。<br>如果想要对某些文件采用不同的打开初始配置，可在相应的文件末尾加入类似如下语句</p>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">vim</span>:ft=<span class="keyword">make</span>:<span class="keyword">sw</span>=<span class="number">4</span>:wrap</span><br></pre></td></tr></table></figure>
 <p>该文件为一个 makefile 文件，第一个字符 “#” 为 makefile 文件的注释符，不同的文件可以采用各自相应的注释符。”ft=make” 即指文件格式为 makefile 文件，Vim 自动按 makefile 语法高亮文本，”sw=4” 即设置自动缩进空格数为 4，”wrap” 即设置自动折行，在这里，省去配置语句中的 set，不同的配置语句间用 “:” 隔开。</p>
 <hr>
@@ -662,11 +667,8 @@
 <td align="center">:hi</td>
 <td align="center">查看 highlight 的系统配色方案</td>
 </tr>
-<tr>
-<td align="center"><code>注：本表持续更新中</code></td>
-<td align="center"></td>
-</tr>
 </tbody></table>
+<p><code>注：本表持续更新中</code></p>
 <hr>
 <h2 id="vim-plug-管理插件"><a href="#vim-plug-管理插件" class="headerlink" title="vim-plug 管理插件"></a>vim-plug 管理插件</h2><p><a href="https://github.com/junegunn/vim-plug" target="_blank" rel="noopener">vim-plug</a> 是一款轻量的 Vim 插件管理器，通过如下一条命令即可完成安装：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -fLo ~/.vim/<span class="built_in">autoload</span>/plug.vim --create-dirs \</span></span><br><span class="line">    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim</span><br></pre></td></tr></table></figure>
@@ -675,7 +677,23 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">call plug#begin('~/.vim/plugged')</span><br><span class="line">  Plug 'SirVer/ultisnips'</span><br><span class="line">  Plug 'lervag/vimtex'</span><br><span class="line">call plug#end()</span><br></pre></td></tr></table></figure>
 
 <p>上例中直接加载了 <a href="https://github.com/SirVer/ultisnips" target="_blank" rel="noopener">SirVer/ultisnips</a> 和 <a href="https://github.com/lervag/vimtex" target="_blank" rel="noopener">lervag/vimtex</a> 插件，Plug 起始行可根据自己的需要加载不同的第三方插件。</p>
-<p>保存上述修改之后，重新打开 Vim，在命令模式下执行 <code>:PlugInstall</code> 即可安装上述加载的插件，再次重启 Vim 正确加载插件后，在命令模式下执行 <code>:h vimtex</code> 即可查看插件 vimtex 的帮助，再根据自己的需要在 ~/.vimrc 中设置不同的环境变量以更改插件的默认设置。</p>
+<p>保存上述修改之后，重新打开 Vim，在命令模式下执行 <code>:PlugInstall</code> 即可安装上述加载的插件，再次重启 Vim 正确加载插件后，根据自己的需要在 ~/.vimrc 中设置不同的环境变量以更改插件的默认设置。</p>
+<h3 id="常用插件推荐配置"><a href="#常用插件推荐配置" class="headerlink" title="常用插件推荐配置"></a>常用插件推荐配置</h3><h4 id="SirVer-ultisnips"><a href="#SirVer-ultisnips" class="headerlink" title="SirVer/ultisnips"></a>SirVer/ultisnips</h4><p><a href="https://github.com/SirVer/ultisnips" target="_blank" rel="noopener">SirVer/ultisnips</a> 是一款代码片段模板自动补全插件。推荐配置如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let g:UltiSnipsExpandTrigger = '&lt;tab&gt;'</span><br><span class="line">let g:UltiSnipsJumpForwardTrigger = '&lt;tab&gt;'</span><br><span class="line">let g:UltiSnipsJumpBackwardTrigger = '&lt;s-tab&gt;'</span><br><span class="line">let g:UltiSnipsEditSplit = 'vertical'</span><br></pre></td></tr></table></figure>
+
+<p>在 Vim 命令模式下执行 <code>:h UltiSnips</code> 即可查看该插件的帮助文档。</p>
+<h4 id="lervag-vimtex"><a href="#lervag-vimtex" class="headerlink" title="lervag/vimtex"></a>lervag/vimtex</h4><p><a href="https://github.com/lervag/vimtex" target="_blank" rel="noopener">lervag/vimtex</a> 是一款对 LaTeX 文件（以 .tex 为文件名后缀）提供实时编译功能的插件。推荐配置如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let g:vimtex_compiler_method = 'latexmk'</span><br><span class="line">let g:vimtex_compiler_latexmk = &#123;'backend' : 'jobs'&#125;</span><br><span class="line">set conceallevel=1</span><br><span class="line">let g:tex_conceal = 'abdmg'</span><br><span class="line">let g:vimtex_indent_enabled = 0</span><br><span class="line">let g:vimtex_quickfix_latexlog = &#123;'default' : 0&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Vim 命令模式下执行 <code>:h vimtex</code> 即可查看该插件的帮助文档。</p>
+<h4 id="airblade-vim-gitgutter"><a href="#airblade-vim-gitgutter" class="headerlink" title="airblade/vim-gitgutter"></a>airblade/vim-gitgutter</h4><p><a href="https://github.com/airblade/vim-gitgutter" target="_blank" rel="noopener">airblade/vim-gitgutter</a> 是一款在编辑文件时实时显示 git 差异（与 git diff 结果类似）的插件。推荐配置如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">set updatetime=100</span><br><span class="line">highlight GitGutterAdd ctermfg=2</span><br><span class="line">highlight GitGutterChange ctermfg=3</span><br><span class="line">highlight GitGutterDelete ctermfg=1</span><br><span class="line">highlight GitGutterChangeDelete ctermfg=4</span><br></pre></td></tr></table></figure>
+
+<p>在 Vim 命令模式下执行 <code>:h gitgutter</code> 即可查看该插件的帮助文档。</p>
+<h4 id="jiangmiao-auto-pairs"><a href="#jiangmiao-auto-pairs" class="headerlink" title="jiangmiao/auto-pairs"></a>jiangmiao/auto-pairs</h4><p><a href="https://github.com/jiangmiao/auto-pairs" target="_blank" rel="noopener">jiangmiao/auto-pairs</a> 是一款在插入左括号时自动补全右括号的插件。推荐配置如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let g:AutoPairsFlyMode = 1</span><br><span class="line">let g:AutoPairsMapCR = 0</span><br></pre></td></tr></table></figure>
+
+<p>该插件的帮助文档见 <a href="https://github.com/jiangmiao/auto-pairs/blob/master/README.md" target="_blank" rel="noopener">README.md</a>。</p>
 
       
     </div>
@@ -1004,7 +1022,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用配置函数"><span class="nav-number">1.</span> <span class="nav-text">常用配置函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#line-expr"><span class="nav-number">1.1.</span> <span class="nav-text">line(expr)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#col-expr"><span class="nav-number">1.2.</span> <span class="nav-text">col({expr})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setpos-expr"><span class="nav-number">1.3.</span> <span class="nav-text">setpos({expr})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setline-lnum-text"><span class="nav-number">1.4.</span> <span class="nav-text">setline ({lnum}, {text})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getline-lnum-end"><span class="nav-number">1.5.</span> <span class="nav-text">getline({lnum}, {end})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#append-lnum-string"><span class="nav-number">1.6.</span> <span class="nav-text">append(lnum, string)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#expand-expr-flag"><span class="nav-number">1.7.</span> <span class="nav-text">expand(expr [, flag])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置函数应用举例"><span class="nav-number">1.8.</span> <span class="nav-text">配置函数应用举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vim-配置收录"><span class="nav-number">2.</span> <span class="nav-text">Vim 配置收录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vim-命令技巧收录"><span class="nav-number">3.</span> <span class="nav-text">Vim 命令技巧收录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim-plug-管理插件"><span class="nav-number">4.</span> <span class="nav-text">vim-plug 管理插件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用配置函数"><span class="nav-number">1.</span> <span class="nav-text">常用配置函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#line-expr"><span class="nav-number">1.1.</span> <span class="nav-text">line(expr)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#col-expr"><span class="nav-number">1.2.</span> <span class="nav-text">col({expr})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setpos-expr"><span class="nav-number">1.3.</span> <span class="nav-text">setpos({expr})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setline-lnum-text"><span class="nav-number">1.4.</span> <span class="nav-text">setline ({lnum}, {text})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getline-lnum-end"><span class="nav-number">1.5.</span> <span class="nav-text">getline({lnum}, {end})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#append-lnum-string"><span class="nav-number">1.6.</span> <span class="nav-text">append(lnum, string)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#expand-expr-flag"><span class="nav-number">1.7.</span> <span class="nav-text">expand(expr [, flag])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置函数应用举例"><span class="nav-number">1.8.</span> <span class="nav-text">配置函数应用举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vim-配置收录"><span class="nav-number">2.</span> <span class="nav-text">Vim 配置收录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vim-命令技巧收录"><span class="nav-number">3.</span> <span class="nav-text">Vim 命令技巧收录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim-plug-管理插件"><span class="nav-number">4.</span> <span class="nav-text">vim-plug 管理插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用插件推荐配置"><span class="nav-number">4.1.</span> <span class="nav-text">常用插件推荐配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SirVer-ultisnips"><span class="nav-number">4.1.1.</span> <span class="nav-text">SirVer&#x2F;ultisnips</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lervag-vimtex"><span class="nav-number">4.1.2.</span> <span class="nav-text">lervag&#x2F;vimtex</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#airblade-vim-gitgutter"><span class="nav-number">4.1.3.</span> <span class="nav-text">airblade&#x2F;vim-gitgutter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jiangmiao-auto-pairs"><span class="nav-number">4.1.4.</span> <span class="nav-text">jiangmiao&#x2F;auto-pairs</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
