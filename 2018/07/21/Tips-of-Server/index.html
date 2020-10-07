@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="服务器管理过程中的一些命令技巧">
 <meta property="article:published_time" content="2018-07-21T05:17:58.000Z">
-<meta property="article:modified_time" content="2020-10-06T10:43:49.183Z">
+<meta property="article:modified_time" content="2020-10-07T01:29:04.954Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="Server">
 <meta name="twitter:card" content="summary">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-10-06 18:43:49" itemprop="dateModified" datetime="2020-10-06T18:43:49+08:00">2020-10-06</time>
+                <time title="Modified: 2020-10-07 09:29:04" itemprop="dateModified" datetime="2020-10-07T09:29:04+08:00">2020-10-07</time>
               
             
           </span>
@@ -481,6 +481,14 @@
 <hr>
 <h2 id="系统安装注意事项"><a href="#系统安装注意事项" class="headerlink" title="系统安装注意事项"></a>系统安装注意事项</h2><h3 id="安装程序引导错误"><a href="#安装程序引导错误" class="headerlink" title="安装程序引导错误"></a>安装程序引导错误</h3><p>在安装 CentOS 7.x 系统时，可能出现报错 “No controller found”，无法继续安装进程，此为安装程序引导错误。此时，可按下 <code>Ctrl + Alt + Delete</code> 组合键重启机器。待重新进入 “Install CentOS 7” 等安装选项选择界面时，按方向键选择该选项后按下 <code>e</code> 键，进入选项编辑页面，将该页面中的 “LABEL=CentOS\x207\x20x86_64” 修改为 “LABEL=CentOS\x207\x20x8” 后按下 <code>Ctrl + x</code> 组合键，而后安装程序仍会报告上述错误，但可继续进入后序安装进程，自此即可正常安装系统了。</p>
 <h3 id="系统目录空间配置"><a href="#系统目录空间配置" class="headerlink" title="系统目录空间配置"></a>系统目录空间配置</h3><p>考虑到在使用过程中，计算节点的 /home 目录需由主节点的 /home 目录远程挂载而来，其原始 /home 目录无法被用户使用，可在安装系统时，将 /home 目录的空间设置小些，而将系统根目录设置得适当大些。</p>
+<p>针对当前需求，推荐的手动分区目录配置为：</p>
+<ul>
+<li>/home: 50 GiB</li>
+<li>/boot: 1 GiB</li>
+<li>/boot/efi: 200 MiB</li>
+<li>swap: 48 GiB</li>
+</ul>
+<p>剩余空间均分配给根目录 <code>/</code> 即可。</p>
 <hr>
 <h2 id="SSH-免密登录"><a href="#SSH-免密登录" class="headerlink" title="SSH 免密登录"></a>SSH 免密登录</h2><p>以下实现主机 A 到主机 B 的免密登录：</p>
 <ul>
