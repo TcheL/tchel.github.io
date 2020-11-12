@@ -114,16 +114,11 @@
 
 
 
-  <meta name="description" content="The method to handle missing window entries at the boundaries of the signal.">
-<meta property="og:type" content="article">
-<meta property="og:title" content="滑动中值滤波边界问题">
-<meta property="og:url" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;2018&#x2F;07&#x2F;21&#x2F;Boundary-problem-of-Moving-Median-Filter&#x2F;index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Here4U">
+<meta property="og:url" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;tags&#x2F;Hankel&#x2F;index.html">
 <meta property="og:site_name" content="Here4U">
-<meta property="og:description" content="The method to handle missing window entries at the boundaries of the signal.">
-<meta property="article:published_time" content="2018-07-21T05:14:20.000Z">
-<meta property="article:modified_time" content="2020-08-03T11:03:38.569Z">
 <meta property="article:author" content="Tche LIU">
-<meta property="article:tag" content="DSP">
 <meta name="twitter:card" content="summary">
 
 
@@ -131,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="http://tchel.github.io/2018/07/21/Boundary-problem-of-Moving-Median-Filter/"/>
+  <link rel="canonical" href="http://tchel.github.io/tags/Hankel/"/>
 
 
 
@@ -141,7 +136,7 @@
   };
 </script>
 
-  <title>滑动中值滤波边界问题 | Here4U</title>
+  <title>Tag: Hankel | Here4U</title>
   
 
 
@@ -191,7 +186,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <!-- 小条 Fork me on Github
@@ -253,7 +248,7 @@
         
         
           
-          <li class="menu-item menu-item-tags">
+          <li class="menu-item menu-item-tags menu-item-active">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
   </li>
@@ -333,280 +328,84 @@
           
             
 
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
           
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block tag">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>Hankel<small>Tag</small>
+        </h1>
+      </div>
 
-  
-  
-  
-
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tchel.github.io/2018/07/21/Boundary-problem-of-Moving-Median-Filter/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Tche LIU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/f58b38472ae7594c1da00001675eb66a?s=80">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Here4U">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2018/07/22/Basic-of-Math/" itemprop="url">
+              
+                <span itemprop="name">一些数学概念</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">滑动中值滤波边界问题
-              
-            
-          </h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-07-21 13:14:20" itemprop="dateCreated datePublished" datetime="2018-07-21T13:14:20+08:00">2018-07-21</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-08-03 19:03:38" itemprop="dateModified" datetime="2020-08-03T19:03:38+08:00">2020-08-03</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tricks/" itemprop="url" rel="index"><span itemprop="name">Tricks</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/21/Boundary-problem-of-Moving-Median-Filter/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count gitment-comments-count" data-xid="/2018/07/21/Boundary-problem-of-Moving-Median-Filter/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-              <div class="post-description">The method to handle missing window entries at the boundaries of the signal.</div>
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>From <a href="https://en.wikipedia.org/wiki/Median_filter" target="_blank" rel="noopener">Wikipedia</a>, to handle missing window entries at the boundaries of the signal, there are some schemes that have different properties that might be preferred in particular circumstances:</p>
-<ul>
-<li>The first value is repeated, as with the last value, to obtain enough entries to fill the window.</li>
-<li>Avoid processing the boundaries, with or without cropping the signal boundaries afterwards.</li>
-<li>Shrinking the window near the boundaries, so that every window is full.</li>
-<li>Fetching entries from other places in the signal.</li>
-</ul>
-
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>若蒙小宠，如沐春风</div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>Donate</span>
-  </button>
-  <div id="QR" style="display: none;">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Tche LIU WeChat Pay"/>
-        <p>WeChat Pay</p>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-07-22T21:05:46+08:00"
+              content="2018-07-22" >
+          07-22
+        </time>
       </div>
-    
 
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.jpg" alt="Tche LIU Alipay"/>
-        <p>Alipay</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
-    
-
-    
-
-    <div>
-      
-        <div>
-  
-    <div style="text-align:center;color: #ccc;font-size:14px;">
-      ---------- 文结至此
-      <i class="fa fa-paw"></i>
-      静待下章 ----------
-    </div>
-  
-</div>
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/DSP/" rel="tag"><i class="fa fa-tag"></i> DSP</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/07/20/Fortran90-netCDF-Introduction/" rel="next" title="在 Fortran 90 中使用 netCDF 数据格式简介">
-                <i class="fa fa-chevron-left"></i> 在 Fortran 90 中使用 netCDF 数据格式简介
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/21/Tips-of-Server/" rel="prev" title="服务器管理">
-                服务器管理 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
     </div>
+
   </div>
+  
+  
+  
+
+  
 
 
           </div>
           
-
-  
-    <div class="comments" id="comments">
-      
-        <div id="gitment-container"></div>
-      
-    </div>
-
-  
-
-
 
         </div>
         
@@ -962,10 +761,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
-
-
 
   
 
@@ -1001,30 +796,6 @@
 
     
 
-    
-      <script type="text/javascript">
-      function renderGitment(){
-        var gitment = new Gitmint({
-            id: window.location.pathname,
-            owner: 'TcheL',
-            repo: 'tchel.github.io',
-            
-            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
-            
-            oauth: {
-            
-            
-                client_secret: '628f26a0072859c93fb65c165cb95a511733ed86',
-            
-                client_id: '3b2772d4d3adc8899407'
-            }});
-        gitment.render('gitment-container');
-      }
-
-      
-      renderGitment();
-      
-      </script>
     
 
 
