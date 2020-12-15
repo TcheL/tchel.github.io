@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="Ubuntu 不乖的时候，你是要揍他的 👊">
 <meta property="article:published_time" content="2018-11-28T02:20:06.000Z">
-<meta property="article:modified_time" content="2020-12-09T01:38:38.416Z">
+<meta property="article:modified_time" content="2020-12-15T12:17:54.447Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="Ubuntu">
 <meta name="twitter:card" content="summary">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-12-09 09:38:38" itemprop="dateModified" datetime="2020-12-09T09:38:38+08:00">2020-12-09</time>
+                <time title="Modified: 2020-12-15 20:17:54" itemprop="dateModified" datetime="2020-12-15T20:17:54+08:00">2020-12-15</time>
               
             
           </span>
@@ -503,6 +503,12 @@
 <hr>
 <h2 id="批量修改目录下所有文件夹或文件的属性"><a href="#批量修改目录下所有文件夹或文件的属性" class="headerlink" title="批量修改目录下所有文件夹或文件的属性"></a>批量修改目录下所有文件夹或文件的属性</h2><p>可以命令 <code>[user@A target_directory]$ find . -type d -exec chmod 755 {} \;</code> 修改主文件夹 target_directory 下所有子文件夹的访问属性为 755。</p>
 <p>可以命令 <code>[user@A target_directory]$ find . -type f -exec chmod 644 {} \;</code> 修改主文件夹 target_directory 下所有文件的访问属性为 644。</p>
+<hr>
+<h2 id="Mendeley-支持中文输入"><a href="#Mendeley-支持中文输入" class="headerlink" title="Mendeley 支持中文输入"></a>Mendeley 支持中文输入</h2><p>根据 <em><a href="https://github.com/JackieMium/my_blog/issues/12" target="_blank" rel="noopener">解决 Debian 中 RStudio 和 Mendeley 下 Fcitx 输入法不能使用的问题</a></em> 所述，Mendeley 等软件不支持 Fcitx 输入法输入中文的原因可能是，这些软件使用的 Qt 版本与系统版本不同，而 Fcitx 是直接调用的系统的 Qt 库。</p>
+<p>所以，Mendeley 等的 Fcitx 中文支持问题的最根本最可靠的解决办法是，下载这些软件对应版本的 Qt 库源码，编译生成动态链接库，拷贝到软件的插件目录下即可。</p>
+<p>此外，针对 Mendeley 软件，另一种可能但不可靠的解决办法（参见 <a href="https://github.com/JackieMium/libfcitxplatforminputcontextplugin.so" target="_blank" rel="noopener">libfcitxplatforminputcontextplugin.so</a>）是，下载 <a href="https://github.com/JackieMium/libfcitxplatforminputcontextplugin.so/blob/master/lib-fcitx-plugin/debian.sid.20171223/libfcitxplatforminputcontextplugin.so.for.MendeleyDesktop" target="_blank" rel="noopener">libfcitxplatforminputcontextplugin.so.for.MendeleyDesktop</a> 并拷贝到插件目录 <code>/opt/mendeleydesktop/plugins/qt/plugins/platforminputcontexts/</code> 下并重命名为 libfcitxplatforminputcontextplugin.so，可通过如下命令实现：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> wget https://github.com/JackieMium/libfcitxplatforminputcontextplugin.so/raw/master/lib-fcitx-plugin/debian.sid.20171223/libfcitxplatforminputcontextplugin.so.for.MendeleyDesktop</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo mv libfcitxplatforminputcontextplugin.so.for.MendeleyDesktop /opt/mendeleydesktop/plugins/qt/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so</span></span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -845,7 +851,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-启动栏图标自定义设置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 启动栏图标自定义设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-20-添加自定义程序到启动栏"><span class="nav-number">2.</span> <span class="nav-text">Ubuntu 20 添加自定义程序到启动栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">3.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FoxitReader-支持中文输入"><span class="nav-number">4.</span> <span class="nav-text">FoxitReader 支持中文输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用-ImageMagick-convert-拼贴多张图片"><span class="nav-number">5.</span> <span class="nav-text">用 ImageMagick convert 拼贴多张图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批量修改目录下所有文件夹或文件的属性"><span class="nav-number">6.</span> <span class="nav-text">批量修改目录下所有文件夹或文件的属性</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-启动栏图标自定义设置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 启动栏图标自定义设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-20-添加自定义程序到启动栏"><span class="nav-number">2.</span> <span class="nav-text">Ubuntu 20 添加自定义程序到启动栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">3.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FoxitReader-支持中文输入"><span class="nav-number">4.</span> <span class="nav-text">FoxitReader 支持中文输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用-ImageMagick-convert-拼贴多张图片"><span class="nav-number">5.</span> <span class="nav-text">用 ImageMagick convert 拼贴多张图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批量修改目录下所有文件夹或文件的属性"><span class="nav-number">6.</span> <span class="nav-text">批量修改目录下所有文件夹或文件的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mendeley-支持中文输入"><span class="nav-number">7.</span> <span class="nav-text">Mendeley 支持中文输入</span></a></li></ol></div>
             
 
           </div>
