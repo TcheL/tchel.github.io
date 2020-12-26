@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="不同领域的常用公式集合，包括数学、物理等。">
 <meta property="article:published_time" content="2019-08-15T06:47:44.000Z">
-<meta property="article:modified_time" content="2020-12-26T03:05:30.400Z">
+<meta property="article:modified_time" content="2020-12-26T03:50:24.579Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="Basic formula">
 <meta name="twitter:card" content="summary">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-12-26 11:05:30" itemprop="dateModified" datetime="2020-12-26T11:05:30+08:00">2020-12-26</time>
+                <time title="Modified: 2020-12-26 11:50:24" itemprop="dateModified" datetime="2020-12-26T11:50:24+08:00">2020-12-26</time>
               
             
           </span>
@@ -944,7 +944,7 @@
 <h5 id="球坐标系"><a href="#球坐标系" class="headerlink" title="球坐标系"></a>球坐标系</h5><p>对于球坐标系 $(r, \theta, \varphi)$，有</p>
 <p>$$\begin{cases}<br>  x = r \sin \theta \cos \varphi \newline<br>  y = r \sin \theta \sin \varphi \newline<br>  z = r \cos \theta \newline<br>\end{cases} \qquad (0 \leqslant r &lt; \infty, 0 \leqslant \varphi &lt; 2 \pi, 0 \leqslant \theta \leqslant \pi)$$</p>
 <p>单位矢量为</p>
-<p>$$\begin{cases}<br>  \vec{e}_r = \sin \theta \cos \varphi \vec{i} + \sin \theta \sin \varphi \vec{j} + \cos \theta \vec{k} \newline<br>  \vec{e}_{\theta} = \cos \theta \cos \varphi \vec{i} + \cos \theta \sin \varphi \vec{j} - \sin \theta vec{k} \newline<br>  \vec{e}_{\varphi} = - \sin \varphi \vec{i} + \cos \varphi \vec{j} \newline<br>\end{cases}$$</p>
+<p>$$\begin{cases}<br>  \vec{e}_r = \sin \theta \cos \varphi \vec{i} + \sin \theta \sin \varphi \vec{j} + \cos \theta \vec{k} \newline<br>  \vec{e}_{\theta} = \cos \theta \cos \varphi \vec{i} + \cos \theta \sin \varphi \vec{j} - \sin \theta \vec{k} \newline<br>  \vec{e}_{\varphi} = - \sin \varphi \vec{i} + \cos \varphi \vec{j} \newline<br>\end{cases}$$</p>
 <p>其偏导数为</p>
 <p>$$\frac{\partial \vec{e}_r}{\partial r} = \frac{\partial \vec{e}_{\theta}}{\partial r} = \frac{\partial \vec{e}_{\varphi}}{\partial r} = 0$$</p>
 <p>$$\frac{\partial \vec{e}_r}{\partial \theta} = \vec{e}_{\theta}, \frac{\partial \vec{e}_{\theta}}{\partial \theta} = - \vec{e}_r, \frac{\partial \vec{e}_{\varphi}}{\partial \theta} = 0$$</p>
@@ -989,6 +989,7 @@
 <p>其中，$p$ 为压力场，$v$ 为速度场，$f$ 为力源项，$\rho$ 为介质密度，$c$ 为介质的声波波速。</p>
 <h5 id="弹性波"><a href="#弹性波" class="headerlink" title="弹性波"></a>弹性波</h5><p>在各向同性介质中，弹性波波动方程有以下几种形式：</p>
 <ul>
+<li>二阶矢量位移方程：$$ \rho \frac{\partial^2 \mathbf{u}(\mathbf{x}, t)}{\partial t^2} = (\lambda + 2 \mu) \nabla \nabla \cdot \mathbf{u} (\mathbf{x}, t) - \mu \nabla \times \nabla \times \mathbf{u} (\mathbf{x}, t) + \mathbf{f}(\mathbf{x}_s, t) $$</li>
 <li>二阶位移方程组：$$ \rho u_{i,tt} = (\lambda u_{k,k})_{,i} + (\mu u_{i,j})_{,j} + (\mu u_{j,i})_{,j} + f_i $$</li>
 <li>位移-应力方程组：$$ \begin{cases} \rho u_{i,tt} = \sigma_{ij,j} + f_i \newline \sigma_{ij} = \lambda u_{k,k} \delta_{ij} + \mu (u_{i,j} + u_{j,i}) \end{cases} $$</li>
 <li>一阶速度-应力方程组：$$ \begin{cases} \rho v_{i,t} = \sigma_{ij,j} + f_i \newline \sigma_{ij,t} = \lambda v_{k,k} \delta_{ij} + \mu (v_{i,j} + v_{j,i}) \end{cases} $$</li>
