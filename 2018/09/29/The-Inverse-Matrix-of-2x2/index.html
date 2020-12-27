@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="用简单的代数方法求二阶方阵的逆矩阵">
 <meta property="article:published_time" content="2018-09-29T05:12:58.000Z">
-<meta property="article:modified_time" content="2020-08-03T11:05:56.271Z">
+<meta property="article:modified_time" content="2020-12-27T13:17:08.000Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="Matrix">
 <meta name="twitter:card" content="summary">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-08-03 19:05:56" itemprop="dateModified" datetime="2020-08-03T19:05:56+08:00">2020-08-03</time>
+                <time title="Modified: 2020-12-27 21:17:08" itemprop="dateModified" datetime="2020-12-27T21:17:08+08:00">2020-12-27</time>
               
             
           </span>
@@ -479,26 +479,32 @@
 <p>$$A^{-1}=\frac{1}{|A|}A^*$$</p>
 <p>其中，$|A|$ 为 $A$ 的行列式，$A^*$ 为 $A$ 的伴随矩阵。</p>
 <h3 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h3><p>方阵 $A$ 的行列式：</p>
-<p>$$|A|=\left|\begin{array}{c} a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \newline a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \newline \vdots &amp; \vdots &amp; \ddots &amp; \vdots \newline a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nn} \end{array}\right|=\sum_k(-1)^ka_{1k_1}a_{2k_2}\cdots a_{nk_n}$$</p>
+<p>$$|A|=\begin{vmatrix} a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \newline a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \newline \vdots &amp; \vdots &amp; \ddots &amp; \vdots \newline a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nn} \end{vmatrix} =\sum_k(-1)^ka_{1k_1}a_{2k_2}\cdots a_{nk_n}$$</p>
 <p>其中，$k_1, k_2, \cdots, k_n$ 是将序列 $1, 2, \cdots, n$ 的元素次序交换 $k$ 次所得到的一个序列。</p>
+<p>此外，也可通过如下递归关系求取方阵 $A$ 的行列式：</p>
+<p>$$|A| = \sum_{j = 1}^n ( - 1)^{j + 1} \cdot M_{1j} a_{1j}$$</p>
+<p>其中 $M_{1j}$ 为方阵 $A$ 的元素 $a_{1j}$ 的余子式。上式将 $n$ 阶方阵的行列式求解化为 $n$ 个 $(n - 1)$ 阶方阵的行列式的求解，借此可逐级递归降阶直至 $1$ 阶行列式的求解，$1$ 阶行列式的值即为该行列式唯一元素之本身，再逐级递归升阶直至原 $n$ 阶行列式即得所求。</p>
 <h3 id="伴随矩阵"><a href="#伴随矩阵" class="headerlink" title="伴随矩阵"></a>伴随矩阵</h3><p>方阵 $A$ 的伴随矩阵为：</p>
-<p>$$A^*=\left[\begin{array}{c} A_{11} &amp; A_{21} &amp; \cdots &amp; A_{n1} \newline A_{12} &amp; A_{22} &amp; \cdots &amp; A_{n2} \newline \vdots &amp; \vdots &amp; \ddots &amp; \vdots \newline A_{1n} &amp; A_{2n} &amp; \cdots &amp; A_{nn} \end{array}\right]$$</p>
+<p>$$A^*=\begin{bmatrix} A_{11} &amp; A_{21} &amp; \cdots &amp; A_{n1} \newline A_{12} &amp; A_{22} &amp; \cdots &amp; A_{n2} \newline \vdots &amp; \vdots &amp; \ddots &amp; \vdots \newline A_{1n} &amp; A_{2n} &amp; \cdots &amp; A_{nn} \end{bmatrix}$$</p>
 <p>其中，$A_{ij}$ 为矩阵 $A$ 的元素 $a_{ij}$ 的代数余子式。</p>
 <h3 id="代数余子式"><a href="#代数余子式" class="headerlink" title="代数余子式"></a>代数余子式</h3><p>在 $n$ 阶行列式 $A$ 中任意选定的 $k$ 行 $k$ 列元素，其中在行列交点上的元素按原顺序排列组成的 $k$ 阶行列式，称为行列式 $A$ 的 $k$ 阶子式 $D$ 。</p>
 <p>在 $n$ 阶行列式 $A$ 中划去任意选定的 $k$ 行 $k$ 列元素后，余下的元素按原顺序排列组成的 $n-k$ 阶行列式，称为行列式 $A$ 的 $k$ 阶子式 $D$ 的余子式 $M$ 。</p>
 <p>如果所选定的行列在行列式 $A$ 中的行列序号分别为 $i_1, i_2, \cdots, i_k$ 和 $j_1, j_2, \cdots, j_k$ ，则行列式 $A$ 的 $k$ 阶子式 $D$ 的代数余子式为 </p>
 <p>$$(-1)^{(i_1+i_2+\cdots+i_k)+(j_1+j_2+\cdots+j_k)}\cdot M$$</p>
+<p>如果选定的是单个元素，如行列式 $A$ 的元素 $a_{ij}$ 的代数余子式为</p>
+<p>$$( - 1)^{i + j} \cdot M_{ij} = ( - 1)^{i + j} \cdot \begin{vmatrix}<br>  a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1, j - 1} &amp; a_{1, j + 1} &amp; \cdots &amp; a_{1n} \newline<br>  a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2, j - 1} &amp; a_{2, j + 1} &amp; \cdots &amp; a_{2n} \newline<br>  \vdots &amp; \vdots &amp; \ldots &amp; \vdots &amp; \vdots &amp; \ldots &amp; \vdots \newline<br>  a_{i - 1, 1} &amp; a_{i - 1, 2} &amp; \cdots &amp; a_{i - 1, j - 1} &amp; a_{i - 1, j + 1} &amp; \cdots &amp; a_{i - 1, n} \newline<br>  a_{i + 1, 1} &amp; a_{i + 1, 2} &amp; \cdots &amp; a_{i + 1, j - 1} &amp; a_{i + 1, j + 1} &amp; \cdots &amp; a_{i + 1, n} \newline<br>  a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{n, j - 1} &amp; a_{n, j +1} &amp; \cdots &amp; a_{nn} \newline<br>\end{vmatrix}$$</p>
+<p>上式中，$(n - 1)$ 阶行列式 $M_{ij}$ 即为行列式 $A$ 的元素 $a_{ij}$ 的余子式。</p>
 <hr>
-<h2 id="二阶矩阵的逆"><a href="#二阶矩阵的逆" class="headerlink" title="二阶矩阵的逆"></a>二阶矩阵的逆</h2><p>对于二阶矩阵 $A=\left[\begin{array}{c} a_{11} &amp; a_{12} \newline a_{21} &amp; a_{22} \end{array}\right]$ ：</p>
+<h2 id="二阶矩阵的逆"><a href="#二阶矩阵的逆" class="headerlink" title="二阶矩阵的逆"></a>二阶矩阵的逆</h2><p>对于二阶矩阵 $A=\begin{bmatrix} a_{11} &amp; a_{12} \newline a_{21} &amp; a_{22} \end{bmatrix}$ ：</p>
 <p>$|A|=a_{11}\cdot a_{22}-a_{12}\cdot a_{21}$ ，</p>
 <p>$A_{11} = (-1)^{(1+1)}\cdot a_{22}=a_{22}$ ，</p>
 <p>$A_{12}=(-1)^{(1+2)}\cdot a_{21}=-a_{21}$ ，</p>
 <p>$A_{21}=(-1)^{(2+1)}\cdot a_{12}=-a_{12}$ ，</p>
 <p>$A_{22}=(-1)^{(2+2)}\cdot a_{11}=a_{11}$ ，</p>
 <p>则其伴随矩阵为</p>
-<p>$$A^*=\left[\begin{array}{c} A_{11} &amp; A_{21} \newline A_{12} &amp; A_{22} \end{array}\right]=\left[\begin{array}{c} a_{22} &amp; -a_{12} \newline -a_{21} &amp; a_{11} \end{array}\right]$$</p>
+<p>$$A^*=\begin{bmatrix} A_{11} &amp; A_{21} \newline A_{12} &amp; A_{22} \end{bmatrix}=\begin{bmatrix} a_{22} &amp; -a_{12} \newline -a_{21} &amp; a_{11} \end{bmatrix}$$</p>
 <p>其逆矩阵为</p>
-<p>$$A^{-1}=\frac{1}{|A|}\cdot A^*=\frac{1}{a_{11}\cdot a_{22}-a_{12}\cdot a_{21}}\cdot\left[\begin{array}{c} a_{22} &amp; -a_{12} \newline -a_{21} &amp; a_{11} \end{array}\right]$$</p>
+<p>$$A^{-1}=\frac{1}{|A|}\cdot A^*=\frac{1}{a_{11}\cdot a_{22}-a_{12}\cdot a_{21}}\cdot\begin{bmatrix} a_{22} &amp; -a_{12} \newline -a_{21} &amp; a_{11} \end{bmatrix}$$</p>
 
       
     </div>
