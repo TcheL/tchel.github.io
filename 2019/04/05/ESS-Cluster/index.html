@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="地空系并行集群管理过程中的一些命令操作">
 <meta property="article:published_time" content="2019-04-05T13:06:23.000Z">
-<meta property="article:modified_time" content="2020-04-23T04:24:36.706Z">
+<meta property="article:modified_time" content="2020-12-31T09:25:44.138Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="Server">
 <meta name="twitter:card" content="summary">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-04-23 12:24:36" itemprop="dateModified" datetime="2020-04-23T12:24:36+08:00">2020-04-23</time>
+                <time title="Modified: 2020-12-31 17:25:44" itemprop="dateModified" datetime="2020-12-31T17:25:44+08:00">2020-12-31</time>
               
             
           </span>
@@ -569,6 +569,11 @@
 <p>在设置软硬限制时，指定 <code>0:</code> 即为无任何限制，可用于取消原有限制。</p>
 <p>通过命令行执行命令生效的 GPFS 文件系统的磁盘配置，即永久生效，即使重启集群系统也不会失效。</p>
 <p>注意，当针对整个文件系统进行配额设置（即 mmcrfs 或 mmchfs 命令中不指定 –perfileset-quota 选项）时，则不可在 mmsetquota 命令中指定 fileset 选项，否则该命令不会生效。</p>
+<hr>
+<h2 id="Matlab-软件-License-更新"><a href="#Matlab-软件-License-更新" class="headerlink" title="Matlab 软件 License 更新"></a>Matlab 软件 License 更新</h2><p>首先，登录服务器通过命令 <code>ip a</code> 获取服务器的 Host ID，在该命令的输出中第一个以太网设备（本服务器上为 eno4 网络端口）对应的 MAC 地址（在前述端口详情中，<code>link/ether</code> 字段对应的内容，应是以冒号连接的六个双字符组成的字段）即为 Host ID。</p>
+<p>其后，登录 License 管理员的 MathWorks 网站个人主页，打开 <code>MATLAB (Concurrent)</code> 对应的许可证主页面，进入 “安装和激活” 子页面，点击 “激活服务器”，在相应对话框中分别选择操作系统、填入主机 ID 和激活标签后选择 “继续”，进入许可证文件下载页面，下载新的 License 文件，并上传至服务器。</p>
+<p>再者，找到服务器上 Matlab 许可证管理器所读取的 License 文件（以许可证管理器命令 <code>lmdiag</code> 可以看到管理器读取的文件路径），保留该文件中以 <code>SERVER</code> 和 <code>DAEMON</code> 起始的两行内容，以新 License 文件的内容替换掉该文件的余下内容。</p>
+<p>最后，先以许可证管理器命令 <code>lmdown</code> 关闭 Matlab 许可证管理器，再以许可证管理器命令 <code>lmstart</code> 重启管理器即可完成 License 的更新。</p>
 <hr>
 <h2 id="一些疑问"><a href="#一些疑问" class="headerlink" title="一些疑问"></a>一些疑问</h2><p>zsh 启动时报错找不到 complete 命令，该如何解决？</p>
 <blockquote>
@@ -932,7 +937,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建或删除用户"><span class="nav-number">1.</span> <span class="nav-text">创建或删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改用户密码"><span class="nav-number">2.</span> <span class="nav-text">修改用户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改用户公共数据访问权限"><span class="nav-number">3.</span> <span class="nav-text">修改用户公共数据访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群系统关机"><span class="nav-number">4.</span> <span class="nav-text">集群系统关机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新启动集群"><span class="nav-number">5.</span> <span class="nav-text">重新启动集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动顺序"><span class="nav-number">5.1.</span> <span class="nav-text">启动顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启检查"><span class="nav-number">5.2.</span> <span class="nav-text">重启检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排查错误"><span class="nav-number">5.3.</span> <span class="nav-text">排查错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-队列管理"><span class="nav-number">6.</span> <span class="nav-text">LSF 队列管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#队列状态"><span class="nav-number">6.1.</span> <span class="nav-text">队列状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#队列控制"><span class="nav-number">6.2.</span> <span class="nav-text">队列控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-作业系统的配置"><span class="nav-number">7.</span> <span class="nav-text">LSF 作业系统的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-系统动态优先级的计算"><span class="nav-number">8.</span> <span class="nav-text">LSF 系统动态优先级的计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPFS-文件系统磁盘配额"><span class="nav-number">9.</span> <span class="nav-text">GPFS 文件系统磁盘配额</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些疑问"><span class="nav-number">10.</span> <span class="nav-text">一些疑问</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建或删除用户"><span class="nav-number">1.</span> <span class="nav-text">创建或删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改用户密码"><span class="nav-number">2.</span> <span class="nav-text">修改用户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改用户公共数据访问权限"><span class="nav-number">3.</span> <span class="nav-text">修改用户公共数据访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群系统关机"><span class="nav-number">4.</span> <span class="nav-text">集群系统关机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新启动集群"><span class="nav-number">5.</span> <span class="nav-text">重新启动集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动顺序"><span class="nav-number">5.1.</span> <span class="nav-text">启动顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启检查"><span class="nav-number">5.2.</span> <span class="nav-text">重启检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排查错误"><span class="nav-number">5.3.</span> <span class="nav-text">排查错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-队列管理"><span class="nav-number">6.</span> <span class="nav-text">LSF 队列管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#队列状态"><span class="nav-number">6.1.</span> <span class="nav-text">队列状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#队列控制"><span class="nav-number">6.2.</span> <span class="nav-text">队列控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-作业系统的配置"><span class="nav-number">7.</span> <span class="nav-text">LSF 作业系统的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSF-系统动态优先级的计算"><span class="nav-number">8.</span> <span class="nav-text">LSF 系统动态优先级的计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPFS-文件系统磁盘配额"><span class="nav-number">9.</span> <span class="nav-text">GPFS 文件系统磁盘配额</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Matlab-软件-License-更新"><span class="nav-number">10.</span> <span class="nav-text">Matlab 软件 License 更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些疑问"><span class="nav-number">11.</span> <span class="nav-text">一些疑问</span></a></li></ol></div>
             
 
           </div>
