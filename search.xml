@@ -162,14 +162,16 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Cuda C 学习之路]]></title>
-    <url>%2F2018%2F09%2F02%2FTips-of-Cuda-C%2F</url>
-    <content type="text"><![CDATA[C 相关 C 语言中函数形参默认传值，即函数内部修改形参不会改变实参的值；但可以通过指针形参传递实参地址，修改指针引用值可以改变实参的值。 在变量单双精度切换时，使用 scanf 函数读入数据到变量也需在格式字符串 %f 和 %lf 之间切换，但使用 printf 函数输出变量数据则不需切换。 else 优先与上文最近的不具备完整 if-else 结构的 if 结合组成判断分支结构： Cuda 相关 Cuda kernel 函数不允许通过指针形参传递单变量地址，修改指针引用值不会改变外部实参的值。 在 Cuda kernel 函数内进行屏幕输出时，可在 host 端 kernel 函数之后加上 cudaDeviceReset(); 确保屏幕及时输出。 若运行时报错 “Too many resources requested for lanch”，可能是处理器上的 register 数超出了限制，可减少 the number of threads per block 后再次尝试运行。 在 C++ 类的构造函数中，不要 launch kernel，否则会发生不可预测的后果，在程序运行至某处时报错 “an illegal memory access was encountered” ？]]></content>
+    <title><![CDATA[编程学习之路]]></title>
+    <url>%2F2018%2F09%2F02%2FTips-of-Programming%2F</url>
+    <content type="text"><![CDATA[C 相关 C 语言中函数形参默认传值，即函数内部修改形参不会改变实参的值；但可以通过指针形参传递实参地址，修改指针引用值可以改变实参的值。 在变量单双精度切换时，使用 scanf 函数读入数据到变量也需在格式字符串 %f 和 %lf 之间切换，但使用 printf 函数输出变量数据则不需切换。 else 优先与上文最近的不具备完整 if-else 结构的 if 结合组成判断分支结构： Cuda 相关Cuda C Cuda kernel 函数不允许通过指针形参传递单变量地址，修改指针引用值不会改变外部实参的值。 在 Cuda kernel 函数内进行屏幕输出时，可在 host 端 kernel 函数之后加上 cudaDeviceReset(); 确保屏幕及时输出。 若运行时报错 “Too many resources requested for lanch”，可能是处理器上的 register 数超出了限制，可减少 the number of threads per block 后再次尝试运行。 在 C++ 类的构造函数中，不要 launch kernel，否则会发生不可预测的后果，在程序运行至某处时报错 “an illegal memory access was encountered” ？ OpenMP 相关Fortran OpenMP module 里的变量能且只能通过 !$OMP THREADPRIVATE(varName) 的方式将其设为 OMP 私有属性。 若动态数组具有 OMP 私有属性，则需在 !$OMP PARALLEL 并行域内完成对该数组的 allocate 和 deallocate 操作。 在并行域内调用的子程序或子函数中，除虚参外定义的变量一般默认为 OMP 私有属性，但具有 save 属性的变量默认为 OMP 共享属性，可通过 !$OMP THREADPRIVATE(varName) 将其重设为 OMP 私有属性。]]></content>
       <categories>
         <category>Program</category>
       </categories>
       <tags>
         <tag>Cuda</tag>
+        <tag>C</tag>
+        <tag>OpenMP</tag>
       </tags>
   </entry>
   <entry>
