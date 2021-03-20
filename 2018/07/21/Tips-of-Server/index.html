@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="服务器管理过程中的一些命令技巧">
 <meta property="article:published_time" content="2018-07-21T05:17:58.000Z">
-<meta property="article:modified_time" content="2021-03-18T13:38:14.280Z">
+<meta property="article:modified_time" content="2021-03-19T00:42:35.663Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="Server">
 <meta name="twitter:card" content="summary">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2021-03-18 21:38:14" itemprop="dateModified" datetime="2021-03-18T21:38:14+08:00">2021-03-18</time>
+                <time title="Modified: 2021-03-19 08:42:35" itemprop="dateModified" datetime="2021-03-19T08:42:35+08:00">2021-03-19</time>
               
             
           </span>
@@ -871,7 +871,8 @@
 <hr>
 <h2 id="查看磁盘相关信息"><a href="#查看磁盘相关信息" class="headerlink" title="查看磁盘相关信息"></a>查看磁盘相关信息</h2><p>以命令 <code>[root@A ~]$ yum install smartmontools</code> 安装 smartctl 工具。</p>
 <p>可尝试以命令 <code>[root@A ~]$ smartctl --all /dev/sda</code> 查看设备 /dev/sda 的磁盘信息。</p>
-<p>若该设备为 RAID 磁盘阵列，则应以命令 <code>[root@A ~]$ smartctl --all /dev/sda -d megaraid,N</code> 查看相关信息，其中 N 为 SCSI 总线号，即代表该阵列中的第 N 块磁盘。</p>
+<p>若该设备为 RAID 磁盘阵列，则应以命令 <code>[root@A ~]$ smartctl --all /dev/sda -d megaraid,N</code> 查看相关信息，其中 N 为 SCSI 总线号，即代表该阵列中的第 N 块磁盘（自 0 计起）。</p>
+<p>需指出的是，该工具给出的 <code>Vendor</code> 实为该磁盘的制造（加工生产）商，可能与磁盘的供货（贴标销售）商不同。</p>
 <hr>
 <h2 id="xz-压缩或解压"><a href="#xz-压缩或解压" class="headerlink" title="xz 压缩或解压"></a>xz 压缩或解压</h2><p>使用 <code>xz -z dir</code> 命令压缩目录 dir，使用 <code>xz -d file</code> 命令解压文件 file。在解压以 <code>.tar.xz</code> 结尾的文件时，可以调用 <code>tar -l xz -cxvf</code> 命令。</p>
 <hr>
@@ -1350,7 +1351,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">40</span>
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
