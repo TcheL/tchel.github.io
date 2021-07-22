@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="Ubuntu 不乖的时候，你是要揍他的 👊">
 <meta property="article:published_time" content="2018-11-28T02:20:06.000Z">
-<meta property="article:modified_time" content="2021-07-20T13:45:11.068Z">
+<meta property="article:modified_time" content="2021-07-22T04:19:23.633Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="Ubuntu">
 <meta name="twitter:card" content="summary">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2021-07-20 21:45:11" itemprop="dateModified" datetime="2021-07-20T21:45:11+08:00">2021-07-20</time>
+                <time title="Modified: 2021-07-22 12:19:23" itemprop="dateModified" datetime="2021-07-22T12:19:23+08:00">2021-07-22</time>
               
             
           </span>
@@ -511,13 +511,17 @@
 <p>在外部命令行中，可通过命令 <code>typeset -f functionName</code> 查看该函数的定义内容。</p>
 <p>在外部命令行中，可通过命令 <code>unset -f functionName</code> 取消对该函数的定义。</p>
 <hr>
-<h2 id="Ubuntu-UEFI-引导修复"><a href="#Ubuntu-UEFI-引导修复" class="headerlink" title="Ubuntu UEFI 引导修复"></a>Ubuntu UEFI 引导修复</h2><p>由于一个很偶然的机会，在 BIOS 中的一时手欠，导致主机上 UEFI 引导的 Ubuntu 系统无法启动（在屏幕闪现过品牌商 Logo 后，只留下 “No operating system found. Boot sequence will automatically repeat” 的提示在热情地工作着）。</p>
+<h2 id="Ubuntu-UEFI-引导修复"><a href="#Ubuntu-UEFI-引导修复" class="headerlink" title="Ubuntu UEFI 引导修复"></a>Ubuntu UEFI 引导修复</h2><p>由于一个很偶然的机会，在 BIOS 中的一时手欠，导致主机上 UEFI 引导的 Ubuntu 系统无法启动（在屏幕闪现过品牌商 Logo 后，只留下 “No operating system found. Boot sequence will automatically repeat” 的提示在热情地舞动着）。</p>
 <p>在多种无果的尝试中，发现使用先前制作的（UEFI 引导）Ubuntu 系统启动盘可以正常进入安装程序，说明在 BIOS 中的启动设置应该是没有问题的。遂怀疑是已安装 Ubuntu 系统的 UEFI 引导出了问题，决定尝试修复看看。</p>
 <p>先使用 Ubuntu 系统启动盘进入 “Trying Ubuntu” 的 Live 操作系统。再以如下命令安装 boot-repair 引导修复工具（该工具的详细使用说明可参考<a href="https://linuxhint.com/ubuntu_boot_repair_tutorial/" target="_blank" rel="noopener">这里</a>）：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@ubuntu:~$ sudo add-apt-repository ppa:yannubuntu/boot-repair</span><br><span class="line">ubuntu@ubuntu:~$ sudo apt install boot-repair</span><br></pre></td></tr></table></figure>
 
 <p>在命令行键入 <code>boot-repair</code> 即可启动该修复工具，展开【Advanced options】菜单，在 [GRUB location] 选项卡中确认默认启动的操作系统和 /boot/efi 对应的分区无误后，即可点击右下角 [Apply] 开始执行修复操作。</p>
 <p>修复完成后重启系统，安装的 Ubuntu 系统果然恢复正常启动。记录至此。</p>
+<hr>
+<h2 id="WoeUSB-刻录-Windows-10-启动盘"><a href="#WoeUSB-刻录-Windows-10-启动盘" class="headerlink" title="WoeUSB 刻录 Windows 10 启动盘"></a>WoeUSB 刻录 Windows 10 启动盘</h2><p>首先，准备 U 盘。先以命令 <code>[user@A ~]$ sudo fdisk -l</code> 确定 U 盘对应的设备号，如 /dev/sdb。若 U 盘的 sdbX 分区已被系统自动挂载，先以命令 <code>[user@A ~]$ sudo umount /dev/sdbX</code> 卸载之。最后以命令 <code>[user@A ~]$ sudo mkfs.vfat /dev/sdb -I</code> 将 U 盘格式化。或也可进一步对 U 盘进行分区（可使用 Ubuntu 20 自带的 gnome-disks 工具）。</p>
+<p>次者，准备 WoeUSB。先以命令 <code>[user@A ~]$ sudo apt install bash dosfstools findutils grep gawk grub-common grub-pc-bin ntfs-3g p7zip-full parted util-linux wget wimtools</code> 安装依赖（其中其他工具都较为常用，可能已被安装，需特别安装的是 wimtools）。在 <a href="https://github.com/WoeUSB/WoeUSB/releases/latest" target="_blank" rel="noopener">WoeUSB 发布页</a> 下载 woeusb-x.x.x.bash 文件。</p>
+<p>最后，刻录启动盘。先自网页上下载 Windows 10 系统的 ISO 安装文件，如 cn_windows_10_…_xxxx.iso 。再切换到下载目录，以命令 <code>[user@A ~]$ sudo ./woeusb-x.x.x.bash -d cn_windows_10_..._xxxx.iso /dev/sdb</code> 开始执行刻录程序。若想提定刻录到 /dev/sdb1 分区，则用 -p 选项替换掉 -d 选项，用 /dev/sdb1 设备号替换掉 /dev/sdb 设备号，执行此命令即可。该命令执行完成，即刻录成功。</p>
 
       
     </div>
@@ -859,7 +863,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-启动栏图标自定义设置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 启动栏图标自定义设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-20-添加自定义程序到启动栏"><span class="nav-number">2.</span> <span class="nav-text">Ubuntu 20 添加自定义程序到启动栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">3.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FoxitReader-支持中文输入"><span class="nav-number">4.</span> <span class="nav-text">FoxitReader 支持中文输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用-ImageMagick-convert-拼贴多张图片"><span class="nav-number">5.</span> <span class="nav-text">用 ImageMagick convert 拼贴多张图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批量修改目录下所有文件夹或文件的属性"><span class="nav-number">6.</span> <span class="nav-text">批量修改目录下所有文件夹或文件的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mendeley-支持中文输入"><span class="nav-number">7.</span> <span class="nav-text">Mendeley 支持中文输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHELL-函数的定义与使用"><span class="nav-number">8.</span> <span class="nav-text">SHELL 函数的定义与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">8.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">8.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-UEFI-引导修复"><span class="nav-number">9.</span> <span class="nav-text">Ubuntu UEFI 引导修复</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-启动栏图标自定义设置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 启动栏图标自定义设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-20-添加自定义程序到启动栏"><span class="nav-number">2.</span> <span class="nav-text">Ubuntu 20 添加自定义程序到启动栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">3.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FoxitReader-支持中文输入"><span class="nav-number">4.</span> <span class="nav-text">FoxitReader 支持中文输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用-ImageMagick-convert-拼贴多张图片"><span class="nav-number">5.</span> <span class="nav-text">用 ImageMagick convert 拼贴多张图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批量修改目录下所有文件夹或文件的属性"><span class="nav-number">6.</span> <span class="nav-text">批量修改目录下所有文件夹或文件的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mendeley-支持中文输入"><span class="nav-number">7.</span> <span class="nav-text">Mendeley 支持中文输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHELL-函数的定义与使用"><span class="nav-number">8.</span> <span class="nav-text">SHELL 函数的定义与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">8.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">8.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-UEFI-引导修复"><span class="nav-number">9.</span> <span class="nav-text">Ubuntu UEFI 引导修复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WoeUSB-刻录-Windows-10-启动盘"><span class="nav-number">10.</span> <span class="nav-text">WoeUSB 刻录 Windows 10 启动盘</span></a></li></ol></div>
             
 
           </div>
