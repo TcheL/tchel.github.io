@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="地空系并行集群管理过程中的一些命令操作">
 <meta property="article:published_time" content="2019-04-05T13:06:23.000Z">
-<meta property="article:modified_time" content="2020-12-31T09:25:44.138Z">
+<meta property="article:modified_time" content="2021-12-11T11:03:46.851Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="Server">
 <meta name="twitter:card" content="summary">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-12-31 17:25:44" itemprop="dateModified" datetime="2020-12-31T17:25:44+08:00">2020-12-31</time>
+                <time title="Modified: 2021-12-11 19:03:46" itemprop="dateModified" datetime="2021-12-11T19:03:46+08:00">2021-12-11</time>
               
             
           </span>
@@ -547,7 +547,7 @@
 <h2 id="LSF-系统动态优先级的计算"><a href="#LSF-系统动态优先级的计算" class="headerlink" title="LSF 系统动态优先级的计算"></a>LSF 系统动态优先级的计算</h2><p>LSF 作业系统会根据用户作业的作业槽数、运行时间和累积核时等资源占用情况，实时调整用户在队列的优先级，即<a href="https://www.ibm.com/support/knowledgecenter/en/SSETD4_9.1.3/lsf_admin/dynamic_user_priority_lsf.html" target="_blank" rel="noopener">动态优先级</a>。</p>
 <p>LSF 系统默认的动态优先级计算公式为：</p>
 <blockquote>
-<p>dynamic_priority = number_shares/(cpu_time*CPU_TIME_FACTOR + run_time*RUN_TIME_FACTOR + (1 + job_slots)*RUN_JOB_FACTOR + fairshare_adjustment*FAIRSHARE_ADJUSTMENT_FACTOR)</p>
+<p>dynamic_priority = number_shares / (cpu_time * CPU_TIME_FACTOR + run_time * RUN_TIME_FACTOR + (1 + job_slots) * RUN_JOB_FACTOR + fairshare_adjustment * FAIRSHARE_ADJUSTMENT_FACTOR)</p>
 </blockquote>
 <p>其中，cpu_time、run_time 和 job_slots 是 LSF 系统收集的用户总资源消耗；CPU_TIME_FACTOR、RUN_TIME_FACTOR 和 RUN_JOB_FACTOR 为权重因子，默认值分别为 0.7、0.7 和 3，可在 lsb.queues 或 lsb.params 中设置。</p>
 <p>另外，lsb.queues 或 lsb.params 中的 HIST_HOURS 参数为 LSF 系统收集资源消耗历史的时间间隔，默认值为 5。</p>
