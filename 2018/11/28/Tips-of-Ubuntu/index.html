@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="Ubuntu 不乖的时候，你是要揍他的 👊">
 <meta property="article:published_time" content="2018-11-28T02:20:06.000Z">
-<meta property="article:modified_time" content="2021-09-07T02:39:39.416Z">
+<meta property="article:modified_time" content="2022-01-12T14:12:14.005Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="Ubuntu">
 <meta name="twitter:card" content="summary">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2021-09-07 10:39:39" itemprop="dateModified" datetime="2021-09-07T10:39:39+08:00">2021-09-07</time>
+                <time title="Modified: 2022-01-12 22:12:14" itemprop="dateModified" datetime="2022-01-12T22:12:14+08:00">2022-01-12</time>
               
             
           </span>
@@ -522,6 +522,9 @@
 <h2 id="WoeUSB-刻录-Windows-10-启动盘"><a href="#WoeUSB-刻录-Windows-10-启动盘" class="headerlink" title="WoeUSB 刻录 Windows 10 启动盘"></a>WoeUSB 刻录 Windows 10 启动盘</h2><p>首先，准备 U 盘。先以命令 <code>[user@A ~]$ sudo fdisk -l</code> 确定 U 盘对应的设备号，如 /dev/sdb。若 U 盘的 sdbX 分区已被系统自动挂载，先以命令 <code>[user@A ~]$ sudo umount /dev/sdbX</code> 卸载之。最后以命令 <code>[user@A ~]$ sudo mkfs.vfat /dev/sdb -I</code> 将 U 盘格式化。或也可进一步对 U 盘进行分区（可使用 Ubuntu 20 自带的 gnome-disks 工具）。</p>
 <p>次者，准备 WoeUSB。先以命令 <code>[user@A ~]$ sudo apt install bash dosfstools findutils grep gawk grub-common grub-pc-bin ntfs-3g p7zip-full parted util-linux wget wimtools</code> 安装依赖（其中其他工具都较为常用，可能已被安装，需特别安装的是 wimtools）。在 <a href="https://github.com/WoeUSB/WoeUSB/releases/latest" target="_blank" rel="noopener">WoeUSB 发布页</a> 下载 woeusb-x.x.x.bash 文件。</p>
 <p>最后，刻录启动盘。先自网页上下载 Windows 10 系统的 ISO 安装文件，如 cn_windows_10_…_xxxx.iso 。再切换到下载目录，以命令 <code>[user@A ~]$ sudo ./woeusb-x.x.x.bash -d cn_windows_10_..._xxxx.iso /dev/sdb</code> 开始执行刻录程序。若想提定刻录到 /dev/sdb1 分区，则用 -p 选项替换掉 -d 选项，用 /dev/sdb1 设备号替换掉 /dev/sdb 设备号，执行此命令即可。该命令执行完成，即刻录成功。</p>
+<hr>
+<h2 id="设置-xdg-open-调用的默认应用"><a href="#设置-xdg-open-调用的默认应用" class="headerlink" title="设置 xdg-open 调用的默认应用"></a>设置 xdg-open 调用的默认应用</h2><p>工具 <code>xdg-open</code> 可以根据文件名的后缀，调用与之相应的应用来打开文件，类似于在桌面系统中，通过鼠标双击调用默认程序打开指定文件的过程。</p>
+<p>通过命令 <code>[user@A ~]$ xdg-mime default application mimetype</code> 可以设置 application 为 mimetype 类型文件的默认应用，其中 application 所支持的应用选项可以是任一 <code>/usr/share/applications</code> 下带有 .desktop 后缀的文件名，mimetype 所支持的类型选项可以是 <code>/usr/share/applications/defaults.list</code> 文件中（除第一行外）任一行的等号左边的内容。</p>
 
       
     </div>
@@ -863,7 +866,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-启动栏图标自定义设置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 启动栏图标自定义设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-20-添加自定义程序到启动栏"><span class="nav-number">2.</span> <span class="nav-text">Ubuntu 20 添加自定义程序到启动栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">3.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FoxitReader-支持中文输入"><span class="nav-number">4.</span> <span class="nav-text">FoxitReader 支持中文输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些常用-Shell-小技巧"><span class="nav-number">5.</span> <span class="nav-text">一些常用 Shell 小技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ImageMagick-convert-拼贴多张图片"><span class="nav-number">5.1.</span> <span class="nav-text">ImageMagick convert 拼贴多张图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find-相关"><span class="nav-number">5.2.</span> <span class="nav-text">find 相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改文件夹或文件的属性"><span class="nav-number">5.2.1.</span> <span class="nav-text">修改文件夹或文件的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重命令指定命令规则文件"><span class="nav-number">5.2.2.</span> <span class="nav-text">重命令指定命令规则文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mendeley-支持中文输入"><span class="nav-number">6.</span> <span class="nav-text">Mendeley 支持中文输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHELL-函数的定义与使用"><span class="nav-number">7.</span> <span class="nav-text">SHELL 函数的定义与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">7.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">7.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-UEFI-引导修复"><span class="nav-number">8.</span> <span class="nav-text">Ubuntu UEFI 引导修复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WoeUSB-刻录-Windows-10-启动盘"><span class="nav-number">9.</span> <span class="nav-text">WoeUSB 刻录 Windows 10 启动盘</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-启动栏图标自定义设置"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 启动栏图标自定义设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-20-添加自定义程序到启动栏"><span class="nav-number">2.</span> <span class="nav-text">Ubuntu 20 添加自定义程序到启动栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Ubuntu-默认终端"><span class="nav-number">3.</span> <span class="nav-text">修改 Ubuntu 默认终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FoxitReader-支持中文输入"><span class="nav-number">4.</span> <span class="nav-text">FoxitReader 支持中文输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些常用-Shell-小技巧"><span class="nav-number">5.</span> <span class="nav-text">一些常用 Shell 小技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ImageMagick-convert-拼贴多张图片"><span class="nav-number">5.1.</span> <span class="nav-text">ImageMagick convert 拼贴多张图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find-相关"><span class="nav-number">5.2.</span> <span class="nav-text">find 相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改文件夹或文件的属性"><span class="nav-number">5.2.1.</span> <span class="nav-text">修改文件夹或文件的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重命令指定命令规则文件"><span class="nav-number">5.2.2.</span> <span class="nav-text">重命令指定命令规则文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mendeley-支持中文输入"><span class="nav-number">6.</span> <span class="nav-text">Mendeley 支持中文输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHELL-函数的定义与使用"><span class="nav-number">7.</span> <span class="nav-text">SHELL 函数的定义与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">7.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">7.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-UEFI-引导修复"><span class="nav-number">8.</span> <span class="nav-text">Ubuntu UEFI 引导修复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WoeUSB-刻录-Windows-10-启动盘"><span class="nav-number">9.</span> <span class="nav-text">WoeUSB 刻录 Windows 10 启动盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置-xdg-open-调用的默认应用"><span class="nav-number">10.</span> <span class="nav-text">设置 xdg-open 调用的默认应用</span></a></li></ol></div>
             
 
           </div>
@@ -883,7 +886,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
