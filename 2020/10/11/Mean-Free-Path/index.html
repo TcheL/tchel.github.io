@@ -120,15 +120,15 @@
 <meta property="og:url" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;2020&#x2F;10&#x2F;11&#x2F;Mean-Free-Path&#x2F;index.html">
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="通过对分子平均自由程的介绍，展示了一些分子化学中令人叹为观止的物理模型的简化操作。">
-<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;mfp-effective-collision-area.gif">
-<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;mfp-swept-out-volume.gif">
-<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;mfp-vector-velocities.gif">
-<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;mfp-example.gif">
+<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;other&#x2F;mfp-effective-collision-area.gif">
+<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;other&#x2F;mfp-swept-out-volume.gif">
+<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;other&#x2F;mfp-vector-velocities.gif">
+<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;other&#x2F;mfp-example.gif">
 <meta property="article:published_time" content="2020-10-11T12:14:51.000Z">
-<meta property="article:modified_time" content="2020-10-11T12:54:19.731Z">
+<meta property="article:modified_time" content="2022-04-19T08:06:09.131Z">
 <meta property="article:author" content="Tche LIU">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;mfp-effective-collision-area.gif">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;other&#x2F;mfp-effective-collision-area.gif">
 
 
 
@@ -399,12 +399,24 @@
                 
               
 
-              <time title="Created: 2020-10-11 20:14:51 / Modified: 20:54:19" itemprop="dateCreated datePublished" datetime="2020-10-11T20:14:51+08:00">2020-10-11</time>
+              <time title="Created: 2020-10-11 20:14:51" itemprop="dateCreated datePublished" datetime="2020-10-11T20:14:51+08:00">2020-10-11</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2022-04-19 16:06:09" itemprop="dateModified" datetime="2022-04-19T16:06:09+08:00">2022-04-19</time>
               
             
           </span>
@@ -443,15 +455,15 @@
 <p>本文译自 <a href="http://hyperphysics.phy-astr.gsu.edu/hbase/Kinetic/menfre.html" target="_blank" rel="noopener">Mean Free Path</a>。</p>
 </blockquote>
 <h2 id="平均自由程"><a href="#平均自由程" class="headerlink" title="平均自由程"></a>平均自由程</h2><p>平均自由程，即气体分子两次碰撞间自由运动的平均路程，可根据气体动力学理论（<a href="http://hyperphysics.phy-astr.gsu.edu/hbase/Kinetic/kinthe.html#c1" target="_blank" rel="noopener">kinetic theory</a>）估计得出。Serway 方法是一种很好的可视化方法，它假设分子直径为 $d$，则碰撞的有效横截面为</p>
-<p><img src="../../../../inblogs/mfp-effective-collision-area.gif" alt="effective collision area"></p>
+<p><img src="../../../../inblogs/other/mfp-effective-collision-area.gif" alt="effective collision area"></p>
 <p>即用一个直径为 $2d$ 的圆代表某一分子的有效碰撞区域，同时将目标分子视为一个质点。在时间 $t$ 内，该圆将扫过如下图所示的体积，碰撞的数量可以由该体积内的气体分子数目估计得到。</p>
-<p><img src="../../../../inblogs/mfp-swept-out-volume.gif" alt="swept out volume"></p>
+<p><img src="../../../../inblogs/other/mfp-swept-out-volume.gif" alt="swept out volume"></p>
 <p>平均自由程可由路程长度除以碰撞数量求得：</p>
 <p>$$ \text{平均自由程估计} = \frac{\bar{v} t}{\pi d^2 \bar{v} t n_v} = \frac{1}{\pi d^2 n_v} $$</p>
 <p>其中，分子上 $\bar{v} t$ 为分子移动距离；分母中 $\pi d^2 \bar{v} t$ 为分子间相互作用的体积，$n_v$ 为每单位体积内的分子数目。上式整体即每碰撞间的平均距离。</p>
 <p>上式中存在的问题是，这里参与计算的是分子平均速度，但目标分子也一直在移动，碰撞的频率依赖于自由运动分子的平均相对速度。</p>
 <h2 id="平均相对速度"><a href="#平均相对速度" class="headerlink" title="平均相对速度"></a>平均相对速度</h2><p>为了计算气体分子的平均自由程，需要估算出分子间的平均相对速度，而不仅仅是某一给定分子的平均速度。任意两个分子的相对速度都可以用它们的矢量速度来表示。</p>
-<p><img src="../../../../inblogs/mfp-vector-velocities.gif" alt="vector velocities"></p>
+<p><img src="../../../../inblogs/other/mfp-vector-velocities.gif" alt="vector velocities"></p>
 <p>相对速度的幅值可表示为它自己的标量积的平方根，即</p>
 <p>$$ v_{\text{rel}} = \sqrt{\vec{v}_{\text{rel}} \cdot \vec{v}_{\text{rel}}} $$</p>
 <p>可进一步表示为</p>
@@ -473,7 +485,7 @@
 <p>其中，$n$ 为摩尔数，$R = 8.3145~\text{J/mol} \cdot \text{K}$ 为气体常数，$P$ 为绝对压力，$V$ 为气体体积，$T$ 为绝对温度，$N_A = 6.0221 \times 10^{23}~\text{mol}^{-1}$ 为阿伏加德罗常数（Avogadro’s number）。</p>
 <p>需要注意的是，上式中的平均自由程的计算，将分子视为坚硬的球体，而实际的分子却不是这样的。对于惰性气体，碰撞是近乎完全弹性的，坚硬球体近似也是合适的。但实际分子存在偶极距，当它们相互靠近时会发生强烈的电相互作用。可以通过分子电势来进一步改进计算，也可以将气体的实测粘度视为一个参数来改进实际气体中分子平均自由程的估计。</p>
 <h2 id="算例"><a href="#算例" class="headerlink" title="算例"></a>算例</h2><p>与理想气体的平均分子间距相比，你可能惊讶于平均自由程的长度。假设分子大小为 $0.3~\text{nm}$，计算其他距离如下：</p>
-<p><img src="../../../../inblogs/mfp-example.gif" alt="example"></p>
+<p><img src="../../../../inblogs/other/mfp-example.gif" alt="example"></p>
 
       
     </div>
@@ -635,7 +647,7 @@
                 
                   <a href="/archives/%20%7C%7C%20archive">
                 
-                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -759,7 +771,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">41</span>
+                      
+                    
+                    <span class="site-state-item-count">42</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
