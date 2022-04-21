@@ -120,19 +120,19 @@
 <meta property="og:url" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;2022&#x2F;04&#x2F;19&#x2F;GRTM-Ricker-wavelet-timeshift&#x2F;index.html">
 <meta property="og:site_name" content="Here4U">
 <meta property="og:description" content="GRTM (Generalized Reflection&#x2F;Transmission coefficients Method) 是一种高效的层状模型波形计算方法。当震源 Ricker 子波取任一时移参数时，即使该值是不合适的，计算程序也都能完成波形计算，但计算的结果却可能是不合物理规律的。">
-<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;program&#x2F;GRTM_t0_Notshift.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;program&#x2F;GRTM_t0_End_+4-4.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;program&#x2F;GRTM_t0_Amp_w+4-4.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;program&#x2F;GRTM_t0_Amp_w-4-14.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;program&#x2F;GRTM_t0_Amp_w+1+4+7.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;program&#x2F;GRTM_t0_Amp_l+4-4.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;program&#x2F;GRTM_t0_Amp_s+4-4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;seismology&#x2F;GRTM_t0_ShiftToSplit.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;seismology&#x2F;GRTM_t0_End_+4-4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;seismology&#x2F;GRTM_t0_Amp_w+4-4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;seismology&#x2F;GRTM_t0_Amp_w-4-14.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;seismology&#x2F;GRTM_t0_Amp_w+1+4+7.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;seismology&#x2F;GRTM_t0_Amp_l+4-4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;seismology&#x2F;GRTM_t0_Amp_s+4-4.png">
 <meta property="article:published_time" content="2022-04-19T08:10:19.000Z">
-<meta property="article:modified_time" content="2022-04-19T08:41:11.119Z">
+<meta property="article:modified_time" content="2022-04-21T02:37:38.938Z">
 <meta property="article:author" content="Tche LIU">
 <meta property="article:tag" content="GRTM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;program&#x2F;GRTM_t0_Notshift.png">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;tchel.github.io&#x2F;inblogs&#x2F;seismology&#x2F;GRTM_t0_ShiftToSplit.png">
 
 
 
@@ -403,12 +403,24 @@
                 
               
 
-              <time title="Created: 2022-04-19 16:10:19 / Modified: 16:41:11" itemprop="dateCreated datePublished" datetime="2022-04-19T16:10:19+08:00">2022-04-19</time>
+              <time title="Created: 2022-04-19 16:10:19" itemprop="dateCreated datePublished" datetime="2022-04-19T16:10:19+08:00">2022-04-19</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2022-04-21 10:37:38" itemprop="dateModified" datetime="2022-04-21T10:37:38+08:00">2022-04-21</time>
               
             
           </span>
@@ -461,22 +473,23 @@
       
 
       
-        <h2 id="不合适的时移参数"><a href="#不合适的时移参数" class="headerlink" title="不合适的时移参数"></a>不合适的时移参数</h2><p>当震源子波的时移参数 $ t_0 $ 不合适时，GRTM 计算出的波形会分裂出现在时窗的两端：</p>
-<p><img src="../../../../inblogs/program/GRTM_t0_Notshift.png" alt="零时移也可能产生较大影响"></p>
-<p>上图中，两端波形的振幅是不一样的。首端振幅与 $ 0 &lt; t_0 &lt; T $ 时振幅一致，尾端由与 $ - T &lt; t_0 &lt; 0 $ 时一致（这里，$ T $ 表示总的记录长度）：</p>
-<p><img src="../../../../inblogs/program/GRTM_t0_End_+4-4.png" alt="波形扩展"></p>
+        <h2 id="不合适的时移参数"><a href="#不合适的时移参数" class="headerlink" title="不合适的时移参数"></a>不合适的时移参数</h2><p>当震源子波的时移参数 $ t_0 $ 不合适时，GRTM 计算出的波形会分裂出现在记录时窗的两端：</p>
+<p><img src="../../../../inblogs/seismology/GRTM_t0_ShiftToSplit.png" alt="时移导致波形分裂"></p>
+<p>实际上，无论 $ t_0 $ 取值如何，波形始终都是“分裂”的，首端和末端的波形振幅放大倍数是不一致的，时窗起点和终点的幅值是不一样的。只是当 $ t_0 $ 取在记录时窗的中部时，两端波形的实际幅值趋于 0，不同的振幅放大倍数的作用效果并不明显。</p>
+<p>可以验证的是，$ t_0 = 0 $ 时的首端振幅放大倍数与 $ 0 &lt; t_0 &lt; T $ 时的倍数一致，尾端则与 $ - T &lt; t_0 &lt; 0 $ 时一致（这里，$ T $ 表示总的记录长度）：</p>
+<p><img src="../../../../inblogs/seismology/GRTM_t0_End_+4-4.png" alt="波形扩展"></p>
 <p><em>注：为了方便比较波形，这里对 $ t_0 = \pm 4.0 $ 时的波形分别做了额外的时移。</em></p>
-<h2 id="在记录时长和时间步长保持不变时"><a href="#在记录时长和时间步长保持不变时" class="headerlink" title="在记录时长和时间步长保持不变时"></a>在记录时长和时间步长保持不变时</h2><p>从上图中可以发现，由不同区间 $ \big[ (i - 1) \cdot T, i \cdot T \big] $（当 $ i = …, -1, 0, 1, … $ 时）内取值的 $ t_0 $ 计算出的波形的振幅存在差异：</p>
-<p><img src="../../../../inblogs/program/GRTM_t0_Amp_w+4-4.png" alt="跨区间取值的差异"></p>
+<h2 id="在记录时长和时间步长保持不变时"><a href="#在记录时长和时间步长保持不变时" class="headerlink" title="在记录时长和时间步长保持不变时"></a>在记录时长和时间步长保持不变时</h2><p>从上图中可以发现，由不同时窗区间 $ U_i = \big[ (i - 1) \cdot T, i \cdot T \big] $（当 $ i = …, -1, 0, 1, … $ 时）内取值的 $ t_0 $ 计算出的波形的振幅存在差异：</p>
+<p><img src="../../../../inblogs/seismology/GRTM_t0_Amp_w+4-4.png" alt="跨区间取值的差异"></p>
 <p><em>注：为了方便比较可能存在的分裂两端的波形，这里对计算出的波形在负时间轴做了周期扩展。</em></p>
 <p>当进一步向负轴取相邻区间的不同 $ t_0 $ 时，波形的振幅比不会发生变化：</p>
-<p><img src="../../../../inblogs/program/GRTM_t0_Amp_w-4-14.png" alt="向负轴进发"></p>
+<p><img src="../../../../inblogs/seismology/GRTM_t0_Amp_w-4-14.png" alt="向负轴进发"></p>
 <p>而由同一区间内的不同 $ t_0 $ 计算出的波形振幅相同：</p>
-<p><img src="../../../../inblogs/program/GRTM_t0_Amp_w+1+4+7.png" alt="区间内取值的差异"></p>
-<h2 id="在记录时长发生变化时"><a href="#在记录时长发生变化时" class="headerlink" title="在记录时长发生变化时"></a>在记录时长发生变化时</h2><p>从前图中可以发现，向后时移（$ t_0 &lt; 0 $）计算出的波形振幅比向前时移（$ t_0 &gt; 0 $）的大。但<strong>这一点不是恒成立的</strong>。当取不同的记录长度时，波形的振幅比可能发生变化：</p>
-<p><img src="../../../../inblogs/program/GRTM_t0_Amp_l+4-4.png" alt="当记录时长不同时"></p>
+<p><img src="../../../../inblogs/seismology/GRTM_t0_Amp_w+1+4+7.png" alt="区间内取值的差异"></p>
+<h2 id="在记录时长发生变化时"><a href="#在记录时长发生变化时" class="headerlink" title="在记录时长发生变化时"></a>在记录时长发生变化时</h2><p>从前图中可以发现，向后时移（在 $ U_i $ 区间）计算出的波形振幅比向前时移（在 $ U_j $ 区间，且 $ j &gt; i $）的大。但<strong>这一点不是恒成立的</strong>。当取不同的记录长度时，波形的振幅比可能发生变化：</p>
+<p><img src="../../../../inblogs/seismology/GRTM_t0_Amp_l+4-4.png" alt="当记录时长不同时"></p>
 <h2 id="在时间步长发生变化时"><a href="#在时间步长发生变化时" class="headerlink" title="在时间步长发生变化时"></a>在时间步长发生变化时</h2><p>同样地，当取不同的时间步长时，波形的振幅比也可能发生变化：</p>
-<p><img src="../../../../inblogs/program/GRTM_t0_Amp_s+4-4.png" alt="时间步长不同时"></p>
+<p><img src="../../../../inblogs/seismology/GRTM_t0_Amp_s+4-4.png" alt="时间步长不同时"></p>
 
       
     </div>
